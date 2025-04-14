@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSMArena Data Scraper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <style>
+        .console-output {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 5px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            margin-top: 20px;
+        }
+        .progress {
+            height: 25px;
+            margin-bottom: 10px;
+        }
+        .stats-box {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .stats-item {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .brand-progress {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .completed-brands {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .completed-brand-item {
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .completed-brand-item:last-child {
+            border-bottom: none;
+        }
+        #brandsTable {
+            margin-top: 20px;
+        }
+        .extraction-section {
+            display: none;
+        }
+        .brand-selection {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">GSMArena Data Scraper</h1>
+        
+        <!-- Brand Selection Section -->
+        <div class="brand-selection">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <button id="scanButton" class="btn btn-primary">Scan Available Brands</button>
+                    <button id="startButton" class="btn btn-success ms-2" disabled>Start Extraction</button>
+                    <div id="scanningSpinner" class="spinner-border text-primary d-none ms-2" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <button id="selectAllBrands" class="btn btn-outline-primary btn-sm">Select All</button>
+                                <button id="deselectAllBrands" class="btn btn-outline-secondary btn-sm ms-2">Deselect All</button>
+                            </div>
+                            <table id="brandsTable" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="50px">Select</th>
+                                        <th>Brand</th>
+                                        <th width="80px">URL</th>
+                                        <th>Device Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Brands will be added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Extraction Progress Section -->
+        <div class="extraction-section">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="stats-box">
+                        <h4>Overall Progress</h4>
+                        <div class="stats-item">Status: <span id="statusText">Ready</span></div>
+                        <div class="progress">
+                            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <div class="stats-item">Overall Progress: <span id="progressText">0%</span></div>
+                        <div class="stats-item">Brands Processed: <span id="brandsProcessed">0</span> / <span id="totalBrands">0</span></div>
+                        <div class="stats-item">Total Devices Processed: <span id="devicesProcessed">0</span> / <span id="totalDevices">0</span></div>
+                    </div>
+
+                    <div class="brand-progress">
+                        <h4>Current Brand Progress</h4>
+                        <div class="stats-item">Brand: <span id="currentBrand">-</span></div>
+                        <div class="stats-item">Devices in Brand: <span id="currentBrandDevices">0</span></div>
+                        <div class="progress">
+                            <div id="brandProgressBar" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <div class="stats-item">Progress: <span id="brandProgressText">0%</span></div>
+                    </div>
+
+                    <div class="console-output" id="console"></div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="stats-box">
+                        <h4>Completed Brands</h4>
+                        <div id="completedBrands" class="completed-brands">
+                            <!-- Completed brands will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extraction Dialog -->
+    <div class="modal fade" id="extractionDialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Brand Data Options</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="brand-list"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="startExtraction">Start Extraction</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        const scanButton = document.getElementById('scanButton');
+        const startButton = document.getElementById('startButton');
+        const selectAllBtn = document.getElementById('selectAllBrands');
+        const deselectAllBtn = document.getElementById('deselectAllBrands');
+        const scanningSpinner = document.getElementById('scanningSpinner');
+        const statusText = document.getElementById('statusText');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const brandsProcessed = document.getElementById('brandsProcessed');
+        const totalBrands = document.getElementById('totalBrands');
+        const devicesProcessed = document.getElementById('devicesProcessed');
+        const totalDevices = document.getElementById('totalDevices');
+        const currentBrand = document.getElementById('currentBrand');
+        const currentBrandDevices = document.getElementById('currentBrandDevices');
+        const brandProgressBar = document.getElementById('brandProgressBar');
+        const brandProgressText = document.getElementById('brandProgressText');
+        const console = document.getElementById('console');
+        const completedBrands = document.getElementById('completedBrands');
+        let brandsTable;
+
+        scanButton.addEventListener('click', async () => {
+            try {
+                scanButton.disabled = true;
+                scanButton.textContent = 'Scanning...';
+                scanningSpinner.classList.remove('d-none');
+                startButton.disabled = true;
+
+                if (brandsTable) {
+                    brandsTable.clear().draw();
+                }
+                
+                const response = await fetch('/scan-brands');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    if (!brandsTable) {
+                        brandsTable = $('#brandsTable').DataTable({
+                            data: data.brands,
+                            columns: [
+                                {
+                                    data: 'url',
+                                    render: function(data) {
+                                        return `<input type="checkbox" class="brand-checkbox" data-url="${data}">`;
+                                    }
+                                },
+                                { data: 'name' },
+                                {
+                                    data: 'url',
+                                    render: function(data) {
+                                        return `<a href="${data}" target="_blank" class="btn btn-sm btn-outline-primary">Visit</a>`;
+                                    }
+                                },
+                                { data: 'device_count' }
+                            ],
+                            order: [[1, 'asc']],
+                            pageLength: 25
+                        });
+                    } else {
+                        brandsTable.clear().rows.add(data.brands).draw();
+                    }
+                    
+                    startButton.disabled = false;
+                    addConsoleMessage('Brands scan completed. Select brands to start extraction.');
+                } else {
+                    throw new Error(data.message || 'Unknown error occurred');
+                }
+            } catch (error) {
+                addConsoleMessage('Error: ' + error.message, 'error');
+                if (brandsTable) {
+                    brandsTable.clear().draw();
+                }
+            } finally {
+                scanButton.disabled = false;
+                scanButton.textContent = 'Scan Available Brands';
+                scanningSpinner.classList.add('d-none');
+            }
+        });
+
+        selectAllBtn.addEventListener('click', () => {
+            $('.brand-checkbox').prop('checked', true);
+        });
+
+        deselectAllBtn.addEventListener('click', () => {
+            $('.brand-checkbox').prop('checked', false);
+        });
+
+        startButton.addEventListener('click', async () => {
+            const selectedBrands = Array.from(document.querySelectorAll('.brand-checkbox:checked'))
+                .map(cb => cb.dataset.url);
+            
+            if (selectedBrands.length === 0) {
+                addConsoleMessage('Please select at least one brand', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/start', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ brands: selectedBrands })
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'error') {
+                    addConsoleMessage('Error: ' + data.message, 'error');
+                    return;
+                }
+
+                // Show extraction dialog with options
+                const extractionDialog = new bootstrap.Modal(document.getElementById('extractionDialog'));
+                const brandList = document.querySelector('.brand-list');
+                brandList.innerHTML = '';
+
+                data.brand_checks.forEach(brandCheck => {
+                    const brand = brandCheck.brand;
+                    const div = document.createElement('div');
+                    div.className = 'brand-option';
+                    div.innerHTML = `
+                        <div class="brand-info">
+                            <h6>${brand.name}</h6>
+                            <p>Devices: ${brand.device_count}</p>
+                            <p>Status: ${brandCheck.exists ? 'Data exists' : 'New brand'}</p>
+                        </div>
+                        <div class="option-buttons">
+                            <input type="checkbox" class="delete-existing" data-brand-url="${brand.url}" ${brandCheck.exists ? '' : 'disabled'}>
+                            <label>Delete existing data</label>
+                        </div>
+                    `;
+                    brandList.appendChild(div);
+                });
+
+                document.getElementById('startExtraction').addEventListener('click', async () => {
+                    const deleteExisting = Array.from(document.querySelectorAll('.delete-existing:checked'))
+                        .map(cb => cb.dataset.brandUrl);
+                    
+                    try {
+                        const response = await fetch('/scrape', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                brands: selectedBrands,
+                                delete_existing: deleteExisting
+                            })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.status === 'started') {
+                            document.querySelector('.extraction-section').style.display = 'block';
+                            document.querySelector('.brand-selection').style.display = 'none';
+                            startButton.disabled = true;
+                            scanButton.disabled = true;
+                            addConsoleMessage('Starting extraction...');
+                            checkProgress();
+                            extractionDialog.hide();
+                        } else {
+                            throw new Error(data.message || 'Failed to start extraction');
+                        }
+                    } catch (error) {
+                        addConsoleMessage('Error: ' + error.message, 'error');
+                    }
+                });
+
+                extractionDialog.show();
+            } catch (error) {
+                addConsoleMessage('Error: ' + error.message, 'error');
+            }
+        });
+
+        async function checkBrandData(brand) {
+            try {
+                const response = await fetch('/check-brand-data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ brand_name: brand.name })
+                });
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error checking brand data:', error);
+                return { exists: false, device_count: 0 };
+            }
+        }
+
+        function addConsoleMessage(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `console-${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            console.appendChild(div);
+            console.scrollTop = console.scrollHeight;
+        }
+
+        function updateCompletedBrands(brands) {
+            completedBrands.innerHTML = brands.map(brand => `
+                <div class="completed-brand-item">
+                    <strong>${brand.name}</strong><br>
+                    Devices: ${brand.devices}/${brand.expected}
+                </div>
+            `).join('');
+        }
+
+        async function checkProgress() {
+            try {
+                const response = await fetch('/progress');
+                const data = await response.json();
+
+                // Update status and progress
+                statusText.textContent = data.message;
+                const progress = Math.max(0, Math.min(100, data.progress));
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `${progress.toFixed(1)}%`;
+
+                // Update brand counts
+                brandsProcessed.textContent = data.brands_processed;
+                totalBrands.textContent = data.total_brands;
+                devicesProcessed.textContent = data.devices_processed;
+                totalDevices.textContent = data.total_devices;
+
+                // Update current brand progress
+                currentBrand.textContent = data.current_brand || '-';
+                currentBrandDevices.textContent = data.current_brand_devices;
+                const brandProgress = Math.max(0, Math.min(100, data.current_brand_progress));
+                brandProgressBar.style.width = `${brandProgress}%`;
+                brandProgressText.textContent = `${brandProgress.toFixed(1)}%`;
+
+                // Update completed brands
+                if (data.completed_brands) {
+                    updateCompletedBrands(data.completed_brands);
+                }
+
+                // Add console message
+                addConsoleMessage(data.message);
+
+                // Continue checking progress if not done
+                if (progress < 100 && progress >= 0) {
+                    setTimeout(checkProgress, 1000);
+                } else {
+                    startButton.disabled = false;
+                    scanButton.disabled = false;
+                    document.querySelector('.brand-selection').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error checking progress:', error);
+                setTimeout(checkProgress, 1000);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - GSMArena Data Scraper</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #333;
+        }
+        
+        .navbar-brand.neon-text {
+            color: #0ff;
+            text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #0ff, 0 0 20px #0ff;
+        }
+        
+        .nav-link {
+            color: #fff;
+        }
+        
+        .nav-link:hover {
+            color: #0ff;
+        }
+        
+        .nav-link.active {
+            color: #0ff;
+            text-shadow: 0 0 5px #0ff;
+        }
+        
+        .swagger-ui {
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+        
+        .swagger-ui .info .title {
+            color: #0ff;
+            text-shadow: 0 0 5px #0ff;
+        }
+        
+        .swagger-ui .opblock .opblock-summary-operation-id, 
+        .swagger-ui .opblock .opblock-summary-path, 
+        .swagger-ui .opblock .opblock-summary-path__deprecated {
+            color: #fff;
+        }
+        
+        .swagger-ui .opblock .opblock-summary-description {
+            color: #ccc;
+        }
+        
+        .swagger-ui .opblock {
+            background: #252525;
+            border-color: #333;
+        }
+        
+        .swagger-ui .opblock.opblock-get {
+            background: rgba(0, 128, 255, 0.1);
+            border-color: #0088ff;
+        }
+        
+        .swagger-ui .opblock.opblock-post {
+            background: rgba(73, 204, 144, 0.1);
+            border-color: #49cc90;
+        }
+        
+        .swagger-ui .opblock.opblock-put {
+            background: rgba(252, 161, 48, 0.1);
+            border-color: #fca130;
+        }
+        
+        .swagger-ui .opblock.opblock-delete {
+            background: rgba(249, 62, 62, 0.1);
+            border-color: #f93e3e;
+        }
+        
+        .swagger-ui .opblock .opblock-section-header {
+            background: #333;
+        }
+        
+        .swagger-ui .opblock .opblock-section-header h4 {
+            color: #fff;
+        }
+        
+        .swagger-ui .opblock-description-wrapper p, 
+        .swagger-ui .opblock-external-docs-wrapper p, 
+        .swagger-ui .opblock-title_normal p {
+            color: #ccc;
+        }
+        
+        .swagger-ui .opblock-description-wrapper, 
+        .swagger-ui .opblock-external-docs-wrapper, 
+        .swagger-ui .opblock-title_normal {
+            color: #ccc;
+        }
+        
+        .swagger-ui .opblock .opblock-summary-operation-id, 
+        .swagger-ui .opblock .opblock-summary-path, 
+        .swagger-ui .opblock .opblock-summary-path__deprecated {
+            color: #fff;
+        }
+        
+        .swagger-ui .opblock .opblock-summary-method {
+            color: #fff;
+        }
+        
+        .swagger-ui table tbody tr td {
+            color: #ccc;
+        }
+        
+        .swagger-ui .response-col_status {
+            color: #fff;
+        }
+        
+        .swagger-ui .btn {
+            color: #fff;
+            border-color: #333;
+        }
+        
+        .swagger-ui select {
+            background: #333;
+            color: #fff;
+            border-color: #555;
+        }
+        
+        .swagger-ui .scheme-container {
+            background: #252525;
+        }
+        
+        .swagger-ui section.models {
+            background: #252525;
+            border-color: #333;
+        }
+        
+        .swagger-ui section.models h4 {
+            color: #fff;
+        }
+        
+        .swagger-ui section.models .model-container {
+            background: #333;
+            border-color: #444;
+        }
+        
+        .swagger-ui .model-title {
+            color: #fff;
+        }
+        
+        .swagger-ui .parameter__name, 
+        .swagger-ui .parameter__type, 
+        .swagger-ui .parameter__deprecated, 
+        .swagger-ui .parameter__in {
+            color: #fff;
+        }
+        
+        .swagger-ui .parameter__name {
+            color: #fff;
+        }
+        
+        .swagger-ui input[type=text] {
+            background: #333;
+            color: #fff;
+            border-color: #555;
+        }
+        
+        .swagger-ui .table-container {
+            background: #252525;
+        }
+        
+        .swagger-ui .responses-table .response-col_status {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand neon-text" href="/">GSMArena Data Scraper</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api-management">API Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/api-docs">API Documentation</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div id="swagger-ui"></div>
+    </div>
+
+    <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-bundle.js"></script>
+    <script>
+        window.onload = function() {
+            const ui = SwaggerUIBundle({
+                url: "/static/swagger.json",
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIBundle.SwaggerUIStandalonePreset
+                ],
+                layout: "BaseLayout",
+                syntaxHighlight: {
+                    activated: true,
+                    theme: "monokai"
+                }
+            });
+            window.ui = ui;
+        };
+    </script>
+</body>
+</html>

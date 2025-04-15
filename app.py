@@ -1,18 +1,24 @@
 from flask import Flask, render_template, jsonify, request
 from scraper import GSMArenaScraper
 from brand_scanner import BrandScanner
+from incremental_scraper import IncrementalScraper
+from api import api_bp, limiter
 import threading
 import queue
 import time
-from loguru import logger
+import json
 import os
 import csv
-import json
-import traceback
+import logging
+from loguru import logger
 from typing import Dict, List
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
+app.config['SECRET_KEY'] = 'your-secret-key'
+app.register_blueprint(api_bp)
+limiter.init_app(app)
 scraper = GSMArenaScraper()
+incremental_scraper = IncrementalScraper()
 brand_scanner = BrandScanner()
 progress_queue = queue.Queue()
 
@@ -160,6 +166,48 @@ def start_scraping_final():
             'message': str(e)
         })
 
+@app.route('/incremental-update', methods=['POST'])
+def start_incremental_update():
+    try:
+        data = request.get_json()
+        selected_brands = data.get('brands', [])
+        
+        if not selected_brands:
+            return jsonify({"status": "error", "message": "No brands selected"})
+            
+        # Filter all_brands to only include selected ones
+        brands_to_scrape = [brand for brand in all_brands if brand["url"] in selected_brands]
+        
+        # Reset status for new scraping session
+        global current_status
+        current_status = {
+            'message': 'Starting incremental update...',
+            'progress': 0,
+            'current_brand': '',
+            'current_brand_devices': 0,
+            'current_brand_progress': 0,
+            'brands_processed': 0,
+            'devices_processed': 0,
+            'total_brands': 0,
+            'total_devices': 0,
+            'completed_brands': [],
+            'is_incremental': True
+        }
+        
+        # Start the incremental update in a separate thread
+        global scraping_thread
+        scraping_thread = threading.Thread(target=incremental_update_worker, args=(brands_to_scrape,))
+        scraping_thread.daemon = True
+        scraping_thread.start()
+        
+        return jsonify({"status": "started"})
+    except Exception as e:
+        logger.error(f"Error starting incremental update: {str(e)}")
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        })
+
 @app.route('/preview-data')
 def preview_data():
     try:
@@ -268,6 +316,16 @@ def get_progress():
         return jsonify(status)
     except queue.Empty:
         return jsonify(current_status)
+
+@app.route('/api-management')
+def api_management():
+    """Render the API management page."""
+    return render_template('api.html')
+
+@app.route('/api-docs')
+def api_docs():
+    """Render the API documentation page."""
+    return render_template('swagger.html')
 
 def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = None):
     """Scrape worker with option to delete existing data for specific brands."""
@@ -439,6 +497,172 @@ def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = Non
         )
     except Exception as e:
         logger.error(f"Error in scraper: {str(e)}")
+        update_status(message=f"Error: {str(e)}")
+
+def incremental_update_worker(brands_to_update: List[Dict]):
+    """Worker function to perform incremental updates."""
+    try:
+        # Start incremental update
+        update_status(
+            message="Starting incremental update...",
+            progress=0,
+            brands_processed=0,
+            devices_processed=0,
+            is_incremental=True
+        )
+        
+        # Calculate total brands
+        update_status(
+            total_brands=len(brands_to_update)
+        )
+        
+        # Process each brand incrementally
+        results = {
+            'new_devices': 0,
+            'updated_devices': 0,
+            'brands_processed': 0
+        }
+        
+        for brand_idx, brand in enumerate(brands_to_update, 1):
+            # Check if paused
+            while scraping_paused:
+                time.sleep(1)
+                continue
+                
+            # Update status for current brand
+            brand_name = brand['name']
+            
+            update_status(
+                message=f"Processing brand: {brand_name} (incremental update)",
+                current_brand=brand_name,
+                current_brand_devices=brand['device_count'],
+                current_brand_progress=0,
+                brands_processed=brand_idx
+            )
+            
+            # Get devices needing update
+            new_devices, updated_devices = incremental_scraper.get_devices_needing_update(brand)
+            total_devices_to_process = len(new_devices) + len(updated_devices)
+            
+            # Update console with what we found
+            addConsoleMessage = f"Found {len(new_devices)} new devices and {len(updated_devices)} devices needing updates for {brand_name}"
+            update_status(message=addConsoleMessage)
+            
+            # Process new devices
+            devices_processed = 0
+            
+            # Process new devices
+            for device_idx, device in enumerate(new_devices, 1):
+                # Check if paused
+                while scraping_paused:
+                    time.sleep(1)
+                    continue
+                    
+                device_progress = (device_idx / total_devices_to_process) * 100 if total_devices_to_process > 0 else 100
+                update_status(
+                    message=f"Processing new device: {device['name']} ({device_idx}/{len(new_devices)})",
+                    current_brand_progress=device_progress,
+                    devices_processed=results['new_devices'] + results['updated_devices'] + device_idx
+                )
+                
+                # Process device specs
+                specs = incremental_scraper.get_device_specs(device['url'])
+                if specs:
+                    with open(scraper.brands_file, 'a', newline='', encoding='utf-8') as f:
+                        writer = csv.writer(f)
+                        writer.writerow([brand_name, device['name'], device['url'], device['image_url']])
+                    
+                    with open(scraper.specs_file, 'a', newline='', encoding='utf-8') as f:
+                        writer = csv.writer(f)
+                        writer.writerow([device['url'], specs.get('name', ''), specs.get('pictures', '[]'), json.dumps(specs)])
+                    
+                    results['new_devices'] += 1
+                
+                time.sleep(1)  # Respect the website
+            
+            # Process updated devices
+            for device_idx, device in enumerate(updated_devices, 1):
+                # Check if paused
+                while scraping_paused:
+                    time.sleep(1)
+                    continue
+                    
+                device_progress = ((len(new_devices) + device_idx) / total_devices_to_process) * 100 if total_devices_to_process > 0 else 100
+                update_status(
+                    message=f"Processing updated device: {device['name']} ({device_idx}/{len(updated_devices)})",
+                    current_brand_progress=device_progress,
+                    devices_processed=results['new_devices'] + results['updated_devices'] + device_idx
+                )
+                
+                # Process device specs
+                specs = incremental_scraper.get_device_specs(device['url'])
+                if specs:
+                    # Update the specs file
+                    updated = False
+                    if os.path.exists(scraper.specs_file):
+                        temp_specs_file = scraper.specs_file + '.temp'
+                        with open(scraper.specs_file, 'r', encoding='utf-8') as input_file, \
+                             open(temp_specs_file, 'w', newline='', encoding='utf-8') as output_file:
+                            reader = csv.reader(input_file)
+                            writer = csv.writer(output_file)
+                            
+                            # Write header
+                            header = next(reader)
+                            writer.writerow(header)
+                            
+                            # Write rows, updating the one we need
+                            for row in reader:
+                                if row and row[0] == device['url']:
+                                    # This is the row to update
+                                    writer.writerow([
+                                        device['url'],
+                                        specs.get('name', ''),
+                                        specs.get('pictures', '[]'),
+                                        json.dumps(specs)
+                                    ])
+                                    updated = True
+                                else:
+                                    writer.writerow(row)
+                            
+                            # If we didn't find the row to update, append it
+                            if not updated:
+                                writer.writerow([
+                                    device['url'],
+                                    specs.get('name', ''),
+                                    specs.get('pictures', '[]'),
+                                    json.dumps(specs)
+                                ])
+                        
+                        # Replace original file with temp file
+                        os.replace(temp_specs_file, scraper.specs_file)
+                    
+                    results['updated_devices'] += 1
+                
+                time.sleep(1)  # Respect the website
+            
+            # Update completed brands
+            completed_brand = {
+                'name': brand_name,
+                'devices': len(new_devices) + len(updated_devices),
+                'expected': brand['device_count']
+            }
+            current_status['completed_brands'].append(completed_brand)
+            
+            # Calculate overall progress
+            results['brands_processed'] += 1
+            overall_progress = (results['brands_processed'] / len(brands_to_update)) * 100
+            update_status(progress=overall_progress)
+        
+        # Update the device updates database
+        incremental_scraper._save_device_updates()
+        
+        # Final status update
+        update_status(
+            message=f"Incremental update completed! Added {results['new_devices']} new devices and updated {results['updated_devices']} devices.",
+            progress=100
+        )
+    except Exception as e:
+        logger.error(f"Error in incremental update: {str(e)}")
         update_status(message=f"Error: {str(e)}")
 
 def check_brand_data(brand_name: str) -> Dict:

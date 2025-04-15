@@ -1,0 +1,619 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "GSMArena Data Scraper API",
+    "description": "API for accessing mobile device specifications from GSMArena",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api/v1",
+      "description": "API v1"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    },
+    "schemas": {
+      "Brand": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Samsung"
+          },
+          "devices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DevicePreview"
+            }
+          }
+        }
+      },
+      "DevicePreview": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Galaxy S21"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://www.gsmarena.com/samsung_galaxy_s21-10626.php"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s21-5g.jpg"
+          }
+        }
+      },
+      "Device": {
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string",
+            "example": "Samsung"
+          },
+          "name": {
+            "type": "string",
+            "example": "Galaxy S21"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://www.gsmarena.com/samsung_galaxy_s21-10626.php"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s21-5g.jpg"
+          }
+        }
+      },
+      "DeviceDetails": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Samsung Galaxy S21"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://www.gsmarena.com/samsung_galaxy_s21-10626.php"
+          },
+          "pictures": {
+            "type": "string",
+            "example": "[\"https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s21-5g.jpg\"]"
+          },
+          "Network": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "example": {
+              "Technology": "GSM / CDMA / HSPA / EVDO / LTE / 5G",
+              "2G bands": "GSM 850 / 900 / 1800 / 1900",
+              "3G bands": "HSDPA 850 / 900 / 1700(AWS) / 1900 / 2100",
+              "4G bands": "1, 2, 3, 4, 5, 7, 8, 12, 13, 17, 18, 19, 20, 25, 26, 28, 32, 38, 39, 40, 41, 66",
+              "5G bands": "1, 3, 5, 7, 8, 20, 28, 38, 40, 41, 66, 78 SA/NSA/Sub6",
+              "Speed": "HSPA 42.2/5.76 Mbps, LTE-A (5CA) Cat20 2000/200 Mbps, 5G"
+            }
+          },
+          "Launch": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Body": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Display": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Platform": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Memory": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Main Camera": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Selfie camera": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Sound": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Comms": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Features": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Battery": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Misc": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "Tests": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "example": "An error occurred"
+          }
+        }
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "API key is missing or invalid",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "API key is required"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RateLimitError": {
+        "description": "Too many requests",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "example": "Rate limit exceeded"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/brands": {
+      "get": {
+        "summary": "Get all brands",
+        "description": "Returns a list of all brands and their devices",
+        "operationId": "getBrands",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "brands": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Brand"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/brands/{brandName}": {
+      "get": {
+        "summary": "Get brand details",
+        "description": "Returns details for a specific brand",
+        "operationId": "getBrand",
+        "parameters": [
+          {
+            "name": "brandName",
+            "in": "path",
+            "description": "Name of the brand to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Samsung"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "brand": {
+                      "$ref": "#/components/schemas/Brand"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "description": "Brand not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices": {
+      "get": {
+        "summary": "Get all devices",
+        "description": "Returns a paginated list of all devices",
+        "operationId": "getDevices",
+        "parameters": [
+          {
+            "name": "brand",
+            "in": "query",
+            "description": "Filter by brand name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Samsung"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100
+            },
+            "example": 100
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Pagination offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "example": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "devices": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Device"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 1000
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "example": 100
+                    },
+                    "offset": {
+                      "type": "integer",
+                      "example": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/{deviceUrl}": {
+      "get": {
+        "summary": "Get device details",
+        "description": "Returns detailed specifications for a specific device",
+        "operationId": "getDevice",
+        "parameters": [
+          {
+            "name": "deviceUrl",
+            "in": "path",
+            "description": "URL of the device to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "samsung_galaxy_s21-10626.php"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "device": {
+                      "$ref": "#/components/schemas/DeviceDetails"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "description": "Device not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "summary": "Search devices",
+        "description": "Search for devices by name or brand",
+        "operationId": "searchDevices",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "galaxy s21"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100
+            },
+            "example": 100
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Pagination offset",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "example": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "devices": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Device"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 15
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "example": 100
+                    },
+                    "offset": {
+                      "type": "integer",
+                      "example": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitError"
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

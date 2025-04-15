@@ -6,6 +6,7 @@
     <title>GSMArena Data Scraper</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --neon-green: #39FF14;
@@ -358,18 +359,68 @@
         .neon-flicker {
             animation: flicker 3s infinite alternate;
         }
+        
+        /* Navigation styles */
+        .navbar {
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #333;
+            margin-bottom: 20px;
+        }
+        
+        .navbar-brand.neon-text {
+            color: #0ff;
+            text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #0ff, 0 0 20px #0ff;
+        }
+        
+        .nav-link {
+            color: #fff;
+        }
+        
+        .nav-link:hover {
+            color: #0ff;
+        }
+        
+        .nav-link.active {
+            color: #0ff;
+            text-shadow: 0 0 5px #0ff;
+        }
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand neon-text" href="/">GSMArena Data Scraper</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api-management">API Management</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container mt-5">
         <h1 class="mb-4 neon-flicker">GSMArena Data Scraper</h1>
         
         <!-- Brand Selection Section -->
         <div class="brand-selection">
-            <div class="row mb-3">
-                <div class="col-12">
-                    <button id="scanButton" class="btn btn-primary">Scan Available Brands</button>
-                    <button id="startButton" class="btn btn-success ms-2" disabled>Start Extraction</button>
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <button id="scanButton" class="btn btn-primary me-2">Scan Brands</button>
+                    <button id="startButton" class="btn btn-success me-2" disabled>Start Extraction</button>
+                    <button id="incrementalUpdateButton" class="btn btn-info me-2" disabled>Incremental Update</button>
+                    <div class="btn-group me-2">
+                        <button id="selectAllBrands" class="btn btn-outline-secondary" disabled>Select All</button>
+                        <button id="deselectAllBrands" class="btn btn-outline-secondary" disabled>Deselect All</button>
+                    </div>
                     <div id="scanningSpinner" class="spinner-border text-primary d-none ms-2" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
@@ -488,6 +539,7 @@
     <script>
         const scanButton = document.getElementById('scanButton');
         const startButton = document.getElementById('startButton');
+        const incrementalUpdateButton = document.getElementById('incrementalUpdateButton');
         const selectAllBtn = document.getElementById('selectAllBrands');
         const deselectAllBtn = document.getElementById('deselectAllBrands');
         const scanningSpinner = document.getElementById('scanningSpinner');
@@ -637,6 +689,13 @@
                     }
                     
                     startButton.disabled = false;
+                    incrementalUpdateButton.disabled = false;
+                    selectAllBtn.disabled = false;
+                    deselectAllBtn.disabled = false;
+                    
+                    scanButton.textContent = 'Refresh Brands';
+                    scanButton.disabled = false;
+                    scanningSpinner.classList.add('d-none');
                     addConsoleMessage('Brands scan completed. Select brands to start extraction.');
                 } else {
                     throw new Error(data.message || 'Unknown error occurred');
@@ -744,6 +803,41 @@
             }
         });
 
+        incrementalUpdateButton.addEventListener('click', async () => {
+            const selectedBrands = Array.from(document.querySelectorAll('.brand-checkbox:checked'))
+                .map(cb => cb.dataset.url);
+            
+            if (selectedBrands.length === 0) {
+                addConsoleMessage('Please select at least one brand', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/incremental-update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ brands: selectedBrands })
+                });
+                
+                const data = await response.json();
+
+                if (data.status === 'started') {
+                    document.querySelector('.extraction-section').style.display = 'block';
+                    document.querySelector('.brand-selection').style.display = 'none';
+                    startButton.disabled = true;
+                    scanButton.disabled = true;
+                    addConsoleMessage('Starting incremental update...');
+                    checkProgress();
+                } else {
+                    throw new Error(data.message || 'Failed to start incremental update');
+                }
+            } catch (error) {
+                addConsoleMessage('Error: ' + error.message, 'error');
+            }
+        });
+
         async function checkBrandData(brand) {
             try {
                 const response = await fetch('/check-brand-data', {
@@ -794,40 +888,71 @@
                 statusText.textContent = data.message;
                 const progress = Math.max(0, Math.min(100, data.progress));
                 progressBar.style.width = `${progress}%`;
-                progressText.textContent = `${progress.toFixed(1)}%`;
-
-                // Update brand counts
-                brandsProcessed.textContent = data.brands_processed;
-                totalBrands.textContent = data.total_brands;
-                devicesProcessed.textContent = data.devices_processed;
-                totalDevices.textContent = data.total_devices;
-
-                // Update current brand progress
-                currentBrand.textContent = data.current_brand || '-';
-                currentBrandDevices.textContent = data.current_brand_devices;
-                const brandProgress = Math.max(0, Math.min(100, data.current_brand_progress));
-                brandProgressBar.style.width = `${brandProgress}%`;
-                brandProgressText.textContent = `${brandProgress.toFixed(1)}%`;
-
+                progressBar.setAttribute('aria-valuenow', progress);
+                
+                // Update brand-specific progress if available
+                if (data.current_brand) {
+                    currentBrand.textContent = data.current_brand;
+                    
+                    if (data.current_brand_progress !== undefined) {
+                        const brandProgress = Math.max(0, Math.min(100, data.current_brand_progress));
+                        brandProgressBar.style.width = `${brandProgress}%`;
+                        brandProgressBar.setAttribute('aria-valuenow', brandProgress);
+                    }
+                }
+                
+                // Update device and brand counts if available
+                if (data.devices_processed !== undefined && data.total_devices !== undefined) {
+                    devicesProcessed.textContent = `${data.devices_processed}/${data.total_devices}`;
+                }
+                
+                if (data.brands_processed !== undefined && data.total_brands !== undefined) {
+                    brandsProcessed.textContent = `${data.brands_processed}/${data.total_brands}`;
+                }
+                
+                // Update overall progress if available
+                if (data.progress !== undefined) {
+                    const overallProgress = Math.max(0, Math.min(100, data.progress));
+                    progressText.textContent = `${overallProgress.toFixed(1)}%`;
+                }
+                
                 // Update completed brands
-                if (data.completed_brands) {
+                if (data.completed_brands && data.completed_brands.length > 0) {
                     updateCompletedBrands(data.completed_brands);
                 }
-
-                // Add console message
-                addConsoleMessage(data.message);
-
-                // Continue checking progress if not done
-                if (progress < 100 && progress >= 0) {
-                    setTimeout(checkProgress, 1000);
-                } else {
-                    startButton.disabled = false;
+                
+                // Add message to console
+                if (data.message && data.message !== statusText.dataset.lastMessage) {
+                    addConsoleMessage(data.message);
+                    statusText.dataset.lastMessage = data.message;
+                }
+                
+                // Check if process is complete
+                if (progress === 100) {
+                    // Check if this was an incremental update
+                    if (data.is_incremental) {
+                        addConsoleMessage('Incremental update completed!', 'success');
+                    } else {
+                        addConsoleMessage('Data extraction completed!', 'success');
+                    }
+                    
+                    // Re-enable buttons
                     scanButton.disabled = false;
                     document.querySelector('.brand-selection').style.display = 'block';
+                    
+                    // Update pause/resume button
+                    pauseResumeBtn.textContent = 'Pause';
+                    pauseResumeBtn.classList.remove('btn-success');
+                    pauseResumeBtn.classList.add('btn-warning');
+                    
+                    return; // Stop checking progress
                 }
+                
+                // Continue checking progress
+                setTimeout(checkProgress, 1000);
             } catch (error) {
                 console.error('Error checking progress:', error);
-                setTimeout(checkProgress, 1000);
+                setTimeout(checkProgress, 2000); // Retry after a longer delay
             }
         }
     </script>

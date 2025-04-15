@@ -75,6 +75,25 @@
                 </div>
             </div>
             
+            <!-- Cache Status Message -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div id="cacheStatusAlert" class="alert d-none" role="alert">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span id="cacheStatusMessage"></span>
+                            <span id="cacheExpiryBadge" class="badge d-none"></span>
+                        </div>
+                        <div id="cacheDetailSection" class="mt-2 small d-none">
+                            <hr class="my-2">
+                            <div class="d-flex justify-content-between">
+                                <span>Cache expires in: <span id="cacheExpiryTime"></span></span>
+                                <button id="refreshCacheBtn" class="btn btn-sm btn-outline-secondary">Refresh Cache</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -193,6 +212,11 @@
                 scanningSpinner.classList.remove('d-none');
                 startButton.disabled = true;
 
+                // Hide any previous cache status message
+                document.getElementById('cacheStatusAlert').classList.add('d-none');
+                document.getElementById('cacheDetailSection').classList.add('d-none');
+                document.getElementById('cacheExpiryBadge').classList.add('d-none');
+                
                 if (brandsTable) {
                     brandsTable.clear().draw();
                 }
@@ -204,6 +228,70 @@
                 const data = await response.json();
                 
                 if (data.status === 'success') {
+                    // Display cache status message
+                    const cacheStatusAlert = document.getElementById('cacheStatusAlert');
+                    const cacheStatusMessage = document.getElementById('cacheStatusMessage');
+                    const cacheExpiryBadge = document.getElementById('cacheExpiryBadge');
+                    const cacheDetailSection = document.getElementById('cacheDetailSection');
+                    const cacheExpiryTime = document.getElementById('cacheExpiryTime');
+                    const refreshCacheBtn = document.getElementById('refreshCacheBtn');
+                    
+                    if (data.cache_status === 'cached') {
+                        cacheStatusAlert.classList.remove('d-none', 'alert-info', 'alert-warning');
+                        cacheStatusAlert.classList.add('alert-success');
+                        cacheStatusMessage.textContent = data.cache_message || 'Brands loaded from cache';
+                        
+                        // Show cache details for cached data
+                        cacheDetailSection.classList.remove('d-none');
+                        
+                        // Calculate and display expiry time
+                        if (data.cache_info && data.cache_info.last_updated) {
+                            const lastUpdated = new Date(data.cache_info.last_updated);
+                            const expiryTime = new Date(lastUpdated.getTime() + (24 * 60 * 60 * 1000)); // 24 hours
+                            const now = new Date();
+                            const hoursRemaining = Math.max(0, Math.round((expiryTime - now) / (60 * 60 * 1000)));
+                            
+                            cacheExpiryTime.textContent = `${hoursRemaining} hours`;
+                            
+                            // Show expiry badge
+                            cacheExpiryBadge.classList.remove('d-none');
+                            if (data.cache_info.is_expired) {
+                                cacheExpiryBadge.classList.remove('bg-success', 'bg-warning');
+                                cacheExpiryBadge.classList.add('bg-danger');
+                                cacheExpiryBadge.textContent = 'Expired';
+                            } else if (hoursRemaining < 6) {
+                                cacheExpiryBadge.classList.remove('bg-success', 'bg-danger');
+                                cacheExpiryBadge.classList.add('bg-warning');
+                                cacheExpiryBadge.textContent = 'Expiring Soon';
+                            } else {
+                                cacheExpiryBadge.classList.remove('bg-warning', 'bg-danger');
+                                cacheExpiryBadge.classList.add('bg-success');
+                                cacheExpiryBadge.textContent = 'Valid';
+                            }
+                        }
+                        
+                        // Set up refresh cache button
+                        refreshCacheBtn.onclick = function() {
+                            // Force a fresh scan by clearing the cache file
+                            fetch('/clear-cache')
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.status === 'success') {
+                                        scanButton.click(); // Trigger a new scan
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error clearing cache:', error);
+                                });
+                        };
+                    } else {
+                        cacheStatusAlert.classList.remove('d-none', 'alert-success', 'alert-warning');
+                        cacheStatusAlert.classList.add('alert-info');
+                        cacheStatusMessage.textContent = data.cache_message || 'Brands freshly scanned from website';
+                        cacheDetailSection.classList.add('d-none');
+                        cacheExpiryBadge.classList.add('d-none');
+                    }
+                    
                     if (!brandsTable) {
                         brandsTable = $('#brandsTable').DataTable({
                             data: data.brands,

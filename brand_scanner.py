@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import time
+import json
+import os
+from datetime import datetime
 
 class BrandScanner:
     def __init__(self):
@@ -12,6 +15,15 @@ class BrandScanner:
         self.last_request_time = 0
         self.min_request_interval = 3  # Minimum seconds between requests
         self.max_retries = 3
+        self.cache_file = 'brands_cache.json'
+        self.cache_expiry_hours = 24  # Cache expires after 24 hours
+        self.loaded_from_cache = False
+        self.cache_info = {
+            "last_updated": None,
+            "brand_count": 0,
+            "time_since_update": None,
+            "is_expired": False
+        }
 
     def _make_request(self, url, headers=None):
         """Make a rate-limited request with retries"""
@@ -53,8 +65,17 @@ class BrandScanner:
 
     def scan_brands(self):
         """
-        Scans brand names, URLs, and gets their device counts
+        Scans brand names, URLs, and gets their device counts.
+        First tries to load from cache, if not available or expired, performs actual scan.
         """
+        # Try to load from cache first
+        cached_brands = self.load_brands_from_cache()
+        if cached_brands:
+            logger.info("Loaded brands from cache file")
+            self.brands = cached_brands
+            self.loaded_from_cache = True
+            return self.brands
+
         try:
             logger.info("Starting brand scan...")
             
@@ -114,6 +135,11 @@ class BrandScanner:
 
             self.brands = sorted(brands_list, key=lambda x: x['name'])
             logger.success(f"Successfully scanned {len(self.brands)} brands")
+            
+            # Save to cache
+            self.save_brands_to_cache(self.brands)
+            self.loaded_from_cache = False
+            
             return self.brands
 
         except requests.RequestException as e:
@@ -124,6 +150,85 @@ class BrandScanner:
             error_msg = f"Error scanning brands: {str(e)}"
             logger.error(error_msg)
             raise Exception(error_msg)
+
+    def save_brands_to_cache(self, brands):
+        """Save brands data to cache file with timestamp"""
+        try:
+            current_time = datetime.now()
+            cache_data = {
+                'timestamp': current_time.isoformat(),
+                'brands': brands,
+                'brand_count': len(brands)
+            }
+            
+            with open(self.cache_file, 'w', encoding='utf-8') as f:
+                json.dump(cache_data, f, indent=2)
+            
+            # Update cache info
+            self.cache_info = {
+                "last_updated": current_time.isoformat(),
+                "brand_count": len(brands),
+                "time_since_update": "just now",
+                "is_expired": False
+            }
+                
+            logger.info(f"Saved {len(brands)} brands to cache file")
+            return True
+        except Exception as e:
+            logger.error(f"Error saving brands to cache: {str(e)}")
+            return False
+            
+    def load_brands_from_cache(self):
+        """Load brands from cache file if it exists and is not expired"""
+        try:
+            if not os.path.exists(self.cache_file):
+                logger.info("Cache file does not exist")
+                return None
+                
+            with open(self.cache_file, 'r', encoding='utf-8') as f:
+                cache_data = json.load(f)
+                
+            # Check if cache is expired
+            cache_time = datetime.fromisoformat(cache_data['timestamp'])
+            current_time = datetime.now()
+            time_diff_seconds = (current_time - cache_time).total_seconds()
+            time_diff_hours = time_diff_seconds / 3600  # Hours
+            
+            # Format time since update in a human-readable way
+            if time_diff_seconds < 60:
+                time_since_update = f"{int(time_diff_seconds)} seconds ago"
+            elif time_diff_seconds < 3600:
+                time_since_update = f"{int(time_diff_seconds / 60)} minutes ago"
+            elif time_diff_seconds < 86400:
+                time_since_update = f"{int(time_diff_hours)} hours ago"
+            else:
+                time_since_update = f"{int(time_diff_hours / 24)} days ago"
+            
+            # Update cache info
+            self.cache_info = {
+                "last_updated": cache_time.isoformat(),
+                "brand_count": len(cache_data['brands']),
+                "time_since_update": time_since_update,
+                "is_expired": time_diff_hours > self.cache_expiry_hours
+            }
+            
+            if time_diff_hours > self.cache_expiry_hours:
+                logger.info(f"Cache is expired ({time_diff_hours:.1f} hours old)")
+                return None
+                
+            logger.info(f"Cache is valid ({time_diff_hours:.1f} hours old)")
+            return cache_data['brands']
+        except Exception as e:
+            logger.error(f"Error loading brands from cache: {str(e)}")
+            return None
+            
+    def get_cache_status(self):
+        """Return the current cache status information"""
+        # Check if cache exists even if not loaded
+        if not self.cache_info["last_updated"] and os.path.exists(self.cache_file):
+            self.load_brands_from_cache()  # This will update cache_info
+            
+        return self.cache_info
 
     def get_brand_devices_count(self, brand_url):
         """Get the total number of devices for a brand from its page"""

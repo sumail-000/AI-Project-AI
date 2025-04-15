@@ -1,0 +1,631 @@
+{
+  "timestamp": "2025-04-15T23:17:11.507306",
+  "brands": [
+    {
+      "name": "AT&T",
+      "url": "https://www.gsmarena.com/at&t-phones-57.php",
+      "device_count": 4
+    },
+    {
+      "name": "Acer",
+      "url": "https://www.gsmarena.com/acer-phones-59.php",
+      "device_count": 102
+    },
+    {
+      "name": "Allview",
+      "url": "https://www.gsmarena.com/allview-phones-88.php",
+      "device_count": 157
+    },
+    {
+      "name": "Amazon",
+      "url": "https://www.gsmarena.com/amazon-phones-76.php",
+      "device_count": 25
+    },
+    {
+      "name": "Amoi",
+      "url": "https://www.gsmarena.com/amoi-phones-28.php",
+      "device_count": 47
+    },
+    {
+      "name": "Apple",
+      "url": "https://www.gsmarena.com/apple-phones-48.php",
+      "device_count": 134
+    },
+    {
+      "name": "Archos",
+      "url": "https://www.gsmarena.com/archos-phones-90.php",
+      "device_count": 43
+    },
+    {
+      "name": "Asus",
+      "url": "https://www.gsmarena.com/asus-phones-46.php",
+      "device_count": 207
+    },
+    {
+      "name": "BLU",
+      "url": "https://www.gsmarena.com/blu-phones-67.php",
+      "device_count": 369
+    },
+    {
+      "name": "BQ",
+      "url": "https://www.gsmarena.com/bq-phones-108.php",
+      "device_count": 20
+    },
+    {
+      "name": "BenQ",
+      "url": "https://www.gsmarena.com/benq-phones-31.php",
+      "device_count": 35
+    },
+    {
+      "name": "BenQ-Siemens",
+      "url": "https://www.gsmarena.com/benq_siemens-phones-42.php",
+      "device_count": 28
+    },
+    {
+      "name": "Benefon",
+      "url": "https://www.gsmarena.com/benefon-phones-15.php",
+      "device_count": 9
+    },
+    {
+      "name": "Bird",
+      "url": "https://www.gsmarena.com/bird-phones-34.php",
+      "device_count": 61
+    },
+    {
+      "name": "BlackBerry",
+      "url": "https://www.gsmarena.com/blackberry-phones-36.php",
+      "device_count": 92
+    },
+    {
+      "name": "Blackview",
+      "url": "https://www.gsmarena.com/blackview-phones-116.php",
+      "device_count": 93
+    },
+    {
+      "name": "Bosch",
+      "url": "https://www.gsmarena.com/bosch-phones-10.php",
+      "device_count": 10
+    },
+    {
+      "name": "Casio",
+      "url": "https://www.gsmarena.com/casio-phones-77.php",
+      "device_count": 5
+    },
+    {
+      "name": "Cat",
+      "url": "https://www.gsmarena.com/cat-phones-89.php",
+      "device_count": 22
+    },
+    {
+      "name": "Celkon",
+      "url": "https://www.gsmarena.com/celkon-phones-75.php",
+      "device_count": 229
+    },
+    {
+      "name": "Chea",
+      "url": "https://www.gsmarena.com/chea-phones-24.php",
+      "device_count": 12
+    },
+    {
+      "name": "Coolpad",
+      "url": "https://www.gsmarena.com/coolpad-phones-105.php",
+      "device_count": 53
+    },
+    {
+      "name": "Cubot",
+      "url": "https://www.gsmarena.com/cubot-phones-130.php",
+      "device_count": 86
+    },
+    {
+      "name": "Dell",
+      "url": "https://www.gsmarena.com/dell-phones-61.php",
+      "device_count": 20
+    },
+    {
+      "name": "Doogee",
+      "url": "https://www.gsmarena.com/doogee-phones-129.php",
+      "device_count": 113
+    },
+    {
+      "name": "Emporia",
+      "url": "https://www.gsmarena.com/emporia-phones-93.php",
+      "device_count": 15
+    },
+    {
+      "name": "Energizer",
+      "url": "https://www.gsmarena.com/energizer-phones-106.php",
+      "device_count": 78
+    },
+    {
+      "name": "Ericsson",
+      "url": "https://www.gsmarena.com/ericsson-phones-2.php",
+      "device_count": 40
+    },
+    {
+      "name": "Eten",
+      "url": "https://www.gsmarena.com/eten-phones-40.php",
+      "device_count": 22
+    },
+    {
+      "name": "Fairphone",
+      "url": "https://www.gsmarena.com/fairphone-phones-127.php",
+      "device_count": 4
+    },
+    {
+      "name": "Fujitsu Siemens",
+      "url": "https://www.gsmarena.com/fujitsu_siemens-phones-50.php",
+      "device_count": 2
+    },
+    {
+      "name": "Garmin-Asus",
+      "url": "https://www.gsmarena.com/garmin_asus-phones-65.php",
+      "device_count": 5
+    },
+    {
+      "name": "Gigabyte",
+      "url": "https://www.gsmarena.com/gigabyte-phones-47.php",
+      "device_count": 63
+    },
+    {
+      "name": "Gionee",
+      "url": "https://www.gsmarena.com/gionee-phones-92.php",
+      "device_count": 95
+    },
+    {
+      "name": "Google",
+      "url": "https://www.gsmarena.com/google-phones-107.php",
+      "device_count": 34
+    },
+    {
+      "name": "HMD",
+      "url": "https://www.gsmarena.com/hmd-phones-133.php",
+      "device_count": 26
+    },
+    {
+      "name": "HP",
+      "url": "https://www.gsmarena.com/hp-phones-41.php",
+      "device_count": 41
+    },
+    {
+      "name": "HTC",
+      "url": "https://www.gsmarena.com/htc-phones-45.php",
+      "device_count": 291
+    },
+    {
+      "name": "Haier",
+      "url": "https://www.gsmarena.com/haier-phones-33.php",
+      "device_count": 59
+    },
+    {
+      "name": "Honor",
+      "url": "https://www.gsmarena.com/honor-phones-121.php",
+      "device_count": 251
+    },
+    {
+      "name": "Huawei",
+      "url": "https://www.gsmarena.com/huawei-phones-58.php",
+      "device_count": 472
+    },
+    {
+      "name": "Icemobile",
+      "url": "https://www.gsmarena.com/icemobile-phones-69.php",
+      "device_count": 61
+    },
+    {
+      "name": "Infinix",
+      "url": "https://www.gsmarena.com/infinix-phones-119.php",
+      "device_count": 148
+    },
+    {
+      "name": "Innostream",
+      "url": "https://www.gsmarena.com/innostream-phones-29.php",
+      "device_count": 18
+    },
+    {
+      "name": "Intex",
+      "url": "https://www.gsmarena.com/intex-phones-102.php",
+      "device_count": 15
+    },
+    {
+      "name": "Jolla",
+      "url": "https://www.gsmarena.com/jolla-phones-84.php",
+      "device_count": 3
+    },
+    {
+      "name": "Karbonn",
+      "url": "https://www.gsmarena.com/karbonn-phones-83.php",
+      "device_count": 60
+    },
+    {
+      "name": "Kyocera",
+      "url": "https://www.gsmarena.com/kyocera-phones-17.php",
+      "device_count": 28
+    },
+    {
+      "name": "LG",
+      "url": "https://www.gsmarena.com/lg-phones-20.php",
+      "device_count": 667
+    },
+    {
+      "name": "Lava",
+      "url": "https://www.gsmarena.com/lava-phones-94.php",
+      "device_count": 160
+    },
+    {
+      "name": "LeEco",
+      "url": "https://www.gsmarena.com/leeco-phones-109.php",
+      "device_count": 9
+    },
+    {
+      "name": "Lenovo",
+      "url": "https://www.gsmarena.com/lenovo-phones-73.php",
+      "device_count": 252
+    },
+    {
+      "name": "MWg",
+      "url": "https://www.gsmarena.com/mwg-phones-56.php",
+      "device_count": 5
+    },
+    {
+      "name": "Maxon",
+      "url": "https://www.gsmarena.com/maxon-phones-14.php",
+      "device_count": 31
+    },
+    {
+      "name": "Maxwest",
+      "url": "https://www.gsmarena.com/maxwest-phones-87.php",
+      "device_count": 41
+    },
+    {
+      "name": "Meizu",
+      "url": "https://www.gsmarena.com/meizu-phones-74.php",
+      "device_count": 82
+    },
+    {
+      "name": "Micromax",
+      "url": "https://www.gsmarena.com/micromax-phones-66.php",
+      "device_count": 289
+    },
+    {
+      "name": "Microsoft",
+      "url": "https://www.gsmarena.com/microsoft-phones-64.php",
+      "device_count": 32
+    },
+    {
+      "name": "Mitac",
+      "url": "https://www.gsmarena.com/mitac-phones-25.php",
+      "device_count": 12
+    },
+    {
+      "name": "Mitsubishi",
+      "url": "https://www.gsmarena.com/mitsubishi-phones-8.php",
+      "device_count": 25
+    },
+    {
+      "name": "Modu",
+      "url": "https://www.gsmarena.com/modu-phones-63.php",
+      "device_count": 8
+    },
+    {
+      "name": "Motorola",
+      "url": "https://www.gsmarena.com/motorola-phones-4.php",
+      "device_count": 645
+    },
+    {
+      "name": "NEC",
+      "url": "https://www.gsmarena.com/nec-phones-12.php",
+      "device_count": 73
+    },
+    {
+      "name": "NIU",
+      "url": "https://www.gsmarena.com/niu-phones-79.php",
+      "device_count": 30
+    },
+    {
+      "name": "Neonode",
+      "url": "https://www.gsmarena.com/neonode-phones-22.php",
+      "device_count": 3
+    },
+    {
+      "name": "Nokia",
+      "url": "https://www.gsmarena.com/nokia-phones-1.php",
+      "device_count": 591
+    },
+    {
+      "name": "Nothing",
+      "url": "https://www.gsmarena.com/nothing-phones-128.php",
+      "device_count": 7
+    },
+    {
+      "name": "Nvidia",
+      "url": "https://www.gsmarena.com/nvidia-phones-97.php",
+      "device_count": 3
+    },
+    {
+      "name": "O",
+      "url": "https://www.gsmarena.com/o2-phones-30.php",
+      "device_count": 245
+    },
+    {
+      "name": "OnePlus",
+      "url": "https://www.gsmarena.com/oneplus-phones-95.php",
+      "device_count": 84
+    },
+    {
+      "name": "Oppo",
+      "url": "https://www.gsmarena.com/oppo-phones-82.php",
+      "device_count": 343
+    },
+    {
+      "name": "Orange",
+      "url": "https://www.gsmarena.com/orange-phones-71.php",
+      "device_count": 19
+    },
+    {
+      "name": "Oscal",
+      "url": "https://www.gsmarena.com/oscal-phones-134.php",
+      "device_count": 25
+    },
+    {
+      "name": "Oukitel",
+      "url": "https://www.gsmarena.com/oukitel-phones-132.php",
+      "device_count": 66
+    },
+    {
+      "name": "Palm",
+      "url": "https://www.gsmarena.com/palm-phones-27.php",
+      "device_count": 17
+    },
+    {
+      "name": "Panasonic",
+      "url": "https://www.gsmarena.com/panasonic-phones-6.php",
+      "device_count": 123
+    },
+    {
+      "name": "Pantech",
+      "url": "https://www.gsmarena.com/pantech-phones-32.php",
+      "device_count": 72
+    },
+    {
+      "name": "Parla",
+      "url": "https://www.gsmarena.com/parla-phones-81.php",
+      "device_count": 10
+    },
+    {
+      "name": "Philips",
+      "url": "https://www.gsmarena.com/philips-phones-11.php",
+      "device_count": 233
+    },
+    {
+      "name": "Plum",
+      "url": "https://www.gsmarena.com/plum-phones-72.php",
+      "device_count": 113
+    },
+    {
+      "name": "Posh",
+      "url": "https://www.gsmarena.com/posh-phones-101.php",
+      "device_count": 30
+    },
+    {
+      "name": "Prestigio",
+      "url": "https://www.gsmarena.com/prestigio-phones-86.php",
+      "device_count": 56
+    },
+    {
+      "name": "QMobile",
+      "url": "https://www.gsmarena.com/qmobile-phones-103.php",
+      "device_count": 90
+    },
+    {
+      "name": "Qtek",
+      "url": "https://www.gsmarena.com/qtek-phones-38.php",
+      "device_count": 21
+    },
+    {
+      "name": "Razer",
+      "url": "https://www.gsmarena.com/razer-phones-117.php",
+      "device_count": 2
+    },
+    {
+      "name": "Realme",
+      "url": "https://www.gsmarena.com/realme-phones-118.php",
+      "device_count": 245
+    },
+    {
+      "name": "Sagem",
+      "url": "https://www.gsmarena.com/sagem-phones-13.php",
+      "device_count": 120
+    },
+    {
+      "name": "Samsung",
+      "url": "https://www.gsmarena.com/samsung-phones-9.php",
+      "device_count": 1424
+    },
+    {
+      "name": "Sendo",
+      "url": "https://www.gsmarena.com/sendo-phones-18.php",
+      "device_count": 19
+    },
+    {
+      "name": "Sewon",
+      "url": "https://www.gsmarena.com/sewon-phones-26.php",
+      "device_count": 25
+    },
+    {
+      "name": "Sharp",
+      "url": "https://www.gsmarena.com/sharp-phones-23.php",
+      "device_count": 79
+    },
+    {
+      "name": "Siemens",
+      "url": "https://www.gsmarena.com/siemens-phones-3.php",
+      "device_count": 94
+    },
+    {
+      "name": "Sonim",
+      "url": "https://www.gsmarena.com/sonim-phones-54.php",
+      "device_count": 22
+    },
+    {
+      "name": "Sony",
+      "url": "https://www.gsmarena.com/sony-phones-7.php",
+      "device_count": 160
+    },
+    {
+      "name": "Sony Ericsson",
+      "url": "https://www.gsmarena.com/sony_ericsson-phones-19.php",
+      "device_count": 188
+    },
+    {
+      "name": "Spice",
+      "url": "https://www.gsmarena.com/spice-phones-68.php",
+      "device_count": 120
+    },
+    {
+      "name": "T-Mobile",
+      "url": "https://www.gsmarena.com/t_mobile-phones-55.php",
+      "device_count": 66
+    },
+    {
+      "name": "TCL",
+      "url": "https://www.gsmarena.com/tcl-phones-123.php",
+      "device_count": 81
+    },
+    {
+      "name": "Tecno",
+      "url": "https://www.gsmarena.com/tecno-phones-120.php",
+      "device_count": 162
+    },
+    {
+      "name": "Tel.Me.",
+      "url": "https://www.gsmarena.com/tel_me_-phones-21.php",
+      "device_count": 7
+    },
+    {
+      "name": "Telit",
+      "url": "https://www.gsmarena.com/telit-phones-16.php",
+      "device_count": 30
+    },
+    {
+      "name": "Thuraya",
+      "url": "https://www.gsmarena.com/thuraya-phones-49.php",
+      "device_count": 2
+    },
+    {
+      "name": "Toshiba",
+      "url": "https://www.gsmarena.com/toshiba-phones-44.php",
+      "device_count": 35
+    },
+    {
+      "name": "Ulefone",
+      "url": "https://www.gsmarena.com/ulefone-phones-124.php",
+      "device_count": 119
+    },
+    {
+      "name": "Umidigi",
+      "url": "https://www.gsmarena.com/umidigi-phones-135.php",
+      "device_count": 75
+    },
+    {
+      "name": "Unnecto",
+      "url": "https://www.gsmarena.com/unnecto-phones-91.php",
+      "device_count": 30
+    },
+    {
+      "name": "VK Mobile",
+      "url": "https://www.gsmarena.com/vk_mobile-phones-37.php",
+      "device_count": 31
+    },
+    {
+      "name": "Vertu",
+      "url": "https://www.gsmarena.com/vertu-phones-39.php",
+      "device_count": 17
+    },
+    {
+      "name": "Vodafone",
+      "url": "https://www.gsmarena.com/vodafone-phones-53.php",
+      "device_count": 87
+    },
+    {
+      "name": "WND",
+      "url": "https://www.gsmarena.com/wnd-phones-51.php",
+      "device_count": 5
+    },
+    {
+      "name": "Wiko",
+      "url": "https://www.gsmarena.com/wiko-phones-96.php",
+      "device_count": 100
+    },
+    {
+      "name": "XCute",
+      "url": "https://www.gsmarena.com/xcute-phones-43.php",
+      "device_count": 4
+    },
+    {
+      "name": "XOLO",
+      "url": "https://www.gsmarena.com/xolo-phones-85.php",
+      "device_count": 81
+    },
+    {
+      "name": "Xiaomi",
+      "url": "https://www.gsmarena.com/xiaomi-phones-80.php",
+      "device_count": 446
+    },
+    {
+      "name": "YU",
+      "url": "https://www.gsmarena.com/yu-phones-100.php",
+      "device_count": 13
+    },
+    {
+      "name": "Yezz",
+      "url": "https://www.gsmarena.com/yezz-phones-78.php",
+      "device_count": 113
+    },
+    {
+      "name": "Yota",
+      "url": "https://www.gsmarena.com/yota-phones-99.php",
+      "device_count": 3
+    },
+    {
+      "name": "ZTE",
+      "url": "https://www.gsmarena.com/zte-phones-62.php",
+      "device_count": 405
+    },
+    {
+      "name": "alcatel",
+      "url": "https://www.gsmarena.com/alcatel-phones-5.php",
+      "device_count": 409
+    },
+    {
+      "name": "i-mate",
+      "url": "https://www.gsmarena.com/i_mate-phones-35.php",
+      "device_count": 34
+    },
+    {
+      "name": "i-mobile",
+      "url": "https://www.gsmarena.com/i_mobile-phones-52.php",
+      "device_count": 37
+    },
+    {
+      "name": "iNQ",
+      "url": "https://www.gsmarena.com/inq-phones-60.php",
+      "device_count": 5
+    },
+    {
+      "name": "itel",
+      "url": "https://www.gsmarena.com/itel-phones-131.php",
+      "device_count": 44
+    },
+    {
+      "name": "verykool",
+      "url": "https://www.gsmarena.com/verykool-phones-70.php",
+      "device_count": 139
+    },
+    {
+      "name": "vivo",
+      "url": "https://www.gsmarena.com/vivo-phones-98.php",
+      "device_count": 515
+    }
+  ],
+  "brand_count": 125
+}

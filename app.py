@@ -45,12 +45,26 @@ def index():
 def scan_brands():
     try:
         global all_brands
+        
         # Use the brand scanner to get brands
         brands = brand_scanner.scan_brands()
         all_brands = brands
         
+        # Get detailed cache information
+        cache_info = brand_scanner.get_cache_status()
+        cache_status = "cached" if brand_scanner.loaded_from_cache else "fresh"
+        
+        # Create a user-friendly cache message
+        if cache_status == "cached":
+            cache_message = f"Loaded {cache_info['brand_count']} brands from cache (last updated {cache_info['time_since_update']})"
+        else:
+            cache_message = f"Freshly scanned {len(brands)} brands from website"
+        
         return jsonify({
             "status": "success",
+            "cache_status": cache_status,
+            "cache_message": cache_message,
+            "cache_info": cache_info,
             "brands": [{
                 "name": brand["name"],
                 "device_count": brand["device_count"],
@@ -63,33 +77,6 @@ def scan_brands():
             "status": "error", 
             "message": f"Failed to scan brands: {str(e)}"
         }), 500
-
-def check_brand_data(brand_name: str) -> Dict:
-    """Check if brand data already exists in files."""
-    try:
-        existing_brands = set()
-        # Check brands_devices.csv
-        if os.path.exists(scraper.brands_file):
-            with open(scraper.brands_file, 'r', encoding='utf-8') as f:
-                reader = csv.reader(f)
-                next(reader)  # Skip header
-                existing_brands.update(row[0] for row in reader)
-        
-        # Check device_specifications.csv
-        existing_devices = set()
-        if os.path.exists(scraper.specs_file):
-            with open(scraper.specs_file, 'r', encoding='utf-8') as f:
-                reader = csv.reader(f)
-                next(reader)  # Skip header
-                existing_devices.update(row[0] for row in reader)
-        
-        return {
-            'exists': brand_name in existing_brands,
-            'device_count': len(existing_devices)
-        }
-    except Exception as e:
-        logger.error(f"Error checking brand data: {str(e)}")
-        return {'exists': False, 'device_count': 0}
 
 @app.route('/check-brand-data', methods=['POST'])
 def check_brand_data_endpoint():
@@ -210,6 +197,31 @@ def pause_resume():
         logger.error(f"Error in pause/resume: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
+@app.route('/clear-cache')
+def clear_cache():
+    """Clear the brands cache file to force a fresh scan"""
+    try:
+        cache_file = brand_scanner.cache_file
+        if os.path.exists(cache_file):
+            os.remove(cache_file)
+            logger.info(f"Cache file {cache_file} deleted successfully")
+            return jsonify({
+                "status": "success",
+                "message": "Cache cleared successfully"
+            })
+        else:
+            logger.info("No cache file found to delete")
+            return jsonify({
+                "status": "success",
+                "message": "No cache file found"
+            })
+    except Exception as e:
+        logger.error(f"Error clearing cache: {str(e)}\n{traceback.format_exc()}")
+        return jsonify({
+            "status": "error",
+            "message": f"Failed to clear cache: {str(e)}"
+        }), 500
+
 def scrape_worker(brands_to_scrape: List[Dict], delete_existing: bool = False):
     """Scrape worker with option to delete existing data."""
     try:
@@ -326,6 +338,33 @@ def get_progress():
         return jsonify(status)
     except queue.Empty:
         return jsonify(current_status)
+
+def check_brand_data(brand_name: str) -> Dict:
+    """Check if brand data already exists in files."""
+    try:
+        existing_brands = set()
+        # Check brands_devices.csv
+        if os.path.exists(scraper.brands_file):
+            with open(scraper.brands_file, 'r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                next(reader)  # Skip header
+                existing_brands.update(row[0] for row in reader)
+        
+        # Check device_specifications.csv
+        existing_devices = set()
+        if os.path.exists(scraper.specs_file):
+            with open(scraper.specs_file, 'r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                next(reader)  # Skip header
+                existing_devices.update(row[0] for row in reader)
+        
+        return {
+            'exists': brand_name in existing_brands,
+            'device_count': len(existing_devices)
+        }
+    except Exception as e:
+        logger.error(f"Error checking brand data: {str(e)}")
+        return {'exists': False, 'device_count': 0}
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

@@ -222,6 +222,53 @@ def clear_cache():
             "message": f"Failed to clear cache: {str(e)}"
         }), 500
 
+@app.route('/get-extracted-brands')
+def get_extracted_brands():
+    try:
+        # Dictionary to store brand data
+        extracted_brands = {}
+        
+        # Read from brands_devices.csv to get all brands and their devices
+        if os.path.exists(scraper.brands_file):
+            with open(scraper.brands_file, 'r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                next(reader)  # Skip header
+                for row in reader:
+                    if len(row) >= 3:  # Ensure row has enough data
+                        brand_name = row[0]
+                        if brand_name not in extracted_brands:
+                            extracted_brands[brand_name] = {
+                                'name': brand_name,
+                                'devices': 0,
+                                'expected': 0  # We don't know the expected count from CSV
+                            }
+                        extracted_brands[brand_name]['devices'] += 1
+        
+        # Convert to list for the response
+        brands_list = list(extracted_brands.values())
+        
+        return jsonify({
+            'status': 'success',
+            'brands': brands_list
+        })
+    except Exception as e:
+        logger.error(f"Error getting extracted brands: {str(e)}")
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        }), 500
+
+@app.route('/progress')
+def get_progress():
+    try:
+        # Get latest status without blocking
+        status = current_status.copy()
+        while not progress_queue.empty():
+            status = progress_queue.get_nowait()
+        return jsonify(status)
+    except queue.Empty:
+        return jsonify(current_status)
+
 def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = None):
     """Scrape worker with option to delete existing data for specific brands."""
     try:
@@ -393,17 +440,6 @@ def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = Non
     except Exception as e:
         logger.error(f"Error in scraper: {str(e)}")
         update_status(message=f"Error: {str(e)}")
-
-@app.route('/progress')
-def get_progress():
-    try:
-        # Get latest status without blocking
-        status = current_status.copy()
-        while not progress_queue.empty():
-            status = progress_queue.get_nowait()
-        return jsonify(status)
-    except queue.Empty:
-        return jsonify(current_status)
 
 def check_brand_data(brand_name: str) -> Dict:
     """Check if brand data already exists in files."""

@@ -140,7 +140,7 @@ def start_scraping_final():
     try:
         data = request.get_json()
         selected_brands = data.get('brands', [])
-        delete_existing = data.get('delete_existing', False)
+        delete_existing = data.get('delete_existing', [])
         
         if not selected_brands:
             return jsonify({"status": "error", "message": "No brands selected"})
@@ -222,8 +222,8 @@ def clear_cache():
             "message": f"Failed to clear cache: {str(e)}"
         }), 500
 
-def scrape_worker(brands_to_scrape: List[Dict], delete_existing: bool = False):
-    """Scrape worker with option to delete existing data."""
+def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = None):
+    """Scrape worker with option to delete existing data for specific brands."""
     try:
         # Start scraping
         update_status(
@@ -233,21 +233,87 @@ def scrape_worker(brands_to_scrape: List[Dict], delete_existing: bool = False):
             devices_processed=0
         )
         
-        # If delete existing is true, clear files
-        if delete_existing:
-            if os.path.exists(scraper.brands_file):
-                os.remove(scraper.brands_file)
-            if os.path.exists(scraper.specs_file):
-                os.remove(scraper.specs_file)
+        # Initialize delete_existing if None
+        if delete_existing is None:
+            delete_existing = []
             
-            # Create files with headers
+        # Create files with headers if they don't exist
+        if not os.path.exists(scraper.brands_file):
             with open(scraper.brands_file, 'w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
                 writer.writerow(['brand_name', 'device_name', 'device_url', 'device_image'])
-            
+        
+        if not os.path.exists(scraper.specs_file):
             with open(scraper.specs_file, 'w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
                 writer.writerow(['device_url', 'name', 'pictures', 'specifications'])
+        
+        # If delete_existing contains brand URLs, selectively delete data for those brands
+        if delete_existing:
+            # Get brand names from URLs
+            brand_names_to_delete = []
+            for brand_url in delete_existing:
+                for brand in brands_to_scrape:
+                    if brand['url'] == brand_url:
+                        brand_names_to_delete.append(brand['name'])
+                        break
+            
+            if brand_names_to_delete:
+                # Process brands_devices.csv - remove entries for selected brands
+                if os.path.exists(scraper.brands_file):
+                    temp_brands_file = scraper.brands_file + '.temp'
+                    with open(scraper.brands_file, 'r', encoding='utf-8') as input_file, \
+                         open(temp_brands_file, 'w', newline='', encoding='utf-8') as output_file:
+                        reader = csv.reader(input_file)
+                        writer = csv.writer(output_file)
+                        
+                        # Write header
+                        header = next(reader)
+                        writer.writerow(header)
+                        
+                        # Get device URLs to delete
+                        device_urls_to_delete = set()
+                        
+                        # First pass to collect device URLs to delete
+                        input_file.seek(0)
+                        next(reader)  # Skip header
+                        for row in reader:
+                            if row and row[0] in brand_names_to_delete:
+                                device_urls_to_delete.add(row[2])  # device_url is at index 2
+                        
+                        # Second pass to write rows that should be kept
+                        input_file.seek(0)
+                        next(reader)  # Skip header
+                        for row in reader:
+                            if row and row[0] not in brand_names_to_delete:
+                                writer.writerow(row)
+                    
+                    # Replace original file with temp file
+                    os.replace(temp_brands_file, scraper.brands_file)
+                    
+                    # Process device_specifications.csv - remove entries for selected brands' devices
+                    if os.path.exists(scraper.specs_file):
+                        temp_specs_file = scraper.specs_file + '.temp'
+                        with open(scraper.specs_file, 'r', encoding='utf-8') as input_file, \
+                             open(temp_specs_file, 'w', newline='', encoding='utf-8') as output_file:
+                            reader = csv.reader(input_file)
+                            writer = csv.writer(output_file)
+                            
+                            # Write header
+                            header = next(reader)
+                            writer.writerow(header)
+                            
+                            # Write rows that should be kept
+                            for row in reader:
+                                if row and row[0] not in device_urls_to_delete:
+                                    writer.writerow(row)
+                        
+                        # Replace original file with temp file
+                        os.replace(temp_specs_file, scraper.specs_file)
+                
+                update_status(
+                    message=f"Deleted data for {len(brand_names_to_delete)} brands: {', '.join(brand_names_to_delete)}"
+                )
         
         # Calculate total devices
         total_devices = sum(brand['device_count'] for brand in brands_to_scrape)

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify, request, Response
-from scraper import AsyncGSMArenaScraper as GSMArenaScraper
+from scraper import GSMArenaScraper
 from brand_scanner import BrandScanner
-from incremental_scraper import AsyncIncrementalScraper as IncrementalScraper
+from incremental_scraper import IncrementalScraper
 from api import api_bp, limiter
 import threading
 import queue
@@ -14,8 +14,6 @@ from loguru import logger
 from typing import Dict, List
 import traceback  # Add this import for better error reporting
 from ai_assistant import DeviceAIAssistant  # Import the AI assistant
-import asyncio
-import aiohttp  # Import aiohttp for async HTTP requests
 
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -411,10 +409,6 @@ def ai_assistant_api():
         return jsonify({'status': 'error', 'message': str(e)})
 
 def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = None):
-    """Wrapper function that calls the async scrape_worker_impl function"""
-    asyncio.run(scrape_worker_impl(brands_to_scrape, delete_existing))
-
-async def scrape_worker_impl(brands_to_scrape: List[Dict], delete_existing: List[str] = None):
     """Scrape worker with option to delete existing data for specific brands."""
     try:
         # Start scraping
@@ -516,36 +510,40 @@ async def scrape_worker_impl(brands_to_scrape: List[Dict], delete_existing: List
         
         # Process each brand
         devices_processed = 0
-        # Create a single aiohttp session for all requests
-        async with aiohttp.ClientSession() as session:
-            for brand_idx, brand in enumerate(brands_to_scrape, 1):
-                # Check if paused
-                while scraping_paused:
-                    await asyncio.sleep(1)
-                    continue
-                    
-                # Update status for current brand
-                brand_name = brand['name']
-                brand_devices = brand['device_count']
+        for brand_idx, brand in enumerate(brands_to_scrape, 1):
+            # Check if paused
+            while scraping_paused:
+                time.sleep(1)
+                continue
                 
-                update_status(
-                    message=f"Processing brand: {brand_name}",
-                    current_brand=brand_name,
-                    current_brand_devices=brand_devices,
-                    current_brand_progress=0,
-                    brands_processed=brand_idx
-                )
-                logger.info(f"Processing brand: {brand_name} ({brand_idx}/{len(brands_to_scrape)})")
-                
-                # Get devices for current brand - properly await and pass session
-                devices = await scraper.get_devices_from_brand(brand['url'], session)
-                total_brand_devices = len(devices)
+            # Update status for current brand
+            brand_name = brand['name']
+            brand_devices = brand['device_count']
+            
+            update_status(
+                message=f"Processing brand: {brand_name}",
+                current_brand=brand_name,
+                current_brand_devices=brand_devices,
+                current_brand_progress=0,
+                brands_processed=brand_idx
+            )
+            logger.info(f"Processing brand: {brand_name} ({brand_idx}/{len(brands_to_scrape)})")
+            
+            # Get devices for current brand
+            devices = scraper.get_devices_from_brand(brand['url'])
+            total_brand_devices = len(devices)
+            logger.info(f"Found {total_brand_devices} devices for brand {brand_name}")
+            
+            # Update with actual device count
+            update_status(
+                current_brand_devices=total_brand_devices
+            )
             
             # Save devices and their specs
             for device_idx, device in enumerate(devices, 1):
                 # Check if paused
                 while scraping_paused:
-                    await asyncio.sleep(1)
+                    time.sleep(1)
                     continue
                     
                 # Calculate and update progress for this device
@@ -568,7 +566,7 @@ async def scrape_worker_impl(brands_to_scrape: List[Dict], delete_existing: List
                     )
                     logger.info(f"Fetching specs for {device['name']}...")
                     
-                    specs = await scraper.get_device_specs(device['url'], session)
+                    specs = scraper.get_device_specs(device['url'])
                     
                     if specs:
                         # Send update for saving specs
@@ -605,7 +603,7 @@ async def scrape_worker_impl(brands_to_scrape: List[Dict], delete_existing: List
                 logger.info(f"Completed {device['name']} ({device_idx}/{total_brand_devices})")
                 
                 # Respect the website by adding a delay
-                await asyncio.sleep(1)
+                time.sleep(1)
             
             # Update completed brands
             devices_processed += total_brand_devices
@@ -636,11 +634,7 @@ async def scrape_worker_impl(brands_to_scrape: List[Dict], delete_existing: List
         update_status(message=f"Error: {str(e)}")
 
 def incremental_update_worker(brands_to_update: List[Dict]):
-    """Wrapper function that calls the async incremental_update_worker_impl function"""
-    asyncio.run(incremental_update_worker_impl(brands_to_update))
-
-async def incremental_update_worker_impl(brands_to_update: List[Dict]):
-    """Async worker function to perform incremental updates."""
+    """Worker function to perform incremental updates."""
     try:
         # Reset status for new update session
         update_status(
@@ -673,13 +667,11 @@ async def incremental_update_worker_impl(brands_to_update: List[Dict]):
             'brands_processed': 0
         }
         
-        # Create a single aiohttp session for all requests
-        async with aiohttp.ClientSession() as session:
-            for brand_idx, brand in enumerate(brands_to_update, 1):
-                # Check if paused
-                while scraping_paused:
-                    await asyncio.sleep(1)
-                    continue
+        for brand_idx, brand in enumerate(brands_to_update, 1):
+            # Check if paused
+            while scraping_paused:
+                time.sleep(1)
+                continue
                 
             # Update status for current brand
             brand_name = brand['name']
@@ -695,7 +687,7 @@ async def incremental_update_worker_impl(brands_to_update: List[Dict]):
             logger.info(f"Processing brand for incremental update: {brand_name} ({brand_idx}/{len(brands_to_update)})")
             
             # Get devices needing update
-            new_devices, updated_devices = await incremental_scraper.get_devices_needing_update(brand, session)
+            new_devices, updated_devices = incremental_scraper.get_devices_needing_update(brand)
             total_devices_to_process = len(new_devices) + len(updated_devices)
             
             # Update console with what we found
@@ -710,7 +702,7 @@ async def incremental_update_worker_impl(brands_to_update: List[Dict]):
             for device_idx, device in enumerate(new_devices, 1):
                 # Check if paused
                 while scraping_paused:
-                    await asyncio.sleep(1)
+                    time.sleep(1)
                     continue
                     
                 device_progress = (device_idx / len(new_devices)) * 100 if len(new_devices) > 0 else 100
@@ -722,7 +714,7 @@ async def incremental_update_worker_impl(brands_to_update: List[Dict]):
                 logger.info(f"Processing new device: {device['name']} ({device_idx}/{len(new_devices)})")
                 
                 # Process device specs
-                specs = await incremental_scraper.get_device_specs(device['url'], session)
+                specs = incremental_scraper.get_device_specs(device['url'])
                 if specs:
                     with open(scraper.brands_file, 'a', newline='', encoding='utf-8') as f:
                         writer = csv.writer(f)
@@ -734,13 +726,13 @@ async def incremental_update_worker_impl(brands_to_update: List[Dict]):
                     
                     results['new_devices'] += 1
                 
-                await asyncio.sleep(1)  # Respect the website
+                time.sleep(1)  # Respect the website
             
             # Process updated devices
             for device_idx, device in enumerate(updated_devices, 1):
                 # Check if paused
                 while scraping_paused:
-                    await asyncio.sleep(1)
+                    time.sleep(1)
                     continue
                     
                 device_progress = (device_idx / len(updated_devices)) * 100 if len(updated_devices) > 0 else 100
@@ -795,7 +787,7 @@ async def incremental_update_worker_impl(brands_to_update: List[Dict]):
                     
                     results['updated_devices'] += 1
                 
-                await asyncio.sleep(1)  # Respect the website
+                time.sleep(1)  # Respect the website
             
             # Update completed brands
             completed_brand = {

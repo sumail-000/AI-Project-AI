@@ -1,19 +1,15 @@
 import json
 import os
 import time
-import random
-import asyncio
-import aiohttp
-import csv
 from datetime import datetime
 from typing import Dict, List, Set, Tuple, Optional
-from loguru import logger
-from scraper import AsyncGSMArenaScraper
-from aiohttp import ClientTimeout
 
-class AsyncIncrementalScraper(AsyncGSMArenaScraper):
+from scraper import GSMArenaScraper
+from loguru import logger
+
+class IncrementalScraper(GSMArenaScraper):
     """
-    Asynchronous implementation of incremental scraper using async/await pattern.
+    Enhanced scraper that supports incremental updates.
     Only scrapes new devices or devices that have been updated since the last scrape.
     """
     
@@ -21,9 +17,7 @@ class AsyncIncrementalScraper(AsyncGSMArenaScraper):
         super().__init__()
         self.updates_file = 'device_updates.json'
         self.device_updates = self._load_device_updates()
-        # Incremental scraper can use even more concurrent requests
-        self.max_concurrent_requests = 150  # Even higher for incremental updates
-
+    
     def _load_device_updates(self) -> Dict:
         """Load the device updates database."""
         if os.path.exists(self.updates_file):
@@ -47,7 +41,7 @@ class AsyncIncrementalScraper(AsyncGSMArenaScraper):
         except Exception as e:
             logger.error(f"Error saving device updates: {str(e)}")
     
-    async def get_existing_devices(self) -> Dict[str, Dict]:
+    def get_existing_devices(self) -> Dict[str, Dict]:
         """
         Get all existing devices from the CSV files.
         Returns a dictionary with device URLs as keys and device info as values.
@@ -74,16 +68,16 @@ class AsyncIncrementalScraper(AsyncGSMArenaScraper):
         
         return existing_devices
     
-    async def get_devices_needing_update(self, brand: Dict, session) -> Tuple[List[Dict], List[Dict]]:
+    def get_devices_needing_update(self, brand: Dict) -> Tuple[List[Dict], List[Dict]]:
         """
         Compare current devices with existing devices to find which ones need to be scraped.
         Returns a tuple of (new_devices, updated_devices).
         """
         # Get current devices from website
-        current_devices = await self.get_devices_from_brand(brand['url'], session)
+        current_devices = self.get_devices_from_brand(brand['url'])
         
         # Get existing devices from database
-        existing_devices = await self.get_existing_devices()
+        existing_devices = self.get_existing_devices()
         
         # Find new devices (not in our database)
         new_devices = []
@@ -102,190 +96,117 @@ class AsyncIncrementalScraper(AsyncGSMArenaScraper):
         
         return new_devices, updated_devices
     
-    async def _process_device_update(self, device, brand, current_time, is_new, session) -> Dict:
+    def incremental_update(self, brands_to_update: List[Dict]) -> Dict:
         """
-        Process a single device update (new or existing) asynchronously
-        Returns a dictionary with the results
-        """
-        try:
-            logger.info(f"Processing {'new' if is_new else 'updated'} device: {device['name']}")
-            specs = await self.get_device_specs(device['url'], session)
-            if not specs:
-                return {'success': False, 'device_url': device['url']}
-            
-            result = {
-                'success': True,
-                'device': device,
-                'specs': specs,
-                'brand': brand,
-                'is_new': is_new,
-                'current_time': current_time
-            }
-            
-            return result
-        except Exception as e:
-            logger.error(f"Error processing device {device['name']}: {str(e)}")
-            return {'success': False, 'device_url': device['url'], 'error': str(e)}
-    
-    async def _process_brand_updates(self, brand, brand_idx, total_brands, current_time, session) -> Dict:
-        """
-        Process all updates for a single brand using concurrent async requests
-        """
-        try:
-            logger.info(f"Processing brand {brand_idx}/{total_brands}: {brand['name']}")
-            
-            # Find devices that need to be updated
-            new_devices, updated_devices = await self.get_devices_needing_update(brand, session)
-            
-            logger.info(f"Found {len(new_devices)} new devices and {len(updated_devices)} devices to update for {brand['name']}")
-            
-            # Process all devices concurrently
-            all_tasks = []
-            
-            # Create tasks for new devices
-            for device in new_devices:
-                task = asyncio.create_task(
-                    self._process_device_update(device, brand, current_time, True, session)
-                )
-                all_tasks.append(task)
-                
-            # Create tasks for updated devices
-            for device in updated_devices:
-                task = asyncio.create_task(
-                    self._process_device_update(device, brand, current_time, False, session)
-                )
-                all_tasks.append(task)
-            
-            # Wait for all tasks to complete
-            results = []
-            for task in asyncio.as_completed(all_tasks):
-                result = await task
-                if result['success']:
-                    results.append(result)
-            
-            return {
-                'brand': brand,
-                'results': results,
-                'new_count': len(new_devices),
-                'updated_count': len(updated_devices),
-                'processed_count': len(results)
-            }
-        except Exception as e:
-            logger.error(f"Error processing brand {brand['name']}: {str(e)}")
-            return {
-                'brand': brand,
-                'results': [],
-                'new_count': 0,
-                'updated_count': 0,
-                'processed_count': 0,
-                'error': str(e)
-            }
-
-    async def incremental_update_async(self, brands_to_update: List[Dict]) -> Dict:
-        """
-        Perform an incremental update for the specified brands asynchronously.
+        Perform an incremental update for the specified brands.
         Only scrapes new devices or devices that have been updated.
         """
         results = {
-            "brands_processed": 0,
-            "total_brands": len(brands_to_update),
-            "new_devices": 0,
-            "updated_devices": 0,
-            "start_time": datetime.now().isoformat(),
-            "end_time": None
+            'new_devices': 0,
+            'updated_devices': 0,
+            'brands_processed': 0,
+            'total_brands': len(brands_to_update)
         }
         
         current_time = datetime.now().isoformat()
         
-        async with aiohttp.ClientSession() as session:
-            for brand_idx, brand in enumerate(brands_to_update, 1):
-                # Process this brand's updates concurrently
-                brand_result = await self._process_brand_updates(
-                    brand, brand_idx, results['total_brands'], current_time, session
-                )
-                
-                # Process the results
-                for result in brand_result['results']:
-                    device = result['device']
-                    specs = result['specs']
-                    is_new = result['is_new']
+        for brand_idx, brand in enumerate(brands_to_update, 1):
+            logger.info(f"Processing brand {brand_idx}/{len(brands_to_update)}: {brand['name']}")
+            results['brands_processed'] = brand_idx
+            
+            # Get devices needing update
+            new_devices, updated_devices = self.get_devices_needing_update(brand)
+            
+            # Log what we found
+            logger.info(f"Found {len(new_devices)} new devices and {len(updated_devices)} devices needing updates for {brand['name']}")
+            
+            # Process new devices
+            for device in new_devices:
+                logger.info(f"Processing new device: {device['name']}")
+                specs = self.get_device_specs(device['url'])
+                if specs:
+                    # Save to brands file
+                    with open(self.brands_file, 'a', newline='', encoding='utf-8') as f:
+                        writer = csv.writer(f)
+                        writer.writerow([
+                            brand['name'],
+                            device['name'],
+                            device['url'],
+                            device['image_url']
+                        ])
                     
-                    if is_new:
-                        # Add to brands_devices.csv
-                        with open(self.brands_file, 'a', newline='', encoding='utf-8') as f:
-                            writer = csv.writer(f)
-                            writer.writerow([
-                                brand['name'],
-                                device['name'],
-                                device['url'],
-                                device['image_url']
-                            ])
-                        
-                        # Add to device_specifications.csv
-                        with open(self.specs_file, 'a', newline='', encoding='utf-8') as f:
-                            writer = csv.writer(f)
-                            writer.writerow([
-                                device['url'],
-                                specs.get('name', ''),
-                                specs.get('pictures', '[]'),
-                                json.dumps(specs)
-                            ])
-                        
-                        # Update the device updates database
-                        self.device_updates['devices'][device['url']] = {
-                            'last_updated': current_time,
-                            'brand': brand['name']
-                        }
-                        results['new_devices'] += 1
-                    else:
-                        # For updated devices, we need to update the specs file
-                        # First, read the existing specs file to find the line to update
-                        updated = False
-                        if os.path.exists(self.specs_file):
-                            temp_specs_file = self.specs_file + '.temp'
-                            with open(self.specs_file, 'r', encoding='utf-8') as input_file, \
-                                 open(temp_specs_file, 'w', newline='', encoding='utf-8') as output_file:
-                                reader = csv.reader(input_file)
-                                writer = csv.writer(output_file)
-                                
-                                # Write header
-                                header = next(reader)
-                                writer.writerow(header)
-                                
-                                # Write rows, updating the one we need
-                                for row in reader:
-                                    if row and row[0] == device['url']:
-                                        # This is the row to update
-                                        writer.writerow([
-                                            device['url'],
-                                            specs.get('name', ''),
-                                            specs.get('pictures', '[]'),
-                                            json.dumps(specs)
-                                        ])
-                                        updated = True
-                                    else:
-                                        writer.writerow(row)
-                                
-                                # If we didn't find the row to update, append it
-                                if not updated:
+                    # Save to specs file
+                    with open(self.specs_file, 'a', newline='', encoding='utf-8') as f:
+                        writer = csv.writer(f)
+                        writer.writerow([
+                            device['url'],
+                            specs.get('name', ''),
+                            specs.get('pictures', '[]'),
+                            json.dumps(specs)
+                        ])
+                    
+                    # Update the device updates database
+                    self.device_updates['devices'][device['url']] = {
+                        'last_updated': current_time,
+                        'brand': brand['name']
+                    }
+                    results['new_devices'] += 1
+                
+                time.sleep(1)  # Respect the website
+            
+            # Process updated devices
+            for device in updated_devices:
+                logger.info(f"Processing updated device: {device['name']}")
+                specs = self.get_device_specs(device['url'])
+                if specs:
+                    # For updated devices, we need to update the specs file
+                    # First, read the existing specs file to find the line to update
+                    updated = False
+                    if os.path.exists(self.specs_file):
+                        temp_specs_file = self.specs_file + '.temp'
+                        with open(self.specs_file, 'r', encoding='utf-8') as input_file, \
+                             open(temp_specs_file, 'w', newline='', encoding='utf-8') as output_file:
+                            reader = csv.reader(input_file)
+                            writer = csv.writer(output_file)
+                            
+                            # Write header
+                            header = next(reader)
+                            writer.writerow(header)
+                            
+                            # Write rows, updating the one we need
+                            for row in reader:
+                                if row and row[0] == device['url']:
+                                    # This is the row to update
                                     writer.writerow([
                                         device['url'],
                                         specs.get('name', ''),
                                         specs.get('pictures', '[]'),
                                         json.dumps(specs)
                                     ])
+                                    updated = True
+                                else:
+                                    writer.writerow(row)
                             
-                            # Replace original file with temp file
-                            os.replace(temp_specs_file, self.specs_file)
+                            # If we didn't find the row to update, append it
+                            if not updated:
+                                writer.writerow([
+                                    device['url'],
+                                    specs.get('name', ''),
+                                    specs.get('pictures', '[]'),
+                                    json.dumps(specs)
+                                ])
                         
-                        # Update the device updates database
-                        self.device_updates['devices'][device['url']] = {
-                            'last_updated': current_time,
-                            'brand': brand['name']
-                        }
-                        results['updated_devices'] += 1
+                        # Replace original file with temp file
+                        os.replace(temp_specs_file, self.specs_file)
+                    
+                    # Update the device updates database
+                    self.device_updates['devices'][device['url']] = {
+                        'last_updated': current_time,
+                        'brand': brand['name']
+                    }
+                    results['updated_devices'] += 1
                 
-                results['brands_processed'] += 1
+                time.sleep(1)  # Respect the website
         
         # Update the last full update time if we processed all brands
         if results['brands_processed'] == results['total_brands']:
@@ -294,19 +215,7 @@ class AsyncIncrementalScraper(AsyncGSMArenaScraper):
         # Save the device updates database
         self._save_device_updates()
         
-        results['end_time'] = datetime.now().isoformat()
-        
         return results
 
-    def incremental_update(self, brands_to_update: List[Dict]) -> Dict:
-        """Synchronous wrapper for the async method"""
-        return asyncio.run(self.incremental_update_async(brands_to_update))
-
-# Example usage
-if __name__ == "__main__":
-    scraper = AsyncIncrementalScraper()
-    # Get all brands
-    brands = asyncio.run(scraper.get_brands(aiohttp.ClientSession()))
-    # Update all brands
-    results = scraper.incremental_update(brands)
-    print(f"Updated {results['new_devices']} new devices and {results['updated_devices']} existing devices")
+# Fix missing import
+import csv

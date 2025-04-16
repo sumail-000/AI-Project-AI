@@ -1,0 +1,520 @@
+2025-04-16 23:10:37 [INFO] AI Assistant Logger initialized
+2025-04-16 23:10:37 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:10:37 [INFO] Loading and processing device data
+2025-04-16 23:10:37 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:10:37 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:10:37 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:10:37 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:10:37 [INFO] Building device search index
+2025-04-16 23:10:37 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:10:37 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:10:37 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:10:37 [INFO] Loading sentence transformer model
+2025-04-16 23:10:38 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:10:38 [INFO] Creating device embeddings
+2025-04-16 23:10:38 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:10:38 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:10:38 [INFO] Created embeddings for 0 devices
+2025-04-16 23:10:38 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:10:38 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:10:46 [INFO] AI Assistant Logger initialized
+2025-04-16 23:10:46 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:10:46 [INFO] Loading and processing device data
+2025-04-16 23:10:46 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:10:46 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:10:46 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:10:46 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:10:46 [INFO] Building device search index
+2025-04-16 23:10:46 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:10:46 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:10:46 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:10:46 [INFO] Loading sentence transformer model
+2025-04-16 23:10:47 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:10:47 [INFO] Creating device embeddings
+2025-04-16 23:10:47 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:10:47 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:10:47 [INFO] Created embeddings for 0 devices
+2025-04-16 23:10:47 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:10:47 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:10:59 [INFO] AI Assistant Logger initialized
+2025-04-16 23:10:59 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:10:59 [INFO] Loading and processing device data
+2025-04-16 23:10:59 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:10:59 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:10:59 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:10:59 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:10:59 [INFO] Building device search index
+2025-04-16 23:10:59 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:10:59 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:10:59 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:10:59 [INFO] Loading sentence transformer model
+2025-04-16 23:11:00 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:11:00 [INFO] Creating device embeddings
+2025-04-16 23:11:00 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:11:00 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:11:00 [INFO] Created embeddings for 0 devices
+2025-04-16 23:11:00 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:11:00 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:11:06 [INFO] AI Assistant Logger initialized
+2025-04-16 23:11:07 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:11:07 [INFO] Loading and processing device data
+2025-04-16 23:11:07 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:11:07 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:11:07 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:11:07 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:11:07 [INFO] Building device search index
+2025-04-16 23:11:07 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:11:07 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:11:07 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:11:07 [INFO] Loading sentence transformer model
+2025-04-16 23:11:07 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:11:07 [INFO] Creating device embeddings
+2025-04-16 23:11:07 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:11:07 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:11:07 [INFO] Created embeddings for 0 devices
+2025-04-16 23:11:07 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:11:07 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:23:21 [INFO] AI Assistant Logger initialized
+2025-04-16 23:23:21 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:23:21 [INFO] Loading and processing device data
+2025-04-16 23:23:21 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:23:21 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:23:21 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:23:21 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:23:21 [INFO] Building device search index
+2025-04-16 23:23:21 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:23:21 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:23:21 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:23:21 [INFO] Loading sentence transformer model
+2025-04-16 23:23:23 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:23:23 [INFO] Creating device embeddings
+2025-04-16 23:23:23 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:23:23 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:23:23 [INFO] Created embeddings for 0 devices
+2025-04-16 23:23:23 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:23:23 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:23:35 [INFO] AI Assistant Logger initialized
+2025-04-16 23:23:35 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:23:35 [INFO] Loading and processing device data
+2025-04-16 23:23:35 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:23:35 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:23:35 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:23:35 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:23:35 [INFO] Building device search index
+2025-04-16 23:23:35 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:23:35 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:23:35 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:23:35 [INFO] Loading sentence transformer model
+2025-04-16 23:23:36 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:23:36 [INFO] Creating device embeddings
+2025-04-16 23:23:36 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:23:36 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:23:36 [INFO] Created embeddings for 0 devices
+2025-04-16 23:23:36 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:23:36 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:24:56 [INFO] AI Assistant Logger initialized
+2025-04-16 23:24:56 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:24:56 [INFO] Loading and processing device data
+2025-04-16 23:24:56 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:24:56 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:24:56 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:24:56 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:24:56 [INFO] Building device search index
+2025-04-16 23:24:56 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:24:56 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:24:56 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:24:56 [INFO] Loading sentence transformer model
+2025-04-16 23:24:57 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:24:57 [INFO] Creating device embeddings
+2025-04-16 23:24:57 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:24:57 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:24:57 [INFO] Created embeddings for 0 devices
+2025-04-16 23:24:57 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:24:57 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:25:13 [INFO] AI Assistant Logger initialized
+2025-04-16 23:25:13 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:25:13 [INFO] Loading and processing device data
+2025-04-16 23:25:13 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:25:13 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:25:13 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:25:13 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:25:13 [INFO] Building device search index
+2025-04-16 23:25:13 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:25:13 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:25:13 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:25:13 [INFO] Loading sentence transformer model
+2025-04-16 23:25:13 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:25:13 [INFO] Creating device embeddings
+2025-04-16 23:25:13 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:25:13 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:25:13 [INFO] Created embeddings for 0 devices
+2025-04-16 23:25:13 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:25:13 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:25:32 [INFO] AI Assistant Logger initialized
+2025-04-16 23:25:32 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:25:32 [INFO] Loading and processing device data
+2025-04-16 23:25:32 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:25:32 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:25:32 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:25:32 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:25:32 [INFO] Building device search index
+2025-04-16 23:25:32 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:25:32 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:25:32 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:25:32 [INFO] Loading sentence transformer model
+2025-04-16 23:25:32 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:25:32 [INFO] Creating device embeddings
+2025-04-16 23:25:32 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:25:32 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:25:32 [INFO] Created embeddings for 0 devices
+2025-04-16 23:25:32 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:25:32 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:25:42 [INFO] AI Assistant Logger initialized
+2025-04-16 23:25:42 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:25:42 [INFO] Loading and processing device data
+2025-04-16 23:25:42 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:25:42 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:25:42 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:25:42 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:25:42 [INFO] Building device search index
+2025-04-16 23:25:42 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:25:42 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:25:42 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:25:42 [INFO] Loading sentence transformer model
+2025-04-16 23:25:43 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:25:43 [INFO] Creating device embeddings
+2025-04-16 23:25:43 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:25:43 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:25:43 [INFO] Created embeddings for 0 devices
+2025-04-16 23:25:43 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:25:43 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:26:36 [INFO] AI Assistant Logger initialized
+2025-04-16 23:26:36 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:26:36 [INFO] Loading and processing device data
+2025-04-16 23:26:36 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:26:36 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:26:36 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:26:36 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:26:36 [INFO] Building device search index
+2025-04-16 23:26:36 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:26:36 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:26:36 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:26:36 [INFO] Loading sentence transformer model
+2025-04-16 23:26:37 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:26:37 [INFO] Creating device embeddings
+2025-04-16 23:26:37 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:26:37 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:26:37 [INFO] Created embeddings for 0 devices
+2025-04-16 23:26:37 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:26:37 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:26:46 [INFO] AI Assistant Logger initialized
+2025-04-16 23:26:46 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:26:46 [INFO] Loading and processing device data
+2025-04-16 23:26:46 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:26:46 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:26:46 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:26:46 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:26:46 [INFO] Building device search index
+2025-04-16 23:26:46 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:26:46 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:26:46 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:26:46 [INFO] Loading sentence transformer model
+2025-04-16 23:26:47 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:26:47 [INFO] Creating device embeddings
+2025-04-16 23:26:47 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:26:47 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:26:47 [INFO] Created embeddings for 0 devices
+2025-04-16 23:26:47 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:26:47 [INFO] DeviceAIAssistant initialization complete
+2025-04-16 23:29:39 [INFO] AI Assistant Logger initialized
+2025-04-16 23:29:39 [INFO] Initializing DeviceAIAssistant with data paths: brands_devices.csv, device_specifications.csv
+2025-04-16 23:29:39 [INFO] Loading and processing device data
+2025-04-16 23:29:39 [DEBUG] ENTER: _process_device_data()
+2025-04-16 23:29:39 [ERROR] Error processing device data: No columns to parse from file
+2025-04-16 23:29:39 [ERROR] Traceback (most recent call last):
+  File "C:\Users\Sumail\Downloads\AI-Project-AI\ai_assistant.py", line 91, in _process_device_data
+    devices_df = pd.read_csv(self.device_data_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 912, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 577, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1407, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\readers.py", line 1679, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Sumail\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\io\parsers\c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas\_libs\parsers.pyx", line 557, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+
+2025-04-16 23:29:39 [DEBUG] EXIT: _process_device_data -> Empty DataFrame (error)
+2025-04-16 23:29:39 [INFO] Building device search index
+2025-04-16 23:29:39 [DEBUG] ENTER: _build_device_index()
+2025-04-16 23:29:40 [WARNING] Cannot build device index: unified data is empty
+2025-04-16 23:29:40 [DEBUG] EXIT: _build_device_index -> Empty index (no data)
+2025-04-16 23:29:40 [INFO] Loading sentence transformer model
+2025-04-16 23:29:40 [INFO] Loaded sentence transformer model successfully
+2025-04-16 23:29:40 [INFO] Creating device embeddings
+2025-04-16 23:29:40 [DEBUG] ENTER: _create_device_embeddings()
+2025-04-16 23:29:40 [DEBUG] Creating embeddings for 0 device texts
+2025-04-16 23:29:40 [INFO] Created embeddings for 0 devices
+2025-04-16 23:29:40 [DEBUG] EXIT: _create_device_embeddings -> Embeddings for 0 devices
+2025-04-16 23:29:40 [INFO] DeviceAIAssistant initialization complete

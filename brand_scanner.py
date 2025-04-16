@@ -1,4 +1,4 @@
-from scraper import GSMArenaScraper
+from scraper import AsyncGSMArenaScraper as GSMArenaScraper
 from loguru import logger
 from bs4 import BeautifulSoup
 import requests

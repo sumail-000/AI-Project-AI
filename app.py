@@ -14,6 +14,8 @@ from loguru import logger
 from typing import Dict, List
 import traceback  # Add this import for better error reporting
 from ai_assistant import DeviceAIAssistant  # Import the AI assistant
+import asyncio
+import aiohttp
 
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -408,8 +410,8 @@ def ai_assistant_api():
         logger.error(f"Error in AI assistant API: {str(e)}")
         return jsonify({'status': 'error', 'message': str(e)})
 
-def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = None):
-    """Scrape worker with option to delete existing data for specific brands."""
+async def scrape_worker_impl(brands_to_scrape: List[Dict], delete_existing: List[str] = None):
+    """Async implementation of scrape worker with option to delete existing data for specific brands."""
     try:
         # Start scraping
         update_status(
@@ -510,131 +512,106 @@ def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = Non
         
         # Process each brand
         devices_processed = 0
-        for brand_idx, brand in enumerate(brands_to_scrape, 1):
-            # Check if paused
-            while scraping_paused:
-                time.sleep(1)
-                continue
-                
-            # Update status for current brand
-            brand_name = brand['name']
-            brand_devices = brand['device_count']
-            
-            update_status(
-                message=f"Processing brand: {brand_name}",
-                current_brand=brand_name,
-                current_brand_devices=brand_devices,
-                current_brand_progress=0,
-                brands_processed=brand_idx
-            )
-            logger.info(f"Processing brand: {brand_name} ({brand_idx}/{len(brands_to_scrape)})")
-            
-            # Get devices for current brand
-            devices = scraper.get_devices_from_brand(brand['url'])
-            total_brand_devices = len(devices)
-            logger.info(f"Found {total_brand_devices} devices for brand {brand_name}")
-            
-            # Update with actual device count
-            update_status(
-                current_brand_devices=total_brand_devices
-            )
-            
-            # Save devices and their specs
-            for device_idx, device in enumerate(devices, 1):
+        
+        # Create a shared session for all requests
+        async with aiohttp.ClientSession() as session:
+            for brand_idx, brand in enumerate(brands_to_scrape, 1):
                 # Check if paused
                 while scraping_paused:
-                    time.sleep(1)
+                    await asyncio.sleep(1)
                     continue
                     
-                # Calculate and update progress for this device
-                device_progress = (device_idx / total_brand_devices) * 100 if total_brand_devices > 0 else 100
-                device_message = f"Processing {device['name']} ({device_idx}/{total_brand_devices})"
+                brand_name = brand['name']
+                brand_devices = brand['device_count']
                 
-                # Send separate update for each device to ensure it's captured
                 update_status(
-                    message=device_message,
-                    current_brand_progress=device_progress,
-                    devices_processed=devices_processed + device_idx
+                    message=f"Processing brand {brand_idx}/{len(brands_to_scrape)}: {brand_name}",
+                    current_brand=brand_name,
+                    current_brand_devices=brand_devices,
+                    current_brand_progress=0,
+                    brands_processed=brand_idx
                 )
-                logger.info(f"Processing {device['name']} ({device_idx}/{total_brand_devices})")
+                logger.info(f"Processing brand {brand_idx}/{len(brands_to_scrape)}: {brand_name}")
                 
-                # Process device specs
-                try:
-                    # Send update for fetching specs
+                # Get devices for this brand
+                devices = await scraper.get_devices_from_brand_impl(brand['url'], session)
+                
+                # Save devices to brands file
+                with open(scraper.brands_file, 'a', newline='', encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    for device in devices:
+                        writer.writerow([
+                            brand_name,
+                            device['name'],
+                            device['url'],
+                            device['image_url']
+                        ])
+                
+                # Process each device
+                for device_idx, device in enumerate(devices, 1):
+                    # Check if paused
+                    while scraping_paused:
+                        await asyncio.sleep(1)
+                        continue
+                        
+                    device_progress = (device_idx / len(devices)) * 100 if len(devices) > 0 else 100
+                    devices_processed += 1
+                    overall_progress = (devices_processed / total_devices) * 100 if total_devices > 0 else 100
+                    
                     update_status(
-                        message=f"Fetching specs for {device['name']}..."
+                        message=f"Processing device {device_idx}/{len(devices)}: {device['name']}",
+                        current_brand_progress=device_progress,
+                        devices_processed=devices_processed,
+                        progress=overall_progress
                     )
-                    logger.info(f"Fetching specs for {device['name']}...")
+                    logger.info(f"Processing device {device_idx}/{len(devices)}: {device['name']}")
                     
-                    specs = scraper.get_device_specs(device['url'])
-                    
+                    # Get specs for this device
+                    specs = await scraper.get_device_specs_impl(device['url'], session)
                     if specs:
-                        # Send update for saving specs
-                        update_status(
-                            message=f"Saving specs for {device['name']}..."
-                        )
-                        logger.info(f"Saving specs for {device['name']}...")
-                        
-                        with open(scraper.brands_file, 'a', newline='', encoding='utf-8') as f:
-                            writer = csv.writer(f)
-                            writer.writerow([brand_name, device['name'], device['url'], device['image_url']])
-                        
                         with open(scraper.specs_file, 'a', newline='', encoding='utf-8') as f:
                             writer = csv.writer(f)
-                            writer.writerow([device['url'], specs.get('name', ''), specs.get('pictures', '[]'), json.dumps(specs)])
-                        
-                        # Send a success update
-                        update_status(
-                            message=f"Saved specifications for {device['name']}"
-                        )
-                        logger.info(f"Saved specifications for {device['name']}")
-                except Exception as e:
-                    logger.error(f"Error processing device {device['name']}: {str(e)}")
-                    update_status(
-                        message=f"Error processing {device['name']}: {str(e)}"
-                    )
+                            writer.writerow([
+                                device['url'],
+                                specs.get('name', ''),
+                                specs.get('pictures', '[]'),
+                                json.dumps(specs)
+                            ])
+                    
+                    # Add a small delay to respect the website
+                    await asyncio.sleep(1)
                 
-                # Update progress after each device
+                # Add this brand to completed brands
+                completed_brand = {
+                    'name': brand_name,
+                    'devices': len(devices),
+                    'expected': brand_devices
+                }
+                current_status['completed_brands'].append(completed_brand)
+                
+                # Update progress after each brand
                 update_status(
-                    current_brand_progress=device_progress,
-                    devices_processed=devices_processed + device_idx,
-                    message=f"Completed {device['name']} ({device_idx}/{total_brand_devices})"
+                    current_brand_progress=100,  # Brand is complete
+                    message=f"Completed brand: {brand_name}"
                 )
-                logger.info(f"Completed {device['name']} ({device_idx}/{total_brand_devices})")
+                logger.info(f"Completed brand: {brand_name} with {len(devices)} devices")
                 
                 # Respect the website by adding a delay
-                time.sleep(1)
-            
-            # Update completed brands
-            devices_processed += total_brand_devices
-            completed_brand = {
-                'name': brand_name,
-                'devices': total_brand_devices,
-                'expected': brand_devices
-            }
-            current_status['completed_brands'].append(completed_brand)
-            logger.info(f"Completed brand: {brand_name} with {total_brand_devices} devices")
-            
-            # Calculate overall progress
-            overall_progress = (devices_processed / total_devices) * 100 if total_devices > 0 else 100
-            update_status(
-                progress=overall_progress,
-                message=f"Completed brand: {brand_name} ({brand_idx}/{len(brands_to_scrape)})"
-            )
-            logger.info(f"Overall progress: {overall_progress:.1f}% ({devices_processed}/{total_devices} devices)")
+                await asyncio.sleep(1)
         
+        # Final status update
         update_status(
-            message="Data extraction completed successfully!",
+            message="Data extraction completed!",
             progress=100
         )
-        logger.info("Data extraction completed successfully!")
+        logger.info("Data extraction completed!")
     except Exception as e:
         error_msg = f"Error in scraper: {str(e)}\n{traceback.format_exc()}"
         logger.error(error_msg)
         update_status(message=f"Error: {str(e)}")
 
-def incremental_update_worker(brands_to_update: List[Dict]):
-    """Worker function to perform incremental updates."""
+async def incremental_update_worker_impl(brands_to_update: List[Dict]):
+    """Async implementation of worker function to perform incremental updates."""
     try:
         # Reset status for new update session
         update_status(
@@ -667,140 +644,147 @@ def incremental_update_worker(brands_to_update: List[Dict]):
             'brands_processed': 0
         }
         
-        for brand_idx, brand in enumerate(brands_to_update, 1):
-            # Check if paused
-            while scraping_paused:
-                time.sleep(1)
-                continue
-                
-            # Update status for current brand
-            brand_name = brand['name']
-            brand_devices = brand['device_count']
-            
-            update_status(
-                message=f"Processing brand for incremental update: {brand_name}",
-                current_brand=brand_name,
-                current_brand_devices=brand_devices,
-                current_brand_progress=0,
-                brands_processed=brand_idx
-            )
-            logger.info(f"Processing brand for incremental update: {brand_name} ({brand_idx}/{len(brands_to_update)})")
-            
-            # Get devices needing update
-            new_devices, updated_devices = incremental_scraper.get_devices_needing_update(brand)
-            total_devices_to_process = len(new_devices) + len(updated_devices)
-            
-            # Update console with what we found
-            addConsoleMessage = f"Found {len(new_devices)} new devices and {len(updated_devices)} devices needing updates for {brand_name}"
-            update_status(message=addConsoleMessage)
-            logger.info(addConsoleMessage)
-            
-            # Process new devices
-            devices_processed = 0
-            
-            # Process new devices
-            for device_idx, device in enumerate(new_devices, 1):
+        # Create a shared session for all requests
+        async with aiohttp.ClientSession() as session:
+            for brand_idx, brand in enumerate(brands_to_update, 1):
                 # Check if paused
                 while scraping_paused:
-                    time.sleep(1)
+                    await asyncio.sleep(1)
                     continue
                     
-                device_progress = (device_idx / len(new_devices)) * 100 if len(new_devices) > 0 else 100
+                # Update status for current brand
+                brand_name = brand['name']
+                brand_devices = brand['device_count']
+                
                 update_status(
-                    message=f"Processing new device: {device['name']} ({device_idx}/{len(new_devices)})",
-                    current_brand_progress=device_progress,
-                    devices_processed=results['new_devices'] + results['updated_devices'] + device_idx
+                    message=f"Processing brand for incremental update: {brand_name}",
+                    current_brand=brand_name,
+                    current_brand_devices=brand_devices,
+                    current_brand_progress=0,
+                    brands_processed=brand_idx
                 )
-                logger.info(f"Processing new device: {device['name']} ({device_idx}/{len(new_devices)})")
+                logger.info(f"Processing brand for incremental update: {brand_name} ({brand_idx}/{len(brands_to_update)})")
                 
-                # Process device specs
-                specs = incremental_scraper.get_device_specs(device['url'])
-                if specs:
-                    with open(scraper.brands_file, 'a', newline='', encoding='utf-8') as f:
-                        writer = csv.writer(f)
-                        writer.writerow([brand_name, device['name'], device['url'], device['image_url']])
-                    
-                    with open(scraper.specs_file, 'a', newline='', encoding='utf-8') as f:
-                        writer = csv.writer(f)
-                        writer.writerow([device['url'], specs.get('name', ''), specs.get('pictures', '[]'), json.dumps(specs)])
-                    
-                    results['new_devices'] += 1
+                # Get devices needing update
+                new_devices, updated_devices = await incremental_scraper.get_devices_needing_update_impl(brand, session)
+                total_devices_to_process = len(new_devices) + len(updated_devices)
                 
-                time.sleep(1)  # Respect the website
-            
-            # Process updated devices
-            for device_idx, device in enumerate(updated_devices, 1):
-                # Check if paused
-                while scraping_paused:
-                    time.sleep(1)
-                    continue
-                    
-                device_progress = (device_idx / len(updated_devices)) * 100 if len(updated_devices) > 0 else 100
-                update_status(
-                    message=f"Processing updated device: {device['name']} ({device_idx}/{len(updated_devices)})",
-                    current_brand_progress=device_progress,
-                    devices_processed=results['new_devices'] + results['updated_devices'] + device_idx
-                )
-                logger.info(f"Processing updated device: {device['name']} ({device_idx}/{len(updated_devices)})")
+                # Update console with what we found
+                addConsoleMessage = f"Found {len(new_devices)} new devices and {len(updated_devices)} devices needing updates for {brand_name}"
+                update_status(message=addConsoleMessage)
+                logger.info(addConsoleMessage)
                 
-                # Process device specs
-                specs = incremental_scraper.get_device_specs(device['url'])
-                if specs:
-                    # Update the specs file
-                    updated = False
-                    if os.path.exists(scraper.specs_file):
-                        temp_specs_file = scraper.specs_file + '.temp'
-                        with open(scraper.specs_file, 'r', encoding='utf-8') as input_file, \
-                             open(temp_specs_file, 'w', newline='', encoding='utf-8') as output_file:
-                            reader = csv.reader(input_file)
-                            writer = csv.writer(output_file)
-                            
-                            # Write header
-                            header = next(reader)
-                            writer.writerow(header)
-                            
-                            # Write rows, updating the one we need
-                            for row in reader:
-                                if row and row[0] == device['url']:
-                                    # This is the row to update
+                # Process new devices
+                devices_processed = 0
+                
+                # Process new devices
+                for device_idx, device in enumerate(new_devices, 1):
+                    # Check if paused
+                    while scraping_paused:
+                        await asyncio.sleep(1)
+                        continue
+                        
+                    device_progress = (device_idx / len(new_devices)) * 100 if len(new_devices) > 0 else 100
+                    update_status(
+                        message=f"Processing new device: {device['name']} ({device_idx}/{len(new_devices)})",
+                        current_brand_progress=device_progress,
+                        devices_processed=results['new_devices'] + results['updated_devices'] + device_idx
+                    )
+                    logger.info(f"Processing new device: {device['name']} ({device_idx}/{len(new_devices)})")
+                    
+                    # Process device specs
+                    specs = await incremental_scraper.get_device_specs_impl(device['url'], session)
+                    if specs:
+                        with open(scraper.brands_file, 'a', newline='', encoding='utf-8') as f:
+                            writer = csv.writer(f)
+                            writer.writerow([brand_name, device['name'], device['url'], device['image_url']])
+                        
+                        with open(scraper.specs_file, 'a', newline='', encoding='utf-8') as f:
+                            writer = csv.writer(f)
+                            writer.writerow([device['url'], specs.get('name', ''), specs.get('pictures', '[]'), json.dumps(specs)])
+                        
+                        results['new_devices'] += 1
+                    
+                    await asyncio.sleep(1)  # Respect the website
+                
+                # Process updated devices
+                for device_idx, device in enumerate(updated_devices, 1):
+                    # Check if paused
+                    while scraping_paused:
+                        await asyncio.sleep(1)
+                        continue
+                        
+                    device_progress = (device_idx / len(updated_devices)) * 100 if len(updated_devices) > 0 else 100
+                    update_status(
+                        message=f"Processing updated device: {device['name']} ({device_idx}/{len(updated_devices)})",
+                        current_brand_progress=device_progress,
+                        devices_processed=results['new_devices'] + results['updated_devices'] + device_idx
+                    )
+                    logger.info(f"Processing updated device: {device['name']} ({device_idx}/{len(updated_devices)})")
+                    
+                    # Process device specs
+                    specs = await incremental_scraper.get_device_specs_impl(device['url'], session)
+                    if specs:
+                        # Update the specs file
+                        updated = False
+                        if os.path.exists(scraper.specs_file):
+                            temp_specs_file = scraper.specs_file + '.temp'
+                            with open(scraper.specs_file, 'r', encoding='utf-8') as input_file, \
+                                 open(temp_specs_file, 'w', newline='', encoding='utf-8') as output_file:
+                                reader = csv.reader(input_file)
+                                writer = csv.writer(output_file)
+                                
+                                # Write header
+                                header = next(reader)
+                                writer.writerow(header)
+                                
+                                # Write rows, updating the one we need
+                                for row in reader:
+                                    if row and row[0] == device['url']:
+                                        # This is the row to update
+                                        writer.writerow([
+                                            device['url'],
+                                            specs.get('name', ''),
+                                            specs.get('pictures', '[]'),
+                                            json.dumps(specs)
+                                        ])
+                                        updated = True
+                                    else:
+                                        writer.writerow(row)
+                                
+                                # If we didn't find the row to update, append it
+                                if not updated:
                                     writer.writerow([
                                         device['url'],
                                         specs.get('name', ''),
                                         specs.get('pictures', '[]'),
                                         json.dumps(specs)
                                     ])
-                                    updated = True
-                                else:
-                                    writer.writerow(row)
-                            
-                            # If we didn't find the row to update, append it
-                            if not updated:
-                                writer.writerow([
-                                    device['url'],
-                                    specs.get('name', ''),
-                                    specs.get('pictures', '[]'),
-                                    json.dumps(specs)
-                                ])
                         
                         # Replace original file with temp file
                         os.replace(temp_specs_file, scraper.specs_file)
+                        
+                        # Update the device updates database
+                        incremental_scraper.device_updates['devices'][device['url']] = {
+                            'last_updated': datetime.now().isoformat(),
+                            'brand': brand['name']
+                        }
+                        results['updated_devices'] += 1
                     
-                    results['updated_devices'] += 1
+                    await asyncio.sleep(1)  # Respect the website
                 
-                time.sleep(1)  # Respect the website
-            
-            # Update completed brands
-            completed_brand = {
-                'name': brand_name,
-                'devices': len(new_devices) + len(updated_devices),
-                'expected': brand_devices
-            }
-            current_status['completed_brands'].append(completed_brand)
-            
-            # Calculate overall progress
-            results['brands_processed'] += 1
-            overall_progress = (results['brands_processed'] / len(brands_to_update)) * 100
-            update_status(progress=overall_progress)
+                # Update completed brands
+                completed_brand = {
+                    'name': brand_name,
+                    'devices': len(new_devices) + len(updated_devices),
+                    'expected': brand_devices
+                }
+                current_status['completed_brands'].append(completed_brand)
+                
+                # Calculate overall progress
+                results['brands_processed'] += 1
+                overall_progress = (results['brands_processed'] / len(brands_to_update)) * 100
+                update_status(progress=overall_progress)
         
         # Update the device updates database
         incremental_scraper._save_device_updates()
@@ -813,6 +797,22 @@ def incremental_update_worker(brands_to_update: List[Dict]):
         logger.info(f"Incremental update completed! Added {results['new_devices']} new devices and updated {results['updated_devices']} devices.")
     except Exception as e:
         logger.error(f"Error in incremental update: {str(e)}")
+        update_status(message=f"Error: {str(e)}")
+
+def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = None):
+    """Synchronous wrapper for the async scrape_worker_impl function"""
+    try:
+        asyncio.run(scrape_worker_impl(brands_to_scrape, delete_existing))
+    except Exception as e:
+        logger.error(f"Error in scrape_worker: {str(e)}\n{traceback.format_exc()}")
+        update_status(message=f"Error: {str(e)}")
+
+def incremental_update_worker(brands_to_update: List[Dict]):
+    """Synchronous wrapper for the async incremental_update_worker_impl function"""
+    try:
+        asyncio.run(incremental_update_worker_impl(brands_to_update))
+    except Exception as e:
+        logger.error(f"Error in incremental update worker: {str(e)}\n{traceback.format_exc()}")
         update_status(message=f"Error: {str(e)}")
 
 def check_brand_data(brand_name: str) -> Dict:
@@ -876,6 +876,127 @@ def events():
             time.sleep(1)
     
     return Response(event_stream(), mimetype='text/event-stream')
+
+@app.route('/visualization')
+def visualization():
+    """Temporary page for data visualization from CSV files."""
+    try:
+        # Get query parameters
+        selected_brand = request.args.get('brand', '')
+        selected_device = request.args.get('device', '')
+        
+        # Read brands and devices from CSV
+        brands_data = []
+        brand_set = set()
+        total_devices = 0
+        
+        if os.path.exists(scraper.brands_file):
+            with open(scraper.brands_file, 'r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                next(reader)  # Skip header
+                for row in reader:
+                    if len(row) >= 3:
+                        brand_name, device_name, device_url, device_image = row
+                        brands_data.append({
+                            'brand': brand_name,
+                            'name': device_name,
+                            'url': device_url,
+                            'image': device_image
+                        })
+                        brand_set.add(brand_name)
+                        total_devices += 1
+        
+        # Get all unique brands
+        brands = sorted(list(brand_set))
+        
+        # Get devices for selected brand
+        devices = []
+        brand_device_count = 0
+        if selected_brand:
+            devices = [d for d in brands_data if d['brand'] == selected_brand]
+            brand_device_count = len(devices)
+        
+        # Get specification for selected device
+        specification = None
+        raw_json = ""
+        if selected_device:
+            if os.path.exists(scraper.specs_file):
+                with open(scraper.specs_file, 'r', encoding='utf-8') as f:
+                    reader = csv.reader(f)
+                    next(reader)  # Skip header
+                    for row in reader:
+                        if len(row) >= 4 and row[0] == selected_device:
+                            try:
+                                device_url, name, pictures, specs_json = row
+                                specification = json.loads(specs_json)
+                                # Initialize the image collections
+                                specification['all_images'] = []
+                                specification['main_image'] = ''
+                                
+                                # Extract pictures from the main pictures field
+                                if 'pictures' in specification:
+                                    try:
+                                        # If pictures is a string representation of a list, parse it
+                                        if isinstance(specification['pictures'], str) and specification['pictures'].startswith('['):
+                                            picture_list = json.loads(specification['pictures'])
+                                            if isinstance(picture_list, list) and len(picture_list) > 0:
+                                                specification['main_image'] = picture_list[0]
+                                                specification['all_images'].extend(picture_list)
+                                        else:
+                                            specification['main_image'] = specification['pictures']
+                                            specification['all_images'].append(specification['pictures'])
+                                    except json.JSONDecodeError:
+                                        # If we can't parse it, just use it as is
+                                        specification['main_image'] = specification['pictures']
+                                        specification['all_images'].append(specification['pictures'])
+                                
+                                # Try to extract pictures from the specifications JSON itself
+                                try:
+                                    # The 'specifications' field might contain additional pictures in the raw JSON
+                                    specs_json = json.loads(specs_json)
+                                    if 'pictures' in specs_json and specs_json['pictures']:
+                                        try:
+                                            # Try to parse the pictures field from the specs JSON
+                                            if isinstance(specs_json['pictures'], str) and specs_json['pictures'].startswith('['):
+                                                more_pics = json.loads(specs_json['pictures'])
+                                                if isinstance(more_pics, list):
+                                                    # Add these pictures to our collection if they're not already there
+                                                    for pic in more_pics:
+                                                        if pic not in specification['all_images']:
+                                                            specification['all_images'].append(pic)
+                                                    
+                                                    # If we don't have a main image yet, use the first one
+                                                    if not specification['main_image'] and more_pics:
+                                                        specification['main_image'] = more_pics[0]
+                                        except json.JSONDecodeError:
+                                            # If it's not valid JSON, try to use it directly
+                                            if specs_json['pictures'] not in specification['all_images']:
+                                                specification['all_images'].append(specs_json['pictures'])
+                                                
+                                            # If we don't have a main image yet, use this one
+                                            if not specification['main_image']:
+                                                specification['main_image'] = specs_json['pictures']
+                                except Exception as e:
+                                    logger.error(f"Error extracting pictures from specs JSON: {str(e)}")
+                                        
+                                raw_json = json.dumps(specification, indent=2)
+                                break
+                            except json.JSONDecodeError as e:
+                                logger.error(f"Error parsing JSON for device {selected_device}: {str(e)}")
+        
+        return render_template('visualization.html',
+                              brands=brands,
+                              devices=devices,
+                              selected_brand=selected_brand,
+                              selected_device=selected_device,
+                              specification=specification,
+                              raw_json=raw_json,
+                              total_brands=len(brands),
+                              total_devices=total_devices,
+                              brand_device_count=brand_device_count)
+    except Exception as e:
+        logger.error(f"Error in visualization: {str(e)}\n{traceback.format_exc()}")
+        return f"Error: {str(e)}", 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

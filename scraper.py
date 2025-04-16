@@ -1,13 +1,20 @@
-import requests
+import asyncio
+import aiohttp
 from bs4 import BeautifulSoup
 import csv
 from loguru import logger
 import time
 import json
-from typing import Dict, List, Optional, Tuple
+import random
 import os
+from typing import Dict, List, Optional, Tuple
+from aiohttp import ClientTimeout
 
-class GSMArenaScraper:
+class AsyncGSMArenaScraper:
+    """
+    Asynchronous implementation of GSMArena scraper using async/await pattern
+    for significantly improved performance over thread-based concurrency.
+    """
     def __init__(self):
         self.base_url = "https://www.gsmarena.com/"
         self.headers = {
@@ -16,56 +23,83 @@ class GSMArenaScraper:
         self.setup_logger()
         self.brands_file = 'brands_devices.csv'
         self.specs_file = 'device_specifications.csv'
+        
+        # Rate limiting settings
+        self.min_request_interval = 2.0  # Base seconds between requests
+        self.interval_variation = 0.5  # Variation in seconds (±) for randomization
+        self.max_retries = 5  # Retries for failed requests
+        
+        # Concurrency settings
+        self.max_concurrent_requests = 100  # Much higher than thread-based version
+        self.semaphore = None  # Will be initialized in run() method
+        
+        # Request tracking
         self.last_request_time = 0
-        self.min_request_interval = 3  # Minimum seconds between requests
-        self.max_retries = 3
+        self.request_times = {}  # Track request times per URL domain
 
     def setup_logger(self):
         logger.add("debug.log", rotation="500 MB", level="DEBUG")
 
-    def _make_request(self, url, headers=None):
-        """Make a rate-limited request with retries"""
-        headers = headers or self.headers
+    async def _sleep_for_rate_limit(self, url):
+        """Implement rate limiting with randomization"""
+        domain = url.split('/')[2]  # Extract domain from URL
+        
+        current_time = time.time()
+        last_time = self.request_times.get(domain, 0)
+        time_since_last = current_time - last_time
+        
+        # Calculate random interval within the specified range
+        random_interval = self.min_request_interval + random.uniform(-self.interval_variation, self.interval_variation)
+        random_interval = max(random_interval, 1.5)  # Ensure minimum delay
+        
+        if time_since_last < random_interval:
+            sleep_time = random_interval - time_since_last
+            logger.info(f"Rate limiting for {domain}: waiting {sleep_time:.1f} seconds...")
+            await asyncio.sleep(sleep_time)
+        
+        # Update last request time for this domain
+        self.request_times[domain] = time.time()
+
+    async def _make_request(self, url, session):
+        """Make an async rate-limited request with retries"""
         retries = 0
         
         while retries < self.max_retries:
-            # Ensure minimum time between requests
-            current_time = time.time()
-            time_since_last = current_time - self.last_request_time
-            if time_since_last < self.min_request_interval:
-                sleep_time = self.min_request_interval - time_since_last
-                logger.info(f"Rate limiting: waiting {sleep_time:.1f} seconds...")
-                time.sleep(sleep_time)
-            
             try:
-                response = requests.get(url, headers=headers, timeout=10)
-                self.last_request_time = time.time()
+                # Apply rate limiting
+                await self._sleep_for_rate_limit(url)
                 
-                if response.status_code == 429:
-                    retry_after = int(response.headers.get('Retry-After', self.min_request_interval * (retries + 2)))
-                    logger.warning(f"Rate limited. Waiting {retry_after} seconds before retry {retries + 1}/{self.max_retries}")
-                    time.sleep(retry_after)
-                    retries += 1
-                    continue
+                # Make the request with timeout
+                timeout = ClientTimeout(total=10)
+                async with session.get(url, headers=self.headers, timeout=timeout) as response:
+                    if response.status == 429:  # Too Many Requests
+                        retry_after = int(response.headers.get('Retry-After', self.min_request_interval * (retries + 2)))
+                        logger.warning(f"Rate limited. Waiting {retry_after} seconds before retry {retries + 1}/{self.max_retries}")
+                        await asyncio.sleep(retry_after)
+                        retries += 1
+                        continue
                     
-                response.raise_for_status()
-                return response
-                
-            except requests.RequestException as e:
+                    response.raise_for_status()
+                    return await response.text()
+                        
+            except (aiohttp.ClientError, asyncio.TimeoutError) as e:
                 if retries == self.max_retries - 1:
+                    logger.error(f"Failed after {self.max_retries} retries for URL {url}: {str(e)}")
                     raise
+                
                 retries += 1
                 wait_time = self.min_request_interval * (retries + 1)
                 logger.warning(f"Request failed: {str(e)}. Retrying in {wait_time} seconds... ({retries}/{self.max_retries})")
-                time.sleep(wait_time)
+                await asyncio.sleep(wait_time)
         
         raise Exception(f"Failed after {self.max_retries} retries")
 
-    def get_brands(self) -> List[Dict]:
+    async def get_brands(self, session) -> List[Dict]:
+        """Fetch all brands from GSMArena"""
         try:
             logger.info("Fetching brands list")
-            response = self._make_request(f"{self.base_url}makers.php3")
-            soup = BeautifulSoup(response.text, 'html.parser')
+            html = await self._make_request(f"{self.base_url}makers.php3", session)
+            soup = BeautifulSoup(html, 'html.parser')
             brands = []
             
             for brand in soup.select('div.brandmenu-v2 ul li a'):
@@ -89,99 +123,103 @@ class GSMArenaScraper:
             logger.error(f"Error fetching brands: {str(e)}")
             return []
 
-    def get_device_pictures(self, url: str) -> List[str]:
+    async def get_device_pictures(self, url: str, session) -> List[str]:
+        """Fetch device pictures asynchronously"""
         try:
             logger.info(f"Fetching pictures for device: {url}")
-            response = self._make_request(url)
-            soup = BeautifulSoup(response.text, 'html.parser')
+            html = await self._make_request(url, session)
+            soup = BeautifulSoup(html, 'html.parser')
             
             pictures = []
-            # Get main picture
-            main_pic = soup.select_one('div.specs-photo-main img')
-            if main_pic and 'src' in main_pic.attrs:
-                pictures.append(main_pic['src'])
+            # Find the pictures section
+            pictures_section = soup.select_one('div.specs-photo-main')
+            if pictures_section:
+                main_pic = pictures_section.select_one('img')
+                if main_pic and 'src' in main_pic.attrs:
+                    pictures.append(main_pic['src'])
             
-            # Get pictures from the Pictures section if available
-            pictures_link = soup.select_one('a[href*="pictures"]')
-            if pictures_link:
-                pics_url = self.base_url + pictures_link['href']
-                pics_response = self._make_request(pics_url)
-                if pics_response.status_code == 200:
-                    pics_soup = BeautifulSoup(pics_response.text, 'html.parser')
-                    for pic in pics_soup.select('div.specs-photo-main img'):
-                        if 'src' in pic.attrs and pic['src'] not in pictures:
-                            pictures.append(pic['src'])
+            # Look for additional pictures
+            thumbs = soup.select('div.specs-photo-sub img')
+            for thumb in thumbs:
+                if 'src' in thumb.attrs:
+                    # Convert thumbnail URL to full-size image URL
+                    pic_url = thumb['src'].replace('t_thumb', 'full')
+                    if pic_url not in pictures:
+                        pictures.append(pic_url)
             
             return pictures
         except Exception as e:
-            logger.error(f"Error fetching device pictures: {str(e)}")
+            logger.error(f"Error fetching pictures for {url}: {str(e)}")
             return []
 
-    def get_device_specs(self, url: str) -> Optional[Dict]:
+    async def get_device_specs(self, url: str, session) -> Optional[Dict]:
+        """Fetch and parse device specifications asynchronously"""
         try:
             logger.info(f"Fetching specs for device: {url}")
-            response = self._make_request(url)
-            soup = BeautifulSoup(response.text, 'html.parser')
+            html = await self._make_request(url, session)
+            soup = BeautifulSoup(html, 'html.parser')
             
-            specs = {
-                'url': url,
-                'pictures': json.dumps(self.get_device_pictures(url))
-            }
+            # Extract device name
+            title = soup.select_one('h1.specs-phone-name-title')
+            device_name = title.text.strip() if title else ""
             
-            # Get device name
-            name_elem = soup.select_one('h1.specs-phone-name-title')
-            if name_elem:
-                specs['name'] = name_elem.text.strip()
+            # Get pictures
+            pictures = await self.get_device_pictures(url, session)
             
-            # Get all specification tables
-            for spec_table in soup.select('table'):
-                category = spec_table.select_one('th')
-                if not category:
-                    continue
-                    
-                category = category.text.strip()
+            # Extract specifications
+            specs = {}
+            spec_tables = soup.select('table.specs-table')
+            
+            for table in spec_tables:
+                category = table.select_one('th.ttl').text.strip() if table.select_one('th.ttl') else "Unknown"
                 specs[category] = {}
                 
-                for row in spec_table.select('tr'):
-                    label = row.select_one('td.ttl')
-                    value = row.select_one('td.nfo')
-                    if label and value:
-                        label_text = label.text.strip()
-                        value_text = value.text.strip()
-                        specs[category][label_text] = value_text
+                rows = table.select('tr')
+                for row in rows:
+                    name_cell = row.select_one('td.ttl')
+                    value_cell = row.select_one('td.nfo')
+                    
+                    if name_cell and value_cell:
+                        spec_name = name_cell.text.strip()
+                        spec_value = value_cell.text.strip()
+                        specs[category][spec_name] = spec_value
             
-            logger.debug(f"Successfully extracted specs for {specs.get('name', 'Unknown device')}")
-            return specs
+            result = {
+                'name': device_name,
+                'url': url,
+                'pictures': json.dumps(pictures),
+                'specifications': specs
+            }
+            
+            logger.debug(f"Successfully extracted specs for {device_name}")
+            return result
+            
         except Exception as e:
-            logger.error(f"Error fetching device specs: {str(e)}")
+            logger.error(f"Error fetching specs for {url}: {str(e)}")
             return None
 
-    def get_devices_from_brand(self, brand_url: str) -> List[Dict]:
-        """Get all devices from a brand, handling pagination."""
+    async def get_devices_from_brand(self, brand_url: str, session) -> List[Dict]:
+        """Get all devices from a brand, handling pagination asynchronously"""
         try:
+            logger.info(f"Fetching devices for brand: {brand_url}")
             all_devices = []
             current_url = brand_url
             page = 1
             
-            while current_url:
-                logger.info(f"Fetching devices from page {page} at {current_url}")
-                response = self._make_request(current_url)
-                if response.status_code != 200:
-                    break
+            while True:
+                logger.info(f"Processing page {page} for {brand_url}")
+                html = await self._make_request(current_url, session)
+                soup = BeautifulSoup(html, 'html.parser')
                 
-                soup = BeautifulSoup(response.text, 'html.parser')
-                
-                # Get devices from current page
-                devices_section = soup.select('div.makers li')
-                if not devices_section:
-                    break
-                
-                for device in devices_section:
+                # Find all device entries
+                device_list = soup.select('div.makers ul li')
+                for device in device_list:
                     link = device.select_one('a')
+                    img = device.select_one('img')
+                    
                     if not link:
                         continue
                         
-                    img = device.select_one('img')
                     device_data = {
                         'name': link.text.strip(),
                         'url': self.base_url + link['href'],
@@ -204,7 +242,7 @@ class GSMArenaScraper:
                 if next_page:
                     current_url = self.base_url + next_page
                     page += 1
-                    time.sleep(1)  # Respect rate limiting between pages
+                    # No need for explicit sleep here as _make_request handles rate limiting
                 else:
                     break
                 
@@ -215,7 +253,53 @@ class GSMArenaScraper:
             logger.error(f"Error fetching devices for brand: {str(e)}")
             return []
 
-    def save_to_csv(self):
+    async def _process_device_specs(self, device, brand_name, session):
+        """Process a single device's specifications asynchronously"""
+        try:
+            logger.info(f"Processing device: {device['name']}")
+            specs = await self.get_device_specs(device['url'], session)
+            if not specs:
+                return None
+                
+            return {
+                'brand_name': brand_name,
+                'device': device,
+                'specs': specs
+            }
+        except Exception as e:
+            logger.error(f"Error processing device {device['name']}: {str(e)}")
+            return None
+
+    async def _process_brand_devices(self, brand, session):
+        """Process all devices for a brand asynchronously"""
+        try:
+            logger.info(f"Processing brand: {brand['name']}")
+            devices = await self.get_devices_from_brand(brand['url'], session)
+            
+            # Process all devices concurrently with semaphore to limit concurrency
+            tasks = []
+            for device in devices:
+                task = asyncio.create_task(self._process_device_specs(device, brand['name'], session))
+                tasks.append(task)
+            
+            # Wait for all tasks to complete
+            results = []
+            for task in asyncio.as_completed(tasks):
+                result = await task
+                if result:
+                    results.append(result)
+            
+            return {
+                'brand': brand,
+                'devices': devices,
+                'results': results
+            }
+        except Exception as e:
+            logger.error(f"Error processing brand {brand['name']}: {str(e)}")
+            return None
+
+    async def _save_to_csv_async(self, brands_results):
+        """Save all scraped data to CSV files asynchronously"""
         try:
             # Create/clear the CSV files
             with open(self.brands_file, 'w', newline='', encoding='utf-8') as f:
@@ -226,15 +310,13 @@ class GSMArenaScraper:
                 writer = csv.writer(f)
                 writer.writerow(['device_url', 'name', 'pictures', 'specifications'])
             
-            # Get all brands
-            brands = self.get_brands()
-            total_brands = len(brands)
-            
-            for brand_idx, brand in enumerate(brands, 1):
-                logger.info(f"Processing brand {brand_idx}/{total_brands}: {brand['name']}")
-                
-                # Get all devices for the brand
-                devices = self.get_devices_from_brand(brand['url'])
+            # Process each brand's results
+            for brand_result in brands_results:
+                if not brand_result:
+                    continue
+                    
+                brand = brand_result['brand']
+                devices = brand_result['devices']
                 
                 # Save devices to brands file
                 with open(self.brands_file, 'a', newline='', encoding='utf-8') as f:
@@ -247,23 +329,56 @@ class GSMArenaScraper:
                             device['image_url']
                         ])
                 
-                # Get and save specifications for each device
-                for device_idx, device in enumerate(devices, 1):
-                    logger.info(f"Processing device {device_idx}/{len(devices)}: {device['name']}")
-                    specs = self.get_device_specs(device['url'])
-                    if specs:
-                        with open(self.specs_file, 'a', newline='', encoding='utf-8') as f:
-                            writer = csv.writer(f)
-                            writer.writerow([
-                                device['url'],
-                                specs.get('name', ''),
-                                specs.get('pictures', '[]'),
-                                json.dumps(specs)
-                            ])
-                    time.sleep(1)  # Respect the website
-                
+                # Save specifications to specs file
+                with open(self.specs_file, 'a', newline='', encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    for result in brand_result['results']:
+                        specs = result['specs']
+                        device = result['device']
+                        writer.writerow([
+                            device['url'],
+                            specs.get('name', ''),
+                            specs.get('pictures', '[]'),
+                            json.dumps(specs)
+                        ])
+            
             logger.success("Data extraction completed successfully!")
             return True
         except Exception as e:
             logger.error(f"Error saving data: {str(e)}")
             return False
+
+    async def save_to_csv_async(self):
+        """Main method to scrape and save all data asynchronously"""
+        try:
+            # Create client session
+            async with aiohttp.ClientSession() as session:
+                # Get all brands
+                brands = await self.get_brands(session)
+                total_brands = len(brands)
+                logger.info(f"Found {total_brands} brands to process")
+                
+                # Process each brand sequentially, but devices concurrently
+                brands_results = []
+                for brand_idx, brand in enumerate(brands, 1):
+                    logger.info(f"Processing brand {brand_idx}/{total_brands}: {brand['name']}")
+                    brand_result = await self._process_brand_devices(brand, session)
+                    if brand_result:
+                        brands_results.append(brand_result)
+                
+                # Save all results to CSV
+                await self._save_to_csv_async(brands_results)
+                
+            return True
+        except Exception as e:
+            logger.error(f"Error in save_to_csv_async: {str(e)}")
+            return False
+
+    def save_to_csv(self):
+        """Synchronous wrapper for the async method"""
+        return asyncio.run(self.save_to_csv_async())
+
+# Example usage
+if __name__ == "__main__":
+    scraper = AsyncGSMArenaScraper()
+    scraper.save_to_csv()

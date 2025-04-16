@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-04-15T23:17:11.507306",
+  "timestamp": "2025-04-16T20:50:05.508386",
   "brands": [
     {
       "name": "AT&T",
@@ -9,7 +9,7 @@
     {
       "name": "Acer",
       "url": "https://www.gsmarena.com/acer-phones-59.php",
-      "device_count": 102
+      "device_count": 104
     },
     {
       "name": "Allview",
@@ -199,7 +199,7 @@
     {
       "name": "Honor",
       "url": "https://www.gsmarena.com/honor-phones-121.php",
-      "device_count": 251
+      "device_count": 252
     },
     {
       "name": "Huawei",
@@ -214,7 +214,7 @@
     {
       "name": "Infinix",
       "url": "https://www.gsmarena.com/infinix-phones-119.php",
-      "device_count": 148
+      "device_count": 149
     },
     {
       "name": "Innostream",
@@ -349,7 +349,7 @@
     {
       "name": "OnePlus",
       "url": "https://www.gsmarena.com/oneplus-phones-95.php",
-      "device_count": 84
+      "device_count": 86
     },
     {
       "name": "Oppo",

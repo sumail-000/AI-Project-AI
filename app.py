@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, Response
 from scraper import GSMArenaScraper
 from brand_scanner import BrandScanner
 from incremental_scraper import IncrementalScraper
@@ -12,6 +12,8 @@ import csv
 import logging
 from loguru import logger
 from typing import Dict, List
+import traceback  # Add this import for better error reporting
+from ai_assistant import DeviceAIAssistant  # Import the AI assistant
 
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -20,6 +22,7 @@ limiter.init_app(app)
 scraper = GSMArenaScraper()
 incremental_scraper = IncrementalScraper()
 brand_scanner = BrandScanner()
+ai_assistant = DeviceAIAssistant()  # Initialize the AI assistant
 progress_queue = queue.Queue()
 
 current_status = {
@@ -39,9 +42,39 @@ current_status = {
 all_brands = []
 scraping_paused = False
 
+# Maximum size for the progress queue
+MAX_QUEUE_SIZE = 1000
+
 def update_status(**kwargs):
+    global current_status
+    # Update the current status
     current_status.update(kwargs)
-    progress_queue.put(current_status.copy())
+    
+    # Create a timestamped message for the queue
+    status_copy = current_status.copy()
+    status_copy['timestamp'] = time.time()
+    
+    # Log the message to help with debugging
+    if 'message' in kwargs:
+        logger.debug(f"Progress update: {kwargs['message']}")
+    
+    # Ensure the queue doesn't get too large
+    try:
+        if progress_queue.qsize() > MAX_QUEUE_SIZE:
+            # Clear half of the queue if it gets too large
+            for _ in range(MAX_QUEUE_SIZE // 2):
+                try:
+                    progress_queue.get_nowait()
+                except queue.Empty:
+                    break
+    except Exception as e:
+        logger.error(f"Error managing queue size: {str(e)}")
+    
+    # Add the new status to the queue
+    try:
+        progress_queue.put(status_copy)
+    except Exception as e:
+        logger.error(f"Error adding to progress queue: {str(e)}")
 
 @app.route('/')
 def index():
@@ -309,12 +342,40 @@ def get_extracted_brands():
 @app.route('/progress')
 def get_progress():
     try:
-        # Get latest status without blocking
+        # Create a copy of the current status to avoid race conditions
         status = current_status.copy()
-        while not progress_queue.empty():
-            status = progress_queue.get_nowait()
+        
+        # Get the latest status from the queue without blocking
+        latest_status = None
+        latest_timestamp = 0
+        
+        # Process all available items in the queue
+        items_to_process = min(progress_queue.qsize(), 50)  # Limit to 50 items at a time
+        
+        for _ in range(items_to_process):
+            try:
+                queue_status = progress_queue.get_nowait()
+                # Keep the status with the most recent timestamp
+                if 'timestamp' in queue_status and queue_status['timestamp'] > latest_timestamp:
+                    latest_status = queue_status
+                    latest_timestamp = queue_status['timestamp']
+            except queue.Empty:
+                break
+        
+        # If we found a newer status in the queue, use it
+        if latest_status:
+            # Remove the timestamp before sending to frontend
+            if 'timestamp' in latest_status:
+                del latest_status['timestamp']
+            status = latest_status
+        
+        # Log the status being sent to help with debugging
+        if 'message' in status:
+            logger.debug(f"Sending progress to frontend: {status['message']}")
+        
         return jsonify(status)
-    except queue.Empty:
+    except Exception as e:
+        logger.error(f"Error in get_progress: {str(e)}")
         return jsonify(current_status)
 
 @app.route('/api-management')
@@ -327,6 +388,26 @@ def api_docs():
     """Render the API documentation page."""
     return render_template('swagger.html')
 
+@app.route('/ai-assistant')
+def ai_assistant_page():
+    """Render the AI assistant page."""
+    return render_template('ai_assistant.html')
+
+@app.route('/ai-assistant-api', methods=['POST'])
+def ai_assistant_api():
+    """API endpoint for the AI assistant."""
+    try:
+        data = request.get_json()
+        query = data.get('query')
+        if not query:
+            return jsonify({'status': 'error', 'message': 'Query required'})
+        
+        response = ai_assistant.process_query(query)
+        return jsonify({'status': 'success', 'response': response})
+    except Exception as e:
+        logger.error(f"Error in AI assistant API: {str(e)}")
+        return jsonify({'status': 'error', 'message': str(e)})
+
 def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = None):
     """Scrape worker with option to delete existing data for specific brands."""
     try:
@@ -337,6 +418,7 @@ def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = Non
             brands_processed=0,
             devices_processed=0
         )
+        logger.info("Starting data extraction...")
         
         # Initialize delete_existing if None
         if delete_existing is None:
@@ -347,11 +429,13 @@ def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = Non
             with open(scraper.brands_file, 'w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
                 writer.writerow(['brand_name', 'device_name', 'device_url', 'device_image'])
+            logger.info(f"Created brands file: {scraper.brands_file}")
         
         if not os.path.exists(scraper.specs_file):
             with open(scraper.specs_file, 'w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
                 writer.writerow(['device_url', 'name', 'pictures', 'specifications'])
+            logger.info(f"Created specs file: {scraper.specs_file}")
         
         # If delete_existing contains brand URLs, selectively delete data for those brands
         if delete_existing:
@@ -378,43 +462,40 @@ def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = Non
                         
                         # Get device URLs to delete
                         device_urls_to_delete = set()
+                        rows_to_keep = []
                         
-                        # First pass to collect device URLs to delete
-                        input_file.seek(0)
-                        next(reader)  # Skip header
                         for row in reader:
                             if row and row[0] in brand_names_to_delete:
-                                device_urls_to_delete.add(row[2])  # device_url is at index 2
+                                device_urls_to_delete.add(row[2])  # URL is in the third column
+                            else:
+                                rows_to_keep.append(row)
                         
-                        # Second pass to write rows that should be kept
-                        input_file.seek(0)
-                        next(reader)  # Skip header
-                        for row in reader:
-                            if row and row[0] not in brand_names_to_delete:
-                                writer.writerow(row)
+                        # Write rows that should be kept
+                        for row in rows_to_keep:
+                            writer.writerow(row)
                     
                     # Replace original file with temp file
                     os.replace(temp_brands_file, scraper.brands_file)
-                    
-                    # Process device_specifications.csv - remove entries for selected brands' devices
-                    if os.path.exists(scraper.specs_file):
-                        temp_specs_file = scraper.specs_file + '.temp'
-                        with open(scraper.specs_file, 'r', encoding='utf-8') as input_file, \
-                             open(temp_specs_file, 'w', newline='', encoding='utf-8') as output_file:
-                            reader = csv.reader(input_file)
-                            writer = csv.writer(output_file)
-                            
-                            # Write header
-                            header = next(reader)
-                            writer.writerow(header)
-                            
-                            # Write rows that should be kept
-                            for row in reader:
-                                if row and row[0] not in device_urls_to_delete:
-                                    writer.writerow(row)
+                
+                # Process device_specifications.csv - remove entries for selected brands
+                if os.path.exists(scraper.specs_file) and device_urls_to_delete:
+                    temp_specs_file = scraper.specs_file + '.temp'
+                    with open(scraper.specs_file, 'r', encoding='utf-8') as input_file, \
+                         open(temp_specs_file, 'w', newline='', encoding='utf-8') as output_file:
+                        reader = csv.reader(input_file)
+                        writer = csv.writer(output_file)
                         
-                        # Replace original file with temp file
-                        os.replace(temp_specs_file, scraper.specs_file)
+                        # Write header
+                        header = next(reader)
+                        writer.writerow(header)
+                        
+                        # Write rows, updating the one we need
+                        for row in reader:
+                            if row and row[0] not in device_urls_to_delete:
+                                writer.writerow(row)
+                    
+                    # Replace original file with temp file
+                    os.replace(temp_specs_file, scraper.specs_file)
                 
                 update_status(
                     message=f"Deleted data for {len(brand_names_to_delete)} brands: {', '.join(brand_names_to_delete)}"
@@ -446,10 +527,17 @@ def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = Non
                 current_brand_progress=0,
                 brands_processed=brand_idx
             )
+            logger.info(f"Processing brand: {brand_name} ({brand_idx}/{len(brands_to_scrape)})")
             
             # Get devices for current brand
             devices = scraper.get_devices_from_brand(brand['url'])
             total_brand_devices = len(devices)
+            logger.info(f"Found {total_brand_devices} devices for brand {brand_name}")
+            
+            # Update with actual device count
+            update_status(
+                current_brand_devices=total_brand_devices
+            )
             
             # Save devices and their specs
             for device_idx, device in enumerate(devices, 1):
@@ -458,25 +546,64 @@ def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = Non
                     time.sleep(1)
                     continue
                     
-                device_progress = (device_idx / total_brand_devices) * 100
+                # Calculate and update progress for this device
+                device_progress = (device_idx / total_brand_devices) * 100 if total_brand_devices > 0 else 100
+                device_message = f"Processing {device['name']} ({device_idx}/{total_brand_devices})"
+                
+                # Send separate update for each device to ensure it's captured
                 update_status(
-                    message=f"Processing {device['name']} ({device_idx}/{total_brand_devices})",
+                    message=device_message,
                     current_brand_progress=device_progress,
                     devices_processed=devices_processed + device_idx
                 )
+                logger.info(f"Processing {device['name']} ({device_idx}/{total_brand_devices})")
                 
                 # Process device specs
-                specs = scraper.get_device_specs(device['url'])
-                if specs:
-                    with open(scraper.brands_file, 'a', newline='', encoding='utf-8') as f:
-                        writer = csv.writer(f)
-                        writer.writerow([brand_name, device['name'], device['url'], device['image_url']])
+                try:
+                    # Send update for fetching specs
+                    update_status(
+                        message=f"Fetching specs for {device['name']}..."
+                    )
+                    logger.info(f"Fetching specs for {device['name']}...")
                     
-                    with open(scraper.specs_file, 'a', newline='', encoding='utf-8') as f:
-                        writer = csv.writer(f)
-                        writer.writerow([device['url'], specs.get('name', ''), specs.get('pictures', '[]'), json.dumps(specs)])
+                    specs = scraper.get_device_specs(device['url'])
+                    
+                    if specs:
+                        # Send update for saving specs
+                        update_status(
+                            message=f"Saving specs for {device['name']}..."
+                        )
+                        logger.info(f"Saving specs for {device['name']}...")
+                        
+                        with open(scraper.brands_file, 'a', newline='', encoding='utf-8') as f:
+                            writer = csv.writer(f)
+                            writer.writerow([brand_name, device['name'], device['url'], device['image_url']])
+                        
+                        with open(scraper.specs_file, 'a', newline='', encoding='utf-8') as f:
+                            writer = csv.writer(f)
+                            writer.writerow([device['url'], specs.get('name', ''), specs.get('pictures', '[]'), json.dumps(specs)])
+                        
+                        # Send a success update
+                        update_status(
+                            message=f"Saved specifications for {device['name']}"
+                        )
+                        logger.info(f"Saved specifications for {device['name']}")
+                except Exception as e:
+                    logger.error(f"Error processing device {device['name']}: {str(e)}")
+                    update_status(
+                        message=f"Error processing {device['name']}: {str(e)}"
+                    )
                 
-                time.sleep(1)  # Respect the website
+                # Update progress after each device
+                update_status(
+                    current_brand_progress=device_progress,
+                    devices_processed=devices_processed + device_idx,
+                    message=f"Completed {device['name']} ({device_idx}/{total_brand_devices})"
+                )
+                logger.info(f"Completed {device['name']} ({device_idx}/{total_brand_devices})")
+                
+                # Respect the website by adding a delay
+                time.sleep(1)
             
             # Update completed brands
             devices_processed += total_brand_devices
@@ -486,35 +613,52 @@ def scrape_worker(brands_to_scrape: List[Dict], delete_existing: List[str] = Non
                 'expected': brand_devices
             }
             current_status['completed_brands'].append(completed_brand)
+            logger.info(f"Completed brand: {brand_name} with {total_brand_devices} devices")
             
             # Calculate overall progress
-            overall_progress = (devices_processed / total_devices) * 100
-            update_status(progress=overall_progress)
+            overall_progress = (devices_processed / total_devices) * 100 if total_devices > 0 else 100
+            update_status(
+                progress=overall_progress,
+                message=f"Completed brand: {brand_name} ({brand_idx}/{len(brands_to_scrape)})"
+            )
+            logger.info(f"Overall progress: {overall_progress:.1f}% ({devices_processed}/{total_devices} devices)")
         
         update_status(
             message="Data extraction completed successfully!",
             progress=100
         )
+        logger.info("Data extraction completed successfully!")
     except Exception as e:
-        logger.error(f"Error in scraper: {str(e)}")
+        error_msg = f"Error in scraper: {str(e)}\n{traceback.format_exc()}"
+        logger.error(error_msg)
         update_status(message=f"Error: {str(e)}")
 
 def incremental_update_worker(brands_to_update: List[Dict]):
     """Worker function to perform incremental updates."""
     try:
-        # Start incremental update
+        # Reset status for new update session
         update_status(
             message="Starting incremental update...",
             progress=0,
+            current_brand="",
+            current_brand_devices=0,
+            current_brand_progress=0,
             brands_processed=0,
             devices_processed=0,
+            total_brands=0,
+            total_devices=0,
+            completed_brands=[],
             is_incremental=True
         )
+        logger.info("Starting incremental update...")
         
-        # Calculate total brands
+        # Calculate total devices for progress tracking
+        total_devices = sum(brand['device_count'] for brand in brands_to_update)
         update_status(
+            total_devices=total_devices,
             total_brands=len(brands_to_update)
         )
+        logger.info(f"Total brands to update: {len(brands_to_update)}, Total devices: {total_devices}")
         
         # Process each brand incrementally
         results = {
@@ -531,14 +675,16 @@ def incremental_update_worker(brands_to_update: List[Dict]):
                 
             # Update status for current brand
             brand_name = brand['name']
+            brand_devices = brand['device_count']
             
             update_status(
-                message=f"Processing brand: {brand_name} (incremental update)",
+                message=f"Processing brand for incremental update: {brand_name}",
                 current_brand=brand_name,
-                current_brand_devices=brand['device_count'],
+                current_brand_devices=brand_devices,
                 current_brand_progress=0,
                 brands_processed=brand_idx
             )
+            logger.info(f"Processing brand for incremental update: {brand_name} ({brand_idx}/{len(brands_to_update)})")
             
             # Get devices needing update
             new_devices, updated_devices = incremental_scraper.get_devices_needing_update(brand)
@@ -547,6 +693,7 @@ def incremental_update_worker(brands_to_update: List[Dict]):
             # Update console with what we found
             addConsoleMessage = f"Found {len(new_devices)} new devices and {len(updated_devices)} devices needing updates for {brand_name}"
             update_status(message=addConsoleMessage)
+            logger.info(addConsoleMessage)
             
             # Process new devices
             devices_processed = 0
@@ -558,12 +705,13 @@ def incremental_update_worker(brands_to_update: List[Dict]):
                     time.sleep(1)
                     continue
                     
-                device_progress = (device_idx / total_devices_to_process) * 100 if total_devices_to_process > 0 else 100
+                device_progress = (device_idx / len(new_devices)) * 100 if len(new_devices) > 0 else 100
                 update_status(
                     message=f"Processing new device: {device['name']} ({device_idx}/{len(new_devices)})",
                     current_brand_progress=device_progress,
                     devices_processed=results['new_devices'] + results['updated_devices'] + device_idx
                 )
+                logger.info(f"Processing new device: {device['name']} ({device_idx}/{len(new_devices)})")
                 
                 # Process device specs
                 specs = incremental_scraper.get_device_specs(device['url'])
@@ -587,12 +735,13 @@ def incremental_update_worker(brands_to_update: List[Dict]):
                     time.sleep(1)
                     continue
                     
-                device_progress = ((len(new_devices) + device_idx) / total_devices_to_process) * 100 if total_devices_to_process > 0 else 100
+                device_progress = (device_idx / len(updated_devices)) * 100 if len(updated_devices) > 0 else 100
                 update_status(
                     message=f"Processing updated device: {device['name']} ({device_idx}/{len(updated_devices)})",
                     current_brand_progress=device_progress,
                     devices_processed=results['new_devices'] + results['updated_devices'] + device_idx
                 )
+                logger.info(f"Processing updated device: {device['name']} ({device_idx}/{len(updated_devices)})")
                 
                 # Process device specs
                 specs = incremental_scraper.get_device_specs(device['url'])
@@ -644,7 +793,7 @@ def incremental_update_worker(brands_to_update: List[Dict]):
             completed_brand = {
                 'name': brand_name,
                 'devices': len(new_devices) + len(updated_devices),
-                'expected': brand['device_count']
+                'expected': brand_devices
             }
             current_status['completed_brands'].append(completed_brand)
             
@@ -661,6 +810,7 @@ def incremental_update_worker(brands_to_update: List[Dict]):
             message=f"Incremental update completed! Added {results['new_devices']} new devices and updated {results['updated_devices']} devices.",
             progress=100
         )
+        logger.info(f"Incremental update completed! Added {results['new_devices']} new devices and updated {results['updated_devices']} devices.")
     except Exception as e:
         logger.error(f"Error in incremental update: {str(e)}")
         update_status(message=f"Error: {str(e)}")
@@ -691,6 +841,41 @@ def check_brand_data(brand_name: str) -> Dict:
     except Exception as e:
         logger.error(f"Error checking brand data: {str(e)}")
         return {'exists': False, 'device_count': 0}
+
+@app.route('/events')
+def events():
+    def event_stream():
+        while True:
+            # Get the latest status from the queue without blocking
+            latest_status = None
+            latest_timestamp = 0
+            
+            # Process all available items in the queue
+            items_to_process = min(progress_queue.qsize(), 50)  # Limit to 50 items at a time
+            
+            for _ in range(items_to_process):
+                try:
+                    queue_status = progress_queue.get_nowait()
+                    # Keep the status with the most recent timestamp
+                    if 'timestamp' in queue_status and queue_status['timestamp'] > latest_timestamp:
+                        latest_status = queue_status
+                        latest_timestamp = queue_status['timestamp']
+                except queue.Empty:
+                    break
+            
+            # If we found a newer status in the queue, use it
+            if latest_status:
+                # Remove the timestamp before sending to frontend
+                if 'timestamp' in latest_status:
+                    del latest_status['timestamp']
+                yield 'data: {}\n\n'.format(json.dumps(latest_status))
+            else:
+                yield 'data: {}\n\n'.format(json.dumps(current_status))
+            
+            # Wait a bit before checking again
+            time.sleep(1)
+    
+    return Response(event_stream(), mimetype='text/event-stream')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

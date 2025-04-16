@@ -8,3 +8,8 @@ limits==3.6.0
 uuid==1.30
 pandas==2.0.3
 redis==4.5.5
+sentence-transformers==2.2.2
+scikit-learn==1.2.2
+torch==2.0.1
+transformers==4.30.2
+numpy==1.24.3

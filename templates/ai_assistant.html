@@ -1,0 +1,460 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 neon-text">Mobile Device AI Assistant</h1>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="chat-container stats-box">
+                <h4>Ask Me Anything About Mobile Devices</h4>
+                <div id="chat-messages" class="console-output mb-3">
+                    <!-- Messages will appear here -->
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" id="user-input" class="form-control" placeholder="Ask about any mobile device...">
+                    <button id="send-button" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="stats-box">
+                <h4>Example Queries</h4>
+                <div class="example-queries">
+                    <div class="example-query" data-query="Show me the Samsung Galaxy S21">
+                        Show me the Samsung Galaxy S21
+                    </div>
+                    <div class="example-query" data-query="Compare iPhone 12 and Samsung Galaxy S21">
+                        Compare iPhone 12 and Samsung Galaxy S21
+                    </div>
+                    <div class="example-query" data-query="What's the battery capacity of Pixel 6?">
+                        What's the battery capacity of Pixel 6?
+                    </div>
+                    <div class="example-query" data-query="Recommend me the best phones">
+                        Recommend me the best phones
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="visualization-area" class="mt-4">
+        <!-- Visualizations will appear here -->
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    .chat-container {
+        padding: 20px;
+    }
+    
+    #chat-messages {
+        height: 300px;
+        overflow-y: auto;
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: var(--dark-bg);
+        border-radius: 5px;
+        border: 1px solid var(--neon-blue);
+    }
+    
+    .user-message {
+        background-color: rgba(57, 255, 20, 0.1);
+        color: var(--neon-green);
+        padding: 8px 12px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        max-width: 80%;
+        align-self: flex-end;
+        margin-left: auto;
+        border: 1px solid var(--neon-green);
+    }
+    
+    .bot-message {
+        background-color: rgba(0, 255, 255, 0.1);
+        color: var(--neon-blue);
+        padding: 8px 12px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        max-width: 80%;
+        border: 1px solid var(--neon-blue);
+    }
+    
+    .example-queries {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .example-query {
+        background-color: var(--dark-bg);
+        color: var(--neon-yellow);
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        border: 1px solid var(--neon-orange);
+        transition: all 0.3s ease;
+    }
+    
+    .example-query:hover {
+        background-color: rgba(255, 153, 51, 0.2);
+        transform: translateY(-2px);
+    }
+    
+    .device-card {
+        background-color: var(--dark-bg);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid var(--neon-purple);
+        box-shadow: 0 0 10px rgba(188, 19, 254, 0.2);
+    }
+    
+    .device-image {
+        max-width: 100%;
+        border-radius: 5px;
+        border: 1px solid var(--neon-blue);
+    }
+    
+    .specs-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-top: 15px;
+    }
+    
+    .spec-item {
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid var(--neon-green);
+    }
+    
+    .spec-name {
+        color: var(--neon-pink);
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .spec-value {
+        color: var(--neon-green);
+    }
+    
+    .comparison-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .comparison-summary {
+        grid-column: span 2;
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        border: 1px solid var(--neon-yellow);
+        color: var(--neon-yellow);
+    }
+    
+    .recommendation-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .recommendation-card {
+        background-color: var(--dark-bg);
+        border-radius: 8px;
+        padding: 15px;
+        border: 1px solid var(--neon-orange);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .recommendation-image {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        margin-bottom: 10px;
+        border: 1px solid var(--neon-blue);
+        border-radius: 5px;
+        padding: 5px;
+    }
+    
+    .recommendation-name {
+        color: var(--neon-orange);
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+    
+    .recommendation-specs {
+        color: var(--neon-green);
+        font-size: 0.9em;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const visualizationArea = document.getElementById('visualization-area');
+        const exampleQueries = document.querySelectorAll('.example-query');
+        
+        // Add initial greeting
+        addBotMessage("Hello! I'm your mobile device assistant. Ask me about any device in our database, compare devices, or get recommendations.");
+        
+        // Handle send button click
+        sendButton.addEventListener('click', sendMessage);
+        
+        // Handle enter key press
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Handle example query clicks
+        exampleQueries.forEach(query => {
+            query.addEventListener('click', function() {
+                const queryText = this.getAttribute('data-query');
+                userInput.value = queryText;
+                sendMessage();
+            });
+        });
+        
+        function sendMessage() {
+            const query = userInput.value.trim();
+            if (query === '') return;
+            
+            // Add user message to chat
+            addUserMessage(query);
+            userInput.value = '';
+            
+            // Show loading indicator
+            addBotMessage("Thinking...", "loading");
+            
+            // Send query to backend
+            fetch('/ai-assistant-api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ query: query })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove loading message
+                removeLoadingMessage();
+                
+                // Handle different response types
+                if (data.status === 'error') {
+                    addBotMessage(data.message);
+                    return;
+                }
+                
+                const response = data.response;
+                
+                if (response.type === 'text') {
+                    addBotMessage(response.content);
+                } else if (response.type === 'device_details') {
+                    addBotMessage(response.summary);
+                    renderDeviceDetails(response.device);
+                } else if (response.type === 'comparison') {
+                    addBotMessage(response.summary);
+                    addBotMessage(response.comparison_text);
+                    renderComparison(response.devices);
+                } else if (response.type === 'spec_details') {
+                    addBotMessage(response.summary);
+                    addBotMessage(response.spec_value);
+                    renderDeviceDetails(response.device);
+                } else if (response.type === 'recommendation') {
+                    addBotMessage(response.summary);
+                    renderRecommendations(response.devices);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                removeLoadingMessage();
+                addBotMessage("Sorry, I encountered an error processing your request.");
+            });
+        }
+        
+        function addUserMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'user-message';
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function addBotMessage(message, type = '') {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'bot-message';
+            if (type === 'loading') {
+                messageDiv.className += ' loading-message';
+            }
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function removeLoadingMessage() {
+            const loadingMessages = document.querySelectorAll('.loading-message');
+            loadingMessages.forEach(msg => msg.remove());
+        }
+        
+        function renderDeviceDetails(device) {
+            // Clear previous visualizations
+            visualizationArea.innerHTML = '';
+            
+            // Create device card
+            const deviceCard = document.createElement('div');
+            deviceCard.className = 'device-card';
+            
+            // Add device image and name
+            deviceCard.innerHTML = `
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="${device.image_url}" alt="${device.name}" class="device-image img-fluid">
+                    </div>
+                    <div class="col-md-8">
+                        <h3>${device.name}</h3>
+                        <div class="specs-container">
+                            ${generateSpecsHTML(device.specifications)}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            visualizationArea.appendChild(deviceCard);
+        }
+        
+        function renderComparison(devices) {
+            if (devices.length < 2) return;
+            
+            // Clear previous visualizations
+            visualizationArea.innerHTML = '';
+            
+            // Create comparison container
+            const comparisonContainer = document.createElement('div');
+            comparisonContainer.className = 'comparison-container';
+            
+            // Add device cards
+            devices.forEach(device => {
+                const deviceCard = document.createElement('div');
+                deviceCard.className = 'device-card';
+                
+                deviceCard.innerHTML = `
+                    <div class="text-center mb-3">
+                        <img src="${device.image_url}" alt="${device.name}" class="device-image" style="max-height: 200px;">
+                        <h4 class="mt-2">${device.name}</h4>
+                    </div>
+                    <div class="specs-container">
+                        ${generateSpecsHTML(device.specifications)}
+                    </div>
+                `;
+                
+                comparisonContainer.appendChild(deviceCard);
+            });
+            
+            visualizationArea.appendChild(comparisonContainer);
+        }
+        
+        function renderRecommendations(devices) {
+            // Clear previous visualizations
+            visualizationArea.innerHTML = '';
+            
+            // Create recommendations container
+            const recommendationsContainer = document.createElement('div');
+            recommendationsContainer.className = 'recommendation-container';
+            
+            // Add device cards
+            devices.forEach(device => {
+                const deviceCard = document.createElement('div');
+                deviceCard.className = 'recommendation-card';
+                
+                // Get key specs
+                let keySpecs = '';
+                if (device.specifications) {
+                    if (device.specifications.display) {
+                        keySpecs += `Display: ${device.specifications.display}<br>`;
+                    }
+                    if (device.specifications.chipset) {
+                        keySpecs += `Chipset: ${device.specifications.chipset}<br>`;
+                    }
+                    if (device.specifications.battery) {
+                        keySpecs += `Battery: ${device.specifications.battery}`;
+                    }
+                }
+                
+                deviceCard.innerHTML = `
+                    <img src="${device.image_url}" alt="${device.name}" class="recommendation-image">
+                    <div class="recommendation-name">${device.name}</div>
+                    <div class="recommendation-specs">${keySpecs}</div>
+                `;
+                
+                recommendationsContainer.appendChild(deviceCard);
+            });
+            
+            visualizationArea.appendChild(recommendationsContainer);
+        }
+        
+        function generateSpecsHTML(specs) {
+            if (!specs || Object.keys(specs).length === 0) {
+                return '<div class="spec-item"><div class="spec-name">No specifications available</div></div>';
+            }
+            
+            // Define the order and labels for key specifications
+            const keySpecs = [
+                { key: 'display', label: 'Display' },
+                { key: 'chipset', label: 'Processor' },
+                { key: 'memory', label: 'Memory' },
+                { key: 'camera', label: 'Main Camera' },
+                { key: 'selfiecam', label: 'Selfie Camera' },
+                { key: 'battery', label: 'Battery' },
+                { key: 'os', label: 'OS' },
+                { key: 'dimensions', label: 'Dimensions' },
+                { key: 'weight', label: 'Weight' }
+            ];
+            
+            let html = '';
+            
+            // Add key specs first
+            keySpecs.forEach(spec => {
+                if (specs[spec.key]) {
+                    html += `
+                        <div class="spec-item">
+                            <div class="spec-name">${spec.label}</div>
+                            <div class="spec-value">${specs[spec.key]}</div>
+                        </div>
+                    `;
+                }
+            });
+            
+            // Add any remaining specs
+            Object.keys(specs).forEach(key => {
+                if (!keySpecs.some(spec => spec.key === key)) {
+                    html += `
+                        <div class="spec-item">
+                            <div class="spec-name">${key.charAt(0).toUpperCase() + key.slice(1)}</div>
+                            <div class="spec-value">${specs[key]}</div>
+                        </div>
+                    `;
+                }
+            });
+            
+            return html;
+        }
+    });
+</script>
+{% endblock %}

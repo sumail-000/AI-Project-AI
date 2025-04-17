@@ -18121,3 +18121,30 @@ Reshape your data either using array.reshape(-1, 1) if your data has a single fe
 2025-04-17 06:08:25.832 | INFO     | __main__:scrape_worker_impl:688 - Data extraction completed!
 2025-04-17 06:08:25.832 | INFO     | __main__:scrape_worker_impl:688 - Data extraction completed!
 2025-04-17 06:08:25.832 | INFO     | __main__:scrape_worker_impl:688 - Data extraction completed!
+2025-04-17 06:09:32.671 | INFO     | ai_assistant:_process_device_data:86 - Loaded 559 devices from brands_devices.csv
+2025-04-17 06:09:32.671 | INFO     | ai_assistant:_process_device_data:86 - Loaded 559 devices from brands_devices.csv
+2025-04-17 06:09:32.671 | INFO     | ai_assistant:_process_device_data:86 - Loaded 559 devices from brands_devices.csv
+2025-04-17 06:09:32.711 | INFO     | ai_assistant:_process_device_data:96 - Loaded 432 device specifications from device_specifications.csv
+2025-04-17 06:09:32.711 | INFO     | ai_assistant:_process_device_data:96 - Loaded 432 device specifications from device_specifications.csv
+2025-04-17 06:09:32.711 | INFO     | ai_assistant:_process_device_data:96 - Loaded 432 device specifications from device_specifications.csv
+2025-04-17 06:09:32.715 | INFO     | ai_assistant:_process_device_data:107 - Created unified data with 561 entries
+2025-04-17 06:09:32.715 | INFO     | ai_assistant:_process_device_data:107 - Created unified data with 561 entries
+2025-04-17 06:09:32.715 | INFO     | ai_assistant:_process_device_data:107 - Created unified data with 561 entries
+2025-04-17 06:09:33.060 | INFO     | ai_assistant:_build_device_index:165 - Built device index with 1117 entries
+2025-04-17 06:09:33.060 | INFO     | ai_assistant:_build_device_index:165 - Built device index with 1117 entries
+2025-04-17 06:09:33.060 | INFO     | ai_assistant:_build_device_index:165 - Built device index with 1117 entries
+2025-04-17 06:09:33.783 | INFO     | ai_assistant:__init__:41 - Loaded sentence transformer model successfully
+2025-04-17 06:09:33.783 | INFO     | ai_assistant:__init__:41 - Loaded sentence transformer model successfully
+2025-04-17 06:09:33.783 | INFO     | ai_assistant:__init__:41 - Loaded sentence transformer model successfully
+2025-04-17 06:09:33.790 | INFO     | conversation_model:load_conversation_data:64 - Loaded 6 conversation patterns
+2025-04-17 06:09:33.790 | INFO     | conversation_model:load_conversation_data:64 - Loaded 6 conversation patterns
+2025-04-17 06:09:33.790 | INFO     | conversation_model:load_conversation_data:64 - Loaded 6 conversation patterns
+2025-04-17 06:09:33.790 | INFO     | conversation_model:load_or_initialize_vectorizer:95 - Initializing new TF-IDF vectorizer
+2025-04-17 06:09:33.790 | INFO     | conversation_model:load_or_initialize_vectorizer:95 - Initializing new TF-IDF vectorizer
+2025-04-17 06:09:33.790 | INFO     | conversation_model:load_or_initialize_vectorizer:95 - Initializing new TF-IDF vectorizer
+2025-04-17 06:09:33.792 | INFO     | ai_assistant:__init__:50 - Initialized conversation model
+2025-04-17 06:09:33.792 | INFO     | ai_assistant:__init__:50 - Initialized conversation model
+2025-04-17 06:09:33.792 | INFO     | ai_assistant:__init__:50 - Initialized conversation model
+2025-04-17 06:09:36.201 | INFO     | ai_assistant:_create_device_embeddings:211 - Created embeddings for 561 devices
+2025-04-17 06:09:36.201 | INFO     | ai_assistant:_create_device_embeddings:211 - Created embeddings for 561 devices
+2025-04-17 06:09:36.201 | INFO     | ai_assistant:_create_device_embeddings:211 - Created embeddings for 561 devices

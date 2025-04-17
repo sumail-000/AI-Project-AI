@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-04-16T20:50:05.508386",
+  "timestamp": "2025-04-17T10:54:56.647209",
   "brands": [
     {
       "name": "AT&T",
@@ -199,7 +199,7 @@
     {
       "name": "Honor",
       "url": "https://www.gsmarena.com/honor-phones-121.php",
-      "device_count": 252
+      "device_count": 254
     },
     {
       "name": "Huawei",
@@ -589,7 +589,7 @@
     {
       "name": "ZTE",
       "url": "https://www.gsmarena.com/zte-phones-62.php",
-      "device_count": 405
+      "device_count": 406
     },
     {
       "name": "alcatel",
@@ -624,7 +624,7 @@
     {
       "name": "vivo",
       "url": "https://www.gsmarena.com/vivo-phones-98.php",
-      "device_count": 515
+      "device_count": 516
     }
   ],
   "brand_count": 125

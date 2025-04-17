@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Device AI Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-green: #39FF14;
+            --neon-pink: #FF10F0;
+            --neon-blue: #00FFFF;
+            --neon-purple: #BC13FE;
+            --neon-orange: #FF9933;
+            --neon-yellow: #FFFF00;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+        }
+        
+        body {
+            background-color: var(--darker-bg);
+            color: var(--neon-green);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 0.97)), 
+                        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%2339FF14' fill-opacity='0.1' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+            z-index: -1;
+            animation: pixelate 20s linear infinite;
+        }
+        
+        @keyframes pixelate {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 100px 100px;
+            }
+        }
+        
+        .container {
+            background-color: rgba(5, 5, 5, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.3), 
+                        0 0 40px rgba(255, 16, 240, 0.1), 
+                        0 0 60px rgba(0, 255, 255, 0.1);
+            margin-top: 30px;
+            border: 1px solid var(--neon-green);
+        }
+        
+        h1, h4 {
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px rgba(255, 16, 240, 0.7);
+            font-weight: bold;
+        }
+        
+        .console-output {
+            background-color: #000000;
+            color: var(--neon-green);
+            padding: 15px;
+            border-radius: 5px;
+            height: 300px;
+            overflow-y: scroll;
+            font-family: 'Courier New', monospace;
+            margin-top: 20px;
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.4) inset;
+            position: relative;
+            max-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .console-output > div {
+            margin-bottom: 5px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+        
+        .console-info {
+            color: var(--neon-green);
+        }
+        
+        .console-success {
+            color: var(--neon-yellow);
+            font-weight: bold;
+        }
+        
+        .console-error {
+            color: var(--neon-pink);
+            font-weight: bold;
+        }
+        
+        .progress {
+            height: 25px;
+            margin-bottom: 10px;
+            background-color: var(--dark-bg);
+            border: 1px solid var(--neon-blue);
+        }
+        
+        .progress-bar {
+            background-color: var(--neon-blue);
+            background-image: linear-gradient(45deg, 
+                rgba(57, 255, 20, 0.15) 25%, 
+                transparent 25%, 
+                transparent 50%, 
+                rgba(57, 255, 20, 0.15) 50%, 
+                rgba(57, 255, 20, 0.15) 75%, 
+                transparent 75%, 
+                transparent);
+            background-size: 1rem 1rem;
+            animation: progress-bar-stripes 1s linear infinite;
+        }
+        
+        @keyframes progress-bar-stripes {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 1rem 0;
+            }
+        }
+        
+        .progress-bar.bg-success {
+            background-color: var(--neon-purple) !important;
+        }
+        
+        .stats-box {
+            background-color: var(--dark-bg);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid var(--neon-pink);
+            box-shadow: 0 0 10px rgba(255, 16, 240, 0.3);
+        }
+        
+        .stat-value {
+            color: var(--neon-blue);
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+        
+        .stat-label {
+            color: var(--neon-green);
+            font-size: 0.9rem;
+        }
+        
+        .brand-checkbox {
+            margin-right: 10px;
+        }
+        
+        .brand-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: var(--darker-bg);
+            border-radius: 5px;
+            border: 1px solid var(--neon-blue);
+        }
+        
+        .completed-brands {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .completed-brand-item {
+            background-color: var(--darker-bg);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--neon-yellow);
+            color: var(--neon-yellow);
+        }
+        
+        .table thead th {
+            background-color: var(--darker-bg);
+            color: var(--neon-pink);
+            border-color: var(--neon-blue);
+        }
+        
+        .btn-primary {
+            background-color: var(--dark-bg);
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            color: var(--darker-bg);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+        
+        .btn-danger {
+            background-color: var(--dark-bg);
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px rgba(255, 16, 240, 0.5);
+        }
+        
+        .btn-danger:hover, .btn-danger:focus {
+            background-color: var(--neon-pink);
+            border-color: var(--neon-pink);
+            color: var(--darker-bg);
+            box-shadow: 0 0 15px rgba(255, 16, 240, 0.5);
+        }
+        
+        .btn-outline-primary {
+            color: var(--neon-purple);
+            border-color: var(--neon-purple);
+            text-shadow: 0 0 5px rgba(188, 19, 254, 0.5);
+        }
+        
+        .btn-outline-primary:hover, .btn-outline-primary:focus {
+            background-color: var(--neon-purple);
+            border-color: var(--neon-purple);
+            color: var(--darker-bg);
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.5);
+        }
+        
+        .btn-success {
+            background-color: var(--dark-bg);
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+            text-shadow: 0 0 5px rgba(57, 255, 20, 0.5);
+        }
+        
+        .btn-success:hover, .btn-success:focus {
+            background-color: var(--neon-green);
+            border-color: var(--neon-green);
+            color: var(--darker-bg);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+        }
+        
+        .alert-danger {
+            background-color: var(--darker-bg);
+            color: var(--neon-pink);
+            border-color: var(--neon-pink);
+        }
+        
+        .alert-success {
+            background-color: var(--darker-bg);
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+        }
+        
+        .alert-warning {
+            background-color: var(--darker-bg);
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+        }
+        
+        .alert-info {
+            background-color: var(--darker-bg);
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+        }
+        
+        /* AI Assistant Specific Styles */
+        .chat-container {
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .user-message, .bot-message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background-color: var(--neon-blue);
+            color: var(--darker-bg);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        
+        .bot-message {
+            align-self: flex-start;
+            background-color: var(--darker-bg);
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+        }
+        
+        .example-queries {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .example-query {
+            background-color: var(--darker-bg);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--neon-purple);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .example-query:hover {
+            background-color: var(--neon-purple);
+            color: var(--darker-bg);
+            box-shadow: 0 0 10px rgba(188, 19, 254, 0.5);
+        }
+        
+        .device-card {
+            background-color: var(--darker-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--neon-blue);
+            margin-bottom: 20px;
+        }
+        
+        .device-image {
+            border: 2px solid var(--neon-purple);
+            border-radius: 5px;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .specs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .spec-group {
+            background-color: var(--dark-bg);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--neon-pink);
+        }
+        
+        .spec-group h5 {
+            color: var(--neon-blue);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .spec-item {
+            margin-bottom: 5px;
+        }
+        
+        .spec-label {
+            color: var(--neon-yellow);
+            font-weight: bold;
+        }
+        
+        .spec-value {
+            color: var(--neon-green);
+        }
+        
+        .recommendation-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .recommendation-card {
+            background-color: var(--darker-bg);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--neon-orange);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .recommendation-image {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            border: 1px solid var(--neon-purple);
+            border-radius: 5px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--neon-blue);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background-color: var(--dark-bg);
+            color: var(--neon-pink);
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--neon-blue);
+        }
+        
+        .comparison-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--neon-blue);
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(0, 255, 255, 0.05);
+        }
+        
+        /* Neon text flicker animation */
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 7px var(--neon-blue),
+                             0 0 10px var(--neon-blue),
+                             0 0 21px var(--neon-blue),
+                             0 0 42px var(--neon-pink),
+                             0 0 82px var(--neon-pink),
+                             0 0 92px var(--neon-pink),
+                             0 0 102px var(--neon-pink),
+                             0 0 151px var(--neon-pink);
+            }
+            20%, 24%, 55% {        
+                text-shadow: none;
+            }    
+        }
+        
+        .neon-text {
+            animation: flicker 1.5s infinite alternate;     
+        }
+        
+        .nav-link {
+            color: #fff;
+        }
+        
+        .nav-link:hover {
+            color: #0ff;
+        }
+        
+        .nav-link.active {
+            color: #0ff;
+            text-shadow: 0 0 5px #0ff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand neon-text" href="/">Mobile Device AI Assistant</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/ai-assistant">AI Assistant</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    {% block content %}{% endblock %}
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

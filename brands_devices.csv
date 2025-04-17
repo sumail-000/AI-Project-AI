@@ -1,3 +1,4 @@
+brand,device_name,device_url,image_url
 Google,Pixel 9a,https://www.gsmarena.com/google_pixel_9a-13478.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9a.jpg
 Google,Pixel 9a,https://www.gsmarena.com/google_pixel_9a-13478.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9a.jpg
 Google,Pixel 9 Pro XL,https://www.gsmarena.com/google_pixel_9_pro_xl-13217.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro-xl-.jpg
@@ -166,3 +167,394 @@ Apple,iPad Wi-Fi,https://www.gsmarena.com/apple_ipad_wi_fi-3828.php,https://fdn2
 Apple,iPhone 3GS,https://www.gsmarena.com/apple_iphone_3gs-2826.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-3gs-ofic.jpg
 Apple,iPhone 3G,https://www.gsmarena.com/apple_iphone_3g-2424.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone3g.jpg
 Apple,iPhone,https://www.gsmarena.com/apple_iphone-1827.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone.gif
+Realme,Narzo 80 Pro,https://www.gsmarena.com/realme_narzo_80_pro_5g-13782.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-80-pro-5g.jpg
+Realme,Narzo 80x,https://www.gsmarena.com/realme_narzo_80x_5g-13771.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-80x-5g.jpg
+Realme,14,https://www.gsmarena.com/realme_14-13729.php,https://fdn2.gsmarena.com/vv/bigpic/realme-14-5g.jpg
+Realme,C75x,https://www.gsmarena.com/realme_c75x-13750.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c75x.jpg
+Realme,P3 Ultra,https://www.gsmarena.com/realme_p3_ultra-13734.php,https://fdn2.gsmarena.com/vv/bigpic/realme-p3-ultra-5g.jpg
+Realme,P3,https://www.gsmarena.com/realme_p3-13715.php,https://fdn2.gsmarena.com/vv/bigpic/realme-p3-5g.jpg
+Realme,14 Pro Lite,https://www.gsmarena.com/realme_14_pro_lite-13706.php,https://fdn2.gsmarena.com/vv/bigpic/realme-13-pro.jpg
+Realme,Neo7 SE,https://www.gsmarena.com/realme_neo7_se-13676.php,https://fdn2.gsmarena.com/vv/bigpic/realme-neo7-se.jpg
+Realme,Neo7x,https://www.gsmarena.com/realme_neo7x-13677.php,https://fdn2.gsmarena.com/vv/bigpic/realme-neo7x.jpg
+Realme,P3 Pro,https://www.gsmarena.com/realme_p3_pro-13667.php,https://fdn2.gsmarena.com/vv/bigpic/realme-p3-pro-5g.jpg
+Realme,P3x,https://www.gsmarena.com/realme_p3x-13665.php,https://fdn2.gsmarena.com/vv/bigpic/realme-p3x.jpg
+Realme,GT7 Pro Racing,https://www.gsmarena.com/realme_gt7_pro_racing-13664.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt7-pro-racing.jpg
+Realme,14x,https://www.gsmarena.com/realme_14x-13646.php,https://fdn2.gsmarena.com/vv/bigpic/realme-14x-5g-glo.jpg
+Realme,14 Pro,https://www.gsmarena.com/realme_14_pro-13586.php,https://fdn2.gsmarena.com/vv/bigpic/realme-14pro.jpg
+Realme,14 Pro+,https://www.gsmarena.com/realme_14_pro+-13585.php,https://fdn2.gsmarena.com/vv/bigpic/realme-14pro-plus.jpg
+Realme,14x (India),https://www.gsmarena.com/realme_14x_(india)-13555.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v60-pro.jpg
+Realme,Neo7,https://www.gsmarena.com/realme_neo7-13540.php,https://fdn2.gsmarena.com/vv/bigpic/realme-neo7.jpg
+Realme,Note 60x,https://www.gsmarena.com/realme_note_60x-13558.php,https://fdn2.gsmarena.com/vv/bigpic/realme-note-60x.jpg
+Realme,V60 pro,https://www.gsmarena.com/realme_v60_pro-13529.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v60-pro.jpg
+Realme,C75,https://www.gsmarena.com/realme_c75-13522.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c75.jpg
+Realme,GT 7 Pro,https://www.gsmarena.com/realme_gt_7_pro-13470.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt7-pro.jpg
+Realme,P1 Speed,https://www.gsmarena.com/realme_p1_speed-13414.php,https://fdn2.gsmarena.com/vv/bigpic/realme-p1-speed.jpg
+Realme,P2 Pro,https://www.gsmarena.com/realme_p2_pro-13332.php,https://fdn2.gsmarena.com/vv/bigpic/realme-p2-pro.jpg
+Realme,Pad 2 Lite,https://www.gsmarena.com/realme_pad_2_lite-13333.php,https://fdn2.gsmarena.com/vv/bigpic/realme-pad-2-lite.jpg
+Realme,Narzo 70 Turbo,https://www.gsmarena.com/realme_narzo_70_turbo-13294.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-70-turbo.jpg
+Realme,Note 60,https://www.gsmarena.com/realme_note_60-13283.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-n61.jpg
+Realme,13+,https://www.gsmarena.com/realme_13+-13255.php,https://fdn2.gsmarena.com/vv/bigpic/realme-13-plus-5g.jpg
+Realme,13,https://www.gsmarena.com/realme_13-13289.php,https://fdn2.gsmarena.com/vv/bigpic/realme-13-5g.jpg
+Realme,C63 5G,https://www.gsmarena.com/realme_c63_5g-13260.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v60.jpg
+Realme,13 4G,https://www.gsmarena.com/realme_13_4g-13252.php,https://fdn2.gsmarena.com/vv/bigpic/realme-12-4g.jpg
+Realme,13 Pro+,https://www.gsmarena.com/realme_13_pro+-13196.php,https://fdn2.gsmarena.com/vv/bigpic/realme-13-pro-plus.jpg
+Realme,13 Pro,https://www.gsmarena.com/realme_13_pro-13240.php,https://fdn2.gsmarena.com/vv/bigpic/realme-13-pro.jpg
+Realme,Watch S2,https://www.gsmarena.com/realme_watch_s2-13241.php,https://fdn2.gsmarena.com/vv/bigpic/realme-watch-s2.jpg
+Realme,Narzo N61,https://www.gsmarena.com/realme_narzo_n61-13232.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-n61.jpg
+Realme,C61,https://www.gsmarena.com/realme_c61-13236.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c61-int.jpg
+Realme,GT6 (China),https://www.gsmarena.com/realme_gt6_(china)-13104.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt6-cn.jpg
+Realme,C61 (India),https://www.gsmarena.com/realme_c61_(india)-13162.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c61.jpg
+Realme,12 4G,https://www.gsmarena.com/realme_12_4g-13172.php,https://fdn2.gsmarena.com/vv/bigpic/realme-12-4g.jpg
+Realme,V60,https://www.gsmarena.com/realme_v60-13165.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v60.jpg
+Realme,GT 6,https://www.gsmarena.com/realme_gt_6-13103.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt6.jpg
+Realme,Narzo N63,https://www.gsmarena.com/realme_narzo_n63-13120.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-n63.jpg
+Realme,C63,https://www.gsmarena.com/realme_c63-13090.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c63.jpg
+Realme,Narzo N65,https://www.gsmarena.com/realme_narzo_n65-13047.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-n65.jpg
+Realme,GT 6T,https://www.gsmarena.com/realme_gt_6t-13010.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo6-se.jpg
+Realme,GT Neo6,https://www.gsmarena.com/realme_gt_neo6-12991.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo6.jpg
+Realme,C65 5G,https://www.gsmarena.com/realme_c65_5g-12963.php,https://fdn2.gsmarena.com/vv/bigpic/realme-12x.jpg
+Realme,Narzo 70,https://www.gsmarena.com/realme_narzo_70-12955.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-70.jpg
+Realme,Narzo 70x,https://www.gsmarena.com/realme_narzo_70x-12954.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-70x.jpg
+Realme,12 Lite,https://www.gsmarena.com/realme_12_lite-12947.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c67-lte.jpg
+Realme,P1 Pro,https://www.gsmarena.com/realme_p1_pro-12935.php,https://fdn2.gsmarena.com/vv/bigpic/realme-p1-pro.jpg
+Realme,P1,https://www.gsmarena.com/realme_p1-12936.php,https://fdn2.gsmarena.com/vv/bigpic/realme-p1.jpg
+Realme,GT Neo6 SE,https://www.gsmarena.com/realme_gt_neo6_se-12898.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo6-se.jpg
+Realme,12x (India),https://www.gsmarena.com/realme_12x_(india)-12914.php,https://fdn2.gsmarena.com/vv/bigpic/realme-12-5g.jpg
+Realme,C65,https://www.gsmarena.com/realme_c65-12908.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c65-1.jpg
+Realme,12x,https://www.gsmarena.com/realme_12x-12890.php,https://fdn2.gsmarena.com/vv/bigpic/realme-12x.jpg
+Realme,Narzo 70 Pro,https://www.gsmarena.com/realme_narzo_70_pro-12878.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-70-pro.jpg
+Realme,C51s,https://www.gsmarena.com/realme_c51s-13130.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c51s.jpg
+Realme,12,https://www.gsmarena.com/realme_12-12861.php,https://fdn2.gsmarena.com/vv/bigpic/realme-12-5g.jpg
+Realme,12+,https://www.gsmarena.com/realme_12+-12821.php,https://fdn2.gsmarena.com/vv/bigpic/realme-12-plus.jpg
+Realme,12 Pro+,https://www.gsmarena.com/realme_12_pro+-12804.php,https://fdn2.gsmarena.com/vv/bigpic/realme-12-pro-plus.jpg
+Realme,12 Pro,https://www.gsmarena.com/realme_12_pro-12810.php,https://fdn2.gsmarena.com/vv/bigpic/realme-12-pro.jpg
+Realme,Note 50,https://www.gsmarena.com/realme_note_50-12799.php,https://fdn2.gsmarena.com/vv/bigpic/realme-note-50.jpg
+Realme,C67 4G,https://www.gsmarena.com/realme_c67_4g-12741.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c67-lte.jpg
+Realme,C67,https://www.gsmarena.com/realme_c67-12728.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c67-5g.jpg
+Realme,V50s,https://www.gsmarena.com/realme_v50s-12703.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v50s.jpg
+Realme,GT5 Pro,https://www.gsmarena.com/realme_gt5_pro-12646.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt5-pro.jpg
+Realme,Narzo 60x,https://www.gsmarena.com/realme_narzo_60x-12542.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-60x-5g.jpg
+Realme,GT5 240W,https://www.gsmarena.com/realme_gt5_240w-12529.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-5-240w.jpg
+Realme,GT5,https://www.gsmarena.com/realme_gt5-12528.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt5-150w.jpg
+Realme,11x,https://www.gsmarena.com/realme_11x-12519.php,https://fdn2.gsmarena.com/vv/bigpic/realme-11x-5g.jpg
+Realme,11 4G,https://www.gsmarena.com/realme_11_4g-12445.php,https://fdn2.gsmarena.com/vv/bigpic/realme-11-4g-.jpg
+Realme,11,https://www.gsmarena.com/realme_11-12444.php,https://fdn2.gsmarena.com/vv/bigpic/realme-11-5g-tw.jpg
+Realme,C51,https://www.gsmarena.com/realme_c51-12527.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c51.jpg
+Realme,C53 (India),https://www.gsmarena.com/realme_c53_(india)-12419.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c53-india.jpg
+Realme,Pad 2,https://www.gsmarena.com/realme_pad_2-12426.php,https://fdn2.gsmarena.com/vv/bigpic/realme-pad2.jpg
+Realme,GT3,https://www.gsmarena.com/realme_gt3-12120.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo5.jpg
+Realme,Narzo 60 Pro,https://www.gsmarena.com/realme_narzo_60_pro-12396.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo60-pro-5g.jpg
+Realme,Narzo 60,https://www.gsmarena.com/realme_narzo_60-12395.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo60-5g.jpg
+Realme,C53,https://www.gsmarena.com/realme_c53-12310.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c53.jpg
+Realme,Narzo N53,https://www.gsmarena.com/realme_narzo_n53-12280.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-n53.jpg
+Realme,11 Pro+,https://www.gsmarena.com/realme_11_pro+-12246.php,https://fdn2.gsmarena.com/vv/bigpic/realme-11-pro-plus.jpg
+Realme,11 Pro,https://www.gsmarena.com/realme_11_pro-12261.php,https://fdn2.gsmarena.com/vv/bigpic/realme-11-pro.jpg
+Realme,11 (China),https://www.gsmarena.com/realme_11_(china)-12262.php,https://fdn2.gsmarena.com/vv/bigpic/realme-11.jpg
+Realme,Narzo N55,https://www.gsmarena.com/realme_narzo_n55-12227.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-n55.jpg
+Realme,GT Neo5 SE,https://www.gsmarena.com/realme_gt_neo5_se-12187.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo5-se.jpg
+Realme,10T,https://www.gsmarena.com/realme_10t-12174.php,https://fdn2.gsmarena.com/vv/bigpic/realme-10t.jpg
+Realme,C33 2023,https://www.gsmarena.com/realme_c33_2023-12173.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c33.jpg
+Realme,C55,https://www.gsmarena.com/realme_c55-12159.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c55.jpg
+Realme,GT Neo 5 240W,https://www.gsmarena.com/realme_gt_neo_5_240w-12067.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo5-240w.jpg
+Realme,GT Neo 5,https://www.gsmarena.com/realme_gt_neo_5-12066.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo5.jpg
+Realme,V30,https://www.gsmarena.com/realme_v30-12114.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v30.jpg
+Realme,10s,https://www.gsmarena.com/realme_10s-12029.php,https://fdn2.gsmarena.com/vv/bigpic/realme-10s-5g.jpg
+Realme,V20,https://www.gsmarena.com/realme_v20-12025.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v20.jpg
+Realme,10 Pro+,https://www.gsmarena.com/realme_10_pro+-11952.php,https://fdn2.gsmarena.com/vv/bigpic/realme-10-pro-plus.jpg
+Realme,10 Pro,https://www.gsmarena.com/realme_10_pro-11978.php,https://fdn2.gsmarena.com/vv/bigpic/realme-10-pro.jpg
+Realme,10 5G,https://www.gsmarena.com/realme_10_5g-11951.php,https://fdn2.gsmarena.com/vv/bigpic/realme-10-5g.jpg
+Realme,10,https://www.gsmarena.com/realme_10-11950.php,https://fdn2.gsmarena.com/vv/bigpic/realme-10.jpg
+Realme,C30s,https://www.gsmarena.com/realme_c30s-11878.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c30s.jpg
+Realme,C33,https://www.gsmarena.com/realme_c33-11849.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c33.jpg
+Realme,Watch 3 Pro,https://www.gsmarena.com/realme_watch_3_pro-11854.php,https://fdn2.gsmarena.com/vv/bigpic/realme-watch3-pro.jpg
+Realme,9i 5G,https://www.gsmarena.com/realme_9i_5g-11769.php,https://fdn2.gsmarena.com/vv/bigpic/realme-9i-5g-r.jpg
+Realme,Watch 3,https://www.gsmarena.com/realme_watch_3-11719.php,https://fdn2.gsmarena.com/vv/bigpic/realme-watch3.jpg
+Realme,GT2 Explorer Master,https://www.gsmarena.com/realme_gt2_explorer_master-11613.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt2-master-explorer.jpg
+Realme,TechLife Watch R100,https://www.gsmarena.com/realme_techlife_watch_r100-11638.php,https://fdn2.gsmarena.com/vv/bigpic/realme-techlife-watch-r100.jpg
+Realme,Narzo 50i Prime,https://www.gsmarena.com/realme_narzo_50i_prime-11630.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-50i-prime.jpg
+Realme,C30,https://www.gsmarena.com/realme_c30-11621.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c30--.jpg
+Realme,GT Neo 3T,https://www.gsmarena.com/realme_gt_neo_3t-11609.php,https://fdn2.gsmarena.com/vv/bigpic/realme-neo-3-gt.jpg
+Realme,Pad X,https://www.gsmarena.com/realme_pad_x-11552.php,https://fdn2.gsmarena.com/vv/bigpic/realme-pad-x.jpg
+Realme,Narzo 50 Pro,https://www.gsmarena.com/realme_narzo_50_pro-11532.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-50-pro-5g.jpg
+Realme,Narzo 50 5G,https://www.gsmarena.com/realme_narzo_50_5g-11518.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-50-5g.jpg
+Realme,9 5G,https://www.gsmarena.com/realme_9_5g-11514.php,https://fdn2.gsmarena.com/vv/bigpic/realme-9-5g-global-.jpg
+Realme,V23i,https://www.gsmarena.com/realme_v23i-12026.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v23.jpg
+Realme,V23,https://www.gsmarena.com/realme_v23-11477.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v23.jpg
+Realme,Q5 Pro,https://www.gsmarena.com/realme_q5_pro-11475.php,https://fdn2.gsmarena.com/vv/bigpic/realme-q5-pro.jpg
+Realme,Q5,https://www.gsmarena.com/realme_q5-11480.php,https://fdn2.gsmarena.com/vv/bigpic/realme-q5.jpg
+Realme,Q5i,https://www.gsmarena.com/realme_q5i-11474.php,https://fdn2.gsmarena.com/vv/bigpic/realme-q5i.jpg
+Realme,9,https://www.gsmarena.com/realme_9-11465.php,https://fdn2.gsmarena.com/vv/bigpic/realme-9-4g.jpg
+Realme,Pad Mini,https://www.gsmarena.com/realme_pad_mini-11446.php,https://fdn2.gsmarena.com/vv/bigpic/realme-pad-mini.jpg
+Realme,C31,https://www.gsmarena.com/realme_c31-11437.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c31.jpg
+Realme,GT Neo 3 150W,https://www.gsmarena.com/realme_gt_neo_3_150w-11597.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo3-new.jpg
+Realme,GT Neo 3,https://www.gsmarena.com/realme_gt_neo_3-11436.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo3-new.jpg
+Realme,Narzo 50A Prime,https://www.gsmarena.com/realme_narzo_50a_prime-11435.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-50a-prime.jpg
+Realme,TechLife Watch S100,https://www.gsmarena.com/realme_techlife_watch_s100-11420.php,https://fdn2.gsmarena.com/vv/bigpic/realme-techlife-watch-s100.jpg
+Realme,9 5G (India),https://www.gsmarena.com/realme_9_5g_(india)-11415.php,https://fdn2.gsmarena.com/vv/bigpic/realme-9-5g.jpg
+Realme,9 5G Speed,https://www.gsmarena.com/realme_9_5g_speed-11414.php,https://fdn2.gsmarena.com/vv/bigpic/realme-9-5g-speed-edition.jpg
+Realme,V25,https://www.gsmarena.com/realme_v25-11400.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v25.jpg
+Realme,Narzo 50,https://www.gsmarena.com/realme_narzo_50-11377.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-50.jpg
+Realme,9 Pro+,https://www.gsmarena.com/realme_9_pro+-11327.php,https://fdn2.gsmarena.com/vv/bigpic/realme-9-pro-plus.jpg
+Realme,9 Pro,https://www.gsmarena.com/realme_9_pro-11317.php,https://fdn2.gsmarena.com/vv/bigpic/realme-9-pro.jpg
+Realme,C35,https://www.gsmarena.com/realme_c35-11353.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c35.jpg
+Realme,9i,https://www.gsmarena.com/realme_9i-11259.php,https://fdn2.gsmarena.com/vv/bigpic/realme-9i-r1.jpg
+Realme,GT2 Pro,https://www.gsmarena.com/realme_gt2_pro-11228.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt2-pro.jpg
+Realme,GT2,https://www.gsmarena.com/realme_gt2-11307.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt2.jpg
+Realme,Q3t,https://www.gsmarena.com/realme_q3t-11208.php,https://fdn2.gsmarena.com/vv/bigpic/realme-q3s.jpg
+Realme,GT Neo2T,https://www.gsmarena.com/realme_gt_neo2t-11163.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo2t.jpg
+Realme,Q3s,https://www.gsmarena.com/realme_q3s-11156.php,https://fdn2.gsmarena.com/vv/bigpic/realme-q3s.jpg
+Realme,Watch T1,https://www.gsmarena.com/realme_watch_t1-11164.php,https://fdn2.gsmarena.com/vv/bigpic/realme-watch-t1.jpg
+Realme,Narzo 50A,https://www.gsmarena.com/realme_narzo_50a-11071.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-50a.jpg
+Realme,Narzo 50i,https://www.gsmarena.com/realme_narzo_50i-11123.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-50i.jpg
+Realme,V11s 5G,https://www.gsmarena.com/realme_v11s_5g-11122.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v11-s-5g.jpg
+Realme,GT Neo2,https://www.gsmarena.com/realme_gt_neo2-11074.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo2.jpg
+Realme,C25Y,https://www.gsmarena.com/realme_c25y-11109.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c25y.jpg
+Realme,8s 5G,https://www.gsmarena.com/realme_8s_5g-11078.php,https://fdn2.gsmarena.com/vv/bigpic/realme-8s-5g.jpg
+Realme,8i,https://www.gsmarena.com/realme_8i-11069.php,https://fdn2.gsmarena.com/vv/bigpic/realme-8i.jpg
+Realme,Pad,https://www.gsmarena.com/realme_pad-11084.php,https://fdn2.gsmarena.com/vv/bigpic/realme-pad.jpg
+Realme,GT Explorer Master,https://www.gsmarena.com/realme_gt_explorer_master-11023.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-master-explorer.jpg
+Realme,GT Master,https://www.gsmarena.com/realme_gt_master-11001.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-master.jpg
+Realme,C21Y,https://www.gsmarena.com/realme_c21y-10999.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c21y.jpg
+Realme,C11 (2021),https://www.gsmarena.com/realme_c11_(2021)-10890.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c11-2021.jpg
+Realme,C25s,https://www.gsmarena.com/realme_c25s-10936.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c25s.jpg
+Realme,X7 Max 5G,https://www.gsmarena.com/realme_x7_max_5g-10883.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x7-max-5g.jpg
+Realme,Narzo 30 5G,https://www.gsmarena.com/realme_narzo_30_5g-10928.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-30-5g.jpg
+Realme,Q3 Pro Carnival,https://www.gsmarena.com/realme_q3_pro_carnival-10923.php,https://fdn2.gsmarena.com/vv/bigpic/realme-q3-pro-carnival-edition.jpg
+Realme,GT Neo Flash,https://www.gsmarena.com/realme_gt_neo_flash-10921.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo-flash-edition.jpg
+Realme,Narzo 30,https://www.gsmarena.com/realme_narzo_30-10911.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-30.jpg
+Realme,C20A,https://www.gsmarena.com/realme_c20a-10901.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c20-r1.jpg
+Realme,Watch 2 Pro,https://www.gsmarena.com/realme_watch_2_pro-10917.php,https://fdn2.gsmarena.com/vv/bigpic/realme-watch-2-pro.jpg
+Realme,Watch 2,https://www.gsmarena.com/realme_watch_2-10888.php,https://fdn2.gsmarena.com/vv/bigpic/realme-watch-2.jpg
+Realme,Q3 Pro 5G,https://www.gsmarena.com/realme_q3_pro_5g-10871.php,https://fdn2.gsmarena.com/vv/bigpic/realme-q3-pro.jpg
+Realme,Q3 5G,https://www.gsmarena.com/realme_q3_5g-10870.php,https://fdn2.gsmarena.com/vv/bigpic/realme-q3.jpg
+Realme,Q3i 5G,https://www.gsmarena.com/realme_q3i_5g-10872.php,https://fdn2.gsmarena.com/vv/bigpic/realme-q3i.jpg
+Realme,8 5G,https://www.gsmarena.com/realme_8_5g-10846.php,https://fdn2.gsmarena.com/vv/bigpic/realme-8-5g-.jpg
+Realme,X7 Pro Ultra,https://www.gsmarena.com/realme_x7_pro_ultra-10826.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x7-pro-ultra.jpg
+Realme,GT Neo,https://www.gsmarena.com/realme_gt_neo-10812.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-neo.jpg
+Realme,V13 5G,https://www.gsmarena.com/realme_v13_5g-10822.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v13-5g.jpg
+Realme,8 Pro,https://www.gsmarena.com/realme_8_pro-10809.php,https://fdn2.gsmarena.com/vv/bigpic/realme-8-pro-ofic.jpg
+Realme,8,https://www.gsmarena.com/realme_8-10810.php,https://fdn2.gsmarena.com/vv/bigpic/realme-8.jpg
+Realme,C25,https://www.gsmarena.com/realme_c25-10793.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c25.jpg
+Realme,C21,https://www.gsmarena.com/realme_c21-10759.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c21.jpg
+Realme,GT 5G,https://www.gsmarena.com/realme_gt_5g-10689.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt-5g.jpg
+Realme,Narzo 30 Pro 5G,https://www.gsmarena.com/realme_narzo_30_pro_5g-10736.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-30-pro.jpg
+Realme,Narzo 30A,https://www.gsmarena.com/realme_narzo_30a-10748.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-30a.jpg
+Realme,V11 5G,https://www.gsmarena.com/realme_v11_5g-10722.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v11-5g.jpg
+Realme,C20,https://www.gsmarena.com/realme_c20-10690.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c20-r1.jpg
+Realme,X7 (India),https://www.gsmarena.com/realme_x7_(india)-10717.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x7-india.jpg
+Realme,V15 5G,https://www.gsmarena.com/realme_v15_5g-10664.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v15-5g.jpg
+Realme,Watch S Pro,https://www.gsmarena.com/realme_watch_s_pro-10651.php,https://fdn2.gsmarena.com/vv/bigpic/realme-watch-s-pro.jpg
+Realme,7i (Global),https://www.gsmarena.com/realme_7i_(global)-10650.php,https://fdn2.gsmarena.com/vv/bigpic/realme-7i-global.jpg
+Realme,7 5G,https://www.gsmarena.com/realme_7_5g-10590.php,https://fdn2.gsmarena.com/vv/bigpic/realme-7-5g.jpg
+Realme,Watch S,https://www.gsmarena.com/realme_watch_s-10570.php,https://fdn2.gsmarena.com/vv/bigpic/realme-watch-s.jpg
+Realme,C15 Qualcomm Edition,https://www.gsmarena.com/realme_c15_qualcomm_edition-10560.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c15q.jpg
+Realme,Q2 Pro,https://www.gsmarena.com/realme_q2_pro-10505.php,https://fdn2.gsmarena.com/vv/bigpic/realme-q2-pro.jpg
+Realme,Q2,https://www.gsmarena.com/realme_q2-10506.php,https://fdn2.gsmarena.com/vv/bigpic/realme-q2.jpg
+Realme,Q2i,https://www.gsmarena.com/realme_q2i-10507.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v3.jpg
+Realme,7,https://www.gsmarena.com/realme_7-10495.php,https://fdn2.gsmarena.com/vv/bigpic/realme-7.jpg
+Realme,Narzo 20 Pro,https://www.gsmarena.com/realme_narzo_20_pro-10455.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-20-pro.jpg
+Realme,Narzo 20,https://www.gsmarena.com/realme_narzo_20-10456.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-20.jpg
+Realme,Narzo 20A,https://www.gsmarena.com/realme_narzo_20a-10457.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-20a.jpg
+Realme,C17,https://www.gsmarena.com/realme_c17-10439.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c17.jpg
+Realme,7i,https://www.gsmarena.com/realme_7i-10430.php,https://fdn2.gsmarena.com/vv/bigpic/realme-7i.jpg
+Realme,7 Pro,https://www.gsmarena.com/realme_7_pro-10400.php,https://fdn2.gsmarena.com/vv/bigpic/realme-7-pro.jpg
+Realme,7 (Asia),https://www.gsmarena.com/realme_7_(asia)-10416.php,https://fdn2.gsmarena.com/vv/bigpic/realme-7.jpg
+Realme,X7 Pro,https://www.gsmarena.com/realme_x7_pro-10380.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x7-pro-5g.jpg
+Realme,X7,https://www.gsmarena.com/realme_x7-10408.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x7-5g.jpg
+Realme,V3,https://www.gsmarena.com/realme_v3-10409.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v3.jpg
+Realme,C12,https://www.gsmarena.com/realme_c12-10369.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c12.jpg
+Realme,V5 5G,https://www.gsmarena.com/realme_v5_5g-10352.php,https://fdn2.gsmarena.com/vv/bigpic/realme-v5.jpg
+Realme,C15,https://www.gsmarena.com/realme_c15-10326.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c15-r1.jpg
+Realme,6i (India),https://www.gsmarena.com/realme_6i_(india)-10331.php,https://fdn2.gsmarena.com/vv/bigpic/realme-6i-india.jpg
+Realme,X50 5G,https://www.gsmarena.com/realme_x50_5g-10319.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x50-5g-eu.jpg
+Realme,C11,https://www.gsmarena.com/realme_c11-10308.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c11.jpg
+Realme,X3,https://www.gsmarena.com/realme_x3-10198.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x3.jpg
+Realme,C3i,https://www.gsmarena.com/realme_c3i-10310.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c3-2020.jpg
+Realme,Narzo,https://www.gsmarena.com/realme_narzo-10309.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-indonesia.jpg
+Realme,X3 SuperZoom,https://www.gsmarena.com/realme_x3_superzoom-10250.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x3-superzoom.jpg
+Realme,6S,https://www.gsmarena.com/realme_6s-10268.php,https://fdn2.gsmarena.com/vv/bigpic/realme-6s.jpg
+Realme,X50 Pro Player,https://www.gsmarena.com/realme_x50_pro_player-10248.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x50-pro-player-edition.jpg
+Realme,Watch,https://www.gsmarena.com/realme_watch-10262.php,https://fdn2.gsmarena.com/vv/bigpic/realme-watch.jpg
+Realme,Narzo 10,https://www.gsmarena.com/realme_narzo_10-10145.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-10.jpg
+Realme,Narzo 10A,https://www.gsmarena.com/realme_narzo_10a-10234.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-10a.jpg
+Realme,X50m 5G,https://www.gsmarena.com/realme_x50m_5g-10197.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x50m-5g.jpg
+Realme,6i,https://www.gsmarena.com/realme_6i-10130.php,https://fdn2.gsmarena.com/vv/bigpic/realme-6i.jpg
+Realme,6 Pro,https://www.gsmarena.com/realme_6_pro-10114.php,https://fdn2.gsmarena.com/vv/bigpic/realme-6-pro.jpg
+Realme,6,https://www.gsmarena.com/realme_6-10113.php,https://fdn2.gsmarena.com/vv/bigpic/realme-6.jpg
+Realme,X50 Pro 5G,https://www.gsmarena.com/realme_x50_pro_5g-10097.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x50-pro-5g-.jpg
+Realme,C3 (3 cameras),https://www.gsmarena.com/realme_c3_(3_cameras)-10089.php,https://fdn2.gsmarena.com/vv/bigpic/reame-c3-3cameras.jpg
+Realme,C3,https://www.gsmarena.com/realme_c3-10056.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c3-2020.jpg
+Realme,X50 5G (China),https://www.gsmarena.com/realme_x50_5g_(china)-9990.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x50-5g-.jpg
+Realme,5i,https://www.gsmarena.com/realme_5i-10010.php,https://fdn2.gsmarena.com/vv/bigpic/realme-5i.jpg
+Realme,5s,https://www.gsmarena.com/realme_5s-9969.php,https://fdn2.gsmarena.com/vv/bigpic/realme-5s.jpg
+Realme,C2s,https://www.gsmarena.com/realme_c2s-10015.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c2s.jpg
+Realme,C2 2020,https://www.gsmarena.com/realme_c2_2020-9957.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c2.jpg
+Realme,X2 Pro,https://www.gsmarena.com/realme_x2_pro-9904.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x2-pro.jpg
+Realme,X2,https://www.gsmarena.com/realme_x2-9879.php,https://fdn2.gsmarena.com/vv/bigpic/realme-xt-730g.jpg
+Realme,XT,https://www.gsmarena.com/realme_xt-9813.php,https://fdn2.gsmarena.com/vv/bigpic/realme-xt.jpg
+Realme,Q,https://www.gsmarena.com/realme_q-9838.php,https://fdn2.gsmarena.com/vv/bigpic/realme-5-pro-rmx1971.jpg
+Realme,5 Pro,https://www.gsmarena.com/realme_5_pro-9801.php,https://fdn2.gsmarena.com/vv/bigpic/realme-5-pro-rmx1971.jpg
+Realme,5,https://www.gsmarena.com/realme_5-9802.php,https://fdn2.gsmarena.com/vv/bigpic/realme-5.jpg
+Realme,3i,https://www.gsmarena.com/realme_3i-9768.php,https://fdn2.gsmarena.com/vv/bigpic/realme-3i.jpg
+Realme,X,https://www.gsmarena.com/realme_x-9700.php,https://fdn2.gsmarena.com/vv/bigpic/realme-x.jpg
+Realme,3 Pro,https://www.gsmarena.com/realme_3_pro-9669.php,https://fdn2.gsmarena.com/vv/bigpic/realme-3pro.jpg
+Realme,C2,https://www.gsmarena.com/realme_c2-9670.php,https://fdn2.gsmarena.com/vv/bigpic/realme-c2.jpg
+Realme,3,https://www.gsmarena.com/realme_3-9558.php,https://fdn2.gsmarena.com/vv/bigpic/realme-3.jpg
+Realme,C1 (2019),https://www.gsmarena.com/realme_c1_(2019)-9539.php,https://fdn2.gsmarena.com/vv/bigpic/oppo-realme-c1.jpg
+Realme,U1,https://www.gsmarena.com/realme_u1-9413.php,https://fdn2.gsmarena.com/vv/bigpic/realme-u1.jpg
+Realme,2 Pro,https://www.gsmarena.com/realme_2_pro-9345.php,https://fdn2.gsmarena.com/vv/bigpic/oppo-realme-2-pro.jpg
+Realme,C1,https://www.gsmarena.com/realme_c1-9346.php,https://fdn2.gsmarena.com/vv/bigpic/oppo-realme-c1.jpg
+Realme,2,https://www.gsmarena.com/realme_2-9299.php,https://fdn2.gsmarena.com/vv/bigpic/oppo-realme-2-.jpg
+Realme,1,https://www.gsmarena.com/realme_1-9200.php,https://fdn2.gsmarena.com/vv/bigpic/oppo-realme-1.jpg
+Realme,V21,https://www.gsmarena.com/realme_v21-11409.php,https://fdn2.gsmarena.com/vv/bigpic/smartphone.jpg
+Realme,X9 Pro,https://www.gsmarena.com/realme_x9_pro-10964.php,https://fdn2.gsmarena.com/vv/bigpic/oppo-reno5-pro-plus-5g.jpg
+Realme,X9,https://www.gsmarena.com/realme_x9-10688.php,https://fdn2.gsmarena.com/vv/bigpic/smartphone.jpg
+Realme,XT 730G,https://www.gsmarena.com/realme_xt_730g-9863.php,https://fdn2.gsmarena.com/vv/bigpic/realme-xt-730g.jpg
+Infinix,Note 50x,https://www.gsmarena.com/infinix_note_50x-13747.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-50x.jpg
+Infinix,Note 50 Pro+,https://www.gsmarena.com/infinix_note_50_pro+-13746.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note50-pro-plus-5g.jpg
+Infinix,Note 50 Pro 4G,https://www.gsmarena.com/infinix_note_50_pro_4g-13701.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note50-pro.jpg
+Infinix,Note 50 4G,https://www.gsmarena.com/infinix_note_50_4g-13705.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note50.jpg
+Infinix,Smart 9 HD,https://www.gsmarena.com/infinix_smart_9_hd-13590.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-9-hd.jpg
+Infinix,Hot 50 Pro 4G,https://www.gsmarena.com/infinix_hot_50_pro_4g-13461.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-pro-4g.jpg
+Infinix,Hot 50 Pro+ 4G,https://www.gsmarena.com/infinix_hot_50_pro+_4g-13408.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-pro-plus-4g.jpg
+Infinix,Note 40S,https://www.gsmarena.com/infinix_note_40s-13460.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note40s-x6850b.jpg
+Infinix,Hot 50i,https://www.gsmarena.com/infinix_hot_50i-13375.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50i.jpg
+Infinix,Smart 9,https://www.gsmarena.com/infinix_smart_9-13374.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart9.jpg
+Infinix,Hot 50 4G,https://www.gsmarena.com/infinix_hot_50_4g-13367.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-4g.jpg
+Infinix,Zero Flip,https://www.gsmarena.com/infinix_zero_flip-13347.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-flip-.jpg
+Infinix,Hot 50,https://www.gsmarena.com/infinix_hot_50-13305.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-5g-x6720-.jpg
+Infinix,Zero 40,https://www.gsmarena.com/infinix_zero_40-13290.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero40-5g-.jpg
+Infinix,Zero 40 4G,https://www.gsmarena.com/infinix_zero_40_4g-13276.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-40-4g-.jpg
+Infinix,Xpad,https://www.gsmarena.com/infinix_xpad-13263.php,https://fdn2.gsmarena.com/vv/bigpic/ulefone-xpad.jpg
+Infinix,Note 40X 5G,https://www.gsmarena.com/infinix_note_40x_5g-13246.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note40x-5g.jpg
+Infinix,Note 40 5G,https://www.gsmarena.com/infinix_note_40_5g-13035.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note40-5g-.jpg
+Infinix,GT 20 Pro,https://www.gsmarena.com/infinix_gt_20_pro-12962.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-gt20-pro.jpg
+Infinix,Note 40 Pro+,https://www.gsmarena.com/infinix_note_40_pro+-12874.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-pro-plus-5g-.jpg
+Infinix,Note 40 Pro,https://www.gsmarena.com/infinix_note_40_pro-12875.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-pro-5g-.jpg
+Infinix,Note 40 Pro 4G,https://www.gsmarena.com/infinix_note_40_pro_4g-12876.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-pro-4g-.jpg
+Infinix,Note 40,https://www.gsmarena.com/infinix_note_40-12877.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-4g-.jpg
+Infinix,Smart 8 Plus,https://www.gsmarena.com/infinix_smart_8_plus-12817.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-plus.jpg
+Infinix,Smart 8 Pro,https://www.gsmarena.com/infinix_smart_8_pro-12812.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-pro.jpg
+Infinix,Smart 8 (India),https://www.gsmarena.com/infinix_smart_8_(india)-12792.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-india.jpg
+Infinix,Smart 8 HD,https://www.gsmarena.com/infinix_smart_8_hd-12736.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-hd.jpg
+Infinix,Hot 40 Pro,https://www.gsmarena.com/infinix_hot_40_pro-12733.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-40-pro.jpg
+Infinix,Hot 40,https://www.gsmarena.com/infinix_hot_40-12732.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-40.jpg
+Infinix,Hot 40i,https://www.gsmarena.com/infinix_hot_40i-12731.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-40i.jpg
+Infinix,Smart 8,https://www.gsmarena.com/infinix_smart_8-12642.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart8.jpg
+Infinix,Zero 30 4G,https://www.gsmarena.com/infinix_zero_30_4g-12641.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-30-4g.jpg
+Infinix,Zero 30,https://www.gsmarena.com/infinix_zero_30-12518.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero30-5g.jpg
+Infinix,GT 10 Pro,https://www.gsmarena.com/infinix_gt_10_pro-12451.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-gt10-pro-5g.jpg
+Infinix,Hot 30 5G,https://www.gsmarena.com/infinix_hot_30_5g-12424.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30-5g.jpg
+Infinix,Note 30 VIP,https://www.gsmarena.com/infinix_note_30_vip-12365.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-x6710-note-30-vip.jpg
+Infinix,Hot 30 Play NFC,https://www.gsmarena.com/infinix_hot_30_play_nfc-12289.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30-play-nfc.jpg
+Infinix,Note 30 Pro,https://www.gsmarena.com/infinix_note_30_pro-12273.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-30-pro.jpg
+Infinix,Note 30,https://www.gsmarena.com/infinix_note_30-12288.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note30-4g.jpg
+Infinix,Note 30 5G,https://www.gsmarena.com/infinix_note_30_5g-12272.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-30-5g.jpg
+Infinix,Note 30i,https://www.gsmarena.com/infinix_note_30i-12274.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-30i.jpg
+Infinix,Smart 7 HD,https://www.gsmarena.com/infinix_smart_7_hd-12243.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart7-hd.jpg
+Infinix,Hot 30i,https://www.gsmarena.com/infinix_hot_30i-12216.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30i.jpg
+Infinix,Hot 30,https://www.gsmarena.com/infinix_hot_30-12214.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30.jpg
+Infinix,Smart 7 (India),https://www.gsmarena.com/infinix_smart_7_(india)-12131.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-7-india.jpg
+Infinix,Smart 7,https://www.gsmarena.com/infinix_smart_7-12116.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-7.jpg
+Infinix,Zero 5G 2023,https://www.gsmarena.com/infinix_zero_5g_2023-11976.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-5g-2023-turbo.jpg
+Infinix,Hot 20 Play,https://www.gsmarena.com/infinix_hot_20_play-11931.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20-play.jpg
+Infinix,Hot 20S,https://www.gsmarena.com/infinix_hot_20s-11930.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20s.jpg
+Infinix,Hot 20,https://www.gsmarena.com/infinix_hot_20-11929.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20-4g.jpg
+Infinix,Note 12 (2023),https://www.gsmarena.com/infinix_note_12_(2023)-11912.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-pro-4g.jpg
+Infinix,Zero Ultra,https://www.gsmarena.com/infinix_zero_ultra-11922.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-ultra.jpg
+Infinix,Hot 20 5G,https://www.gsmarena.com/infinix_hot_20_5g-11923.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20-5g.jpg
+Infinix,Hot 20i,https://www.gsmarena.com/infinix_hot_20i-11924.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20i.jpg
+Infinix,Zero 20,https://www.gsmarena.com/infinix_zero_20-11913.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero20-.jpg
+Infinix,Note 12i 2022,https://www.gsmarena.com/infinix_note_12i_2022-11919.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12i-2022.jpg
+Infinix,Hot 12 Pro,https://www.gsmarena.com/infinix_hot_12_pro-11822.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12-pro.jpg
+Infinix,Smart 6 Plus (India),https://www.gsmarena.com/infinix_smart_6_plus_(india)-11742.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-6-plus.jpg
+Infinix,Note 12 Pro,https://www.gsmarena.com/infinix_note_12_pro-11695.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-pro-4g.jpg
+Infinix,Note 12 Pro 5G,https://www.gsmarena.com/infinix_note_12_pro_5g-11663.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-pro-5g.jpg
+Infinix,Note 12 5G,https://www.gsmarena.com/infinix_note_12_5g-11662.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-5g.jpg
+Infinix,Hot 11s NFC,https://www.gsmarena.com/infinix_hot_11s_nfc-11605.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-11s-nfc.jpg
+Infinix,Hot 12 Play,https://www.gsmarena.com/infinix_hot_12_play-11547.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12-play.jpg
+Infinix,Hot 12 Play NFC,https://www.gsmarena.com/infinix_hot_12_play_nfc-11876.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12-play.jpg
+Infinix,Note 12 VIP,https://www.gsmarena.com/infinix_note_12_vip-11527.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-vip.jpg
+Infinix,Note 12 G96,https://www.gsmarena.com/infinix_note_12_g96-11526.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-g96.jpg
+Infinix,Note 12i,https://www.gsmarena.com/infinix_note_12i-11523.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12i.jpg
+Infinix,Note 12,https://www.gsmarena.com/infinix_note_12-11497.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12.jpg
+Infinix,Hot 12,https://www.gsmarena.com/infinix_hot_12-11498.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12.jpg
+Infinix,Smart 6 HD,https://www.gsmarena.com/infinix_smart_6_hd-11499.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-6-hd.jpg
+Infinix,Hot 11 2022,https://www.gsmarena.com/infinix_hot_11_2022-11478.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-11-2022.jpg
+Infinix,Hot 12i,https://www.gsmarena.com/infinix_hot_12i-11473.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-12i.jpg
+Infinix,Zero 5G,https://www.gsmarena.com/infinix_zero_5g-11355.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-5g.jpg
+Infinix,Smart 5 Pro,https://www.gsmarena.com/infinix_smart_5_pro-11221.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-5pro.jpg
+Infinix,Hot 11 Play,https://www.gsmarena.com/infinix_hot_11_play-11216.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot11-play.jpg
+Infinix,Note 11i,https://www.gsmarena.com/infinix_note_11i-11214.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-11i.jpg
+Infinix,Note 11s,https://www.gsmarena.com/infinix_note_11s-11202.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-11s.jpg
+Infinix,Note 11,https://www.gsmarena.com/infinix_note_11-11201.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note11.jpg
+Infinix,Smart 6,https://www.gsmarena.com/infinix_smart_6-11189.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-6.jpg
+Infinix,Note 11 Pro,https://www.gsmarena.com/infinix_note_11_pro-11157.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-11-pro.jpg
+Infinix,Hot 11s,https://www.gsmarena.com/infinix_hot_11s-11162.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot11s.jpg
+Infinix,Hot 11,https://www.gsmarena.com/infinix_hot_11-11161.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot11.jpg
+Infinix,Zero X Pro,https://www.gsmarena.com/infinix_zero_x_pro-10989.php,https://fdn2.gsmarena.com/vv/bigpic/zero-x-series.jpg
+Infinix,Zero X,https://www.gsmarena.com/infinix_zero_x-11097.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-x-.jpg
+Infinix,Zero X Neo,https://www.gsmarena.com/infinix_zero_x_neo-11098.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-x-neo-.jpg
+Infinix,Hot 10i,https://www.gsmarena.com/infinix_hot_10i-11031.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10i.jpg
+Infinix,Note 10 Pro NFC,https://www.gsmarena.com/infinix_note_10_pro_nfc-10908.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-10-pro-.jpg
+Infinix,Note 10 Pro,https://www.gsmarena.com/infinix_note_10_pro-10907.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-10-pro-.jpg
+Infinix,Note 10,https://www.gsmarena.com/infinix_note_10-10909.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-10.jpg
+Infinix,Hot 10T,https://www.gsmarena.com/infinix_hot_10t-10891.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10t-.jpg
+Infinix,Hot 10s NFC,https://www.gsmarena.com/infinix_hot_10s_nfc-10869.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10s--.jpg
+Infinix,Hot 10s,https://www.gsmarena.com/infinix_hot_10s-10868.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10s--.jpg
+Infinix,Smart 5 (India),https://www.gsmarena.com/infinix_smart_5_(india)-10735.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10-play.jpg
+Infinix,Hot 10 Play,https://www.gsmarena.com/infinix_hot_10_play-10699.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10-play.jpg
+Infinix,Smart HD 2021,https://www.gsmarena.com/infinix_smart_hd_2021-10646.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-hd-2021.jpg
+Infinix,Zero 8i,https://www.gsmarena.com/infinix_zero_8i-10622.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-8i.jpg
+Infinix,Note 8,https://www.gsmarena.com/infinix_note_8-10514.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note8-.jpg
+Infinix,Note 8i,https://www.gsmarena.com/infinix_note_8i-10515.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-8i-.jpg
+Infinix,Hot 10 Lite,https://www.gsmarena.com/infinix_hot_10_lite-10516.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10-lite-.jpg
+Infinix,Hot 10,https://www.gsmarena.com/infinix_hot_10-10452.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10.jpg
+Infinix,Zero 8,https://www.gsmarena.com/infinix_zero_8-10401.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero8.jpg
+Infinix,Smart 5,https://www.gsmarena.com/infinix_smart_5-10367.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart5-.jpg
+Infinix,Hot 9 Play,https://www.gsmarena.com/infinix_hot_9_play-10285.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot9-play.jpg
+Infinix,Note 7,https://www.gsmarena.com/infinix_note_7-10175.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note7.jpg
+Infinix,Note 7 Lite,https://www.gsmarena.com/infinix_note_7_lite-10177.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note7lite.jpg
+Infinix,Hot 9 Pro,https://www.gsmarena.com/infinix_hot_9_pro-10272.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot9-pro.jpg
+Infinix,Hot 9,https://www.gsmarena.com/infinix_hot_9-10156.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot9.jpg
+Infinix,S5 Pro (16+32),https://www.gsmarena.com/infinix_s5_pro_(16+32)-10128.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-pro-new.jpg
+Infinix,S5 Pro (48+40),https://www.gsmarena.com/infinix_s5_pro_(48+40)-10127.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-pro-new.jpg
+Infinix,S5 Pro,https://www.gsmarena.com/infinix_s5_pro-10116.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-pro-new.jpg
+Infinix,S5 lite,https://www.gsmarena.com/infinix_s5_lite-10008.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-lite-new.jpg
+Infinix,Smart 4,https://www.gsmarena.com/infinix_smart_4-9980.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart4-x653.jpg
+Infinix,Smart 4c,https://www.gsmarena.com/infinix_smart_4c-9975.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart4-x653c.jpg
+Infinix,Hot 8 Lite,https://www.gsmarena.com/infinix_hot_8_lite-9927.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-8-lite.jpg
+Infinix,S5,https://www.gsmarena.com/infinix_s5-9915.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-x652.jpg
+Infinix,Hot 8,https://www.gsmarena.com/infinix_hot_8-9856.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s8.jpg
+Infinix,Note 6,https://www.gsmarena.com/infinix_note_6-9761.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-6-x610.jpg
+Infinix,Smart3 Plus,https://www.gsmarena.com/infinix_smart3_plus-9680.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart3-plus.jpg
+Infinix,S4,https://www.gsmarena.com/infinix_s4-9678.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s4.jpg
+Infinix,Hot 7 Pro,https://www.gsmarena.com/infinix_hot_7_pro-9679.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-7-pro.jpg
+Infinix,Hot 7,https://www.gsmarena.com/infinix_hot_7-9658.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot7.jpg
+Infinix,Zero 6 Pro,https://www.gsmarena.com/infinix_zero_6_pro-9657.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-6.jpg
+Infinix,Zero 6,https://www.gsmarena.com/infinix_zero_6-9656.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-6.jpg
+Infinix,Smart 2 HD,https://www.gsmarena.com/infinix_smart_2_hd-9477.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart2-hd-n.jpg
+Infinix,Hot 6X,https://www.gsmarena.com/infinix_hot_6x-9423.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot6x-n.jpg
+Infinix,Note 5 Stylus,https://www.gsmarena.com/infinix_note_5_stylus-9416.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note5-stylus-n.jpg
+Infinix,S3X,https://www.gsmarena.com/infinix_s3x-9420.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s3x-n.jpg
+Infinix,Hot 6,https://www.gsmarena.com/infinix_hot_6-9426.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot6-n.jpg
+Infinix,Note 5,https://www.gsmarena.com/infinix_note_5-9417.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note5-n.jpg
+Infinix,Smart 2 Pro,https://www.gsmarena.com/infinix_smart_2_pro-9429.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart2-pro-n.jpg
+Infinix,Smart 2,https://www.gsmarena.com/infinix_smart_2-9430.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart2-n.jpg
+Infinix,Hot 6 Pro,https://www.gsmarena.com/infinix_hot_6_pro-9425.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot6-pro-n.jpg
+Infinix,Hot S3,https://www.gsmarena.com/infinix_hot_s3-9421.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s3-n.jpg
+Infinix,Zero 5 Pro,https://www.gsmarena.com/infinix_zero_5_pro-9415.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero5-pro.jpg
+Infinix,Zero 5,https://www.gsmarena.com/infinix_zero_5-9414.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero5-n.jpg
+Infinix,Hot 5 Lite,https://www.gsmarena.com/infinix_hot_5_lite-9428.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot5-lite-n.jpg
+Infinix,Hot 5,https://www.gsmarena.com/infinix_hot_5-9427.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot5-n.jpg
+Infinix,Note 4 Pro,https://www.gsmarena.com/infinix_note_4_pro-9419.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note4-pro-n.jpg
+Infinix,Note 4,https://www.gsmarena.com/infinix_note_4-9418.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note4-n.jpg
+Infinix,Smart,https://www.gsmarena.com/infinix_smart-9431.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-n.jpg
+Infinix,Zero 4 Plus,https://www.gsmarena.com/infinix_zero_4_plus-9479.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero4-plus-n.jpg
+Infinix,Zero 4,https://www.gsmarena.com/infinix_zero_4-9478.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero4-n.jpg
+Infinix,S2 Pro,https://www.gsmarena.com/infinix_s2_pro-9422.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s2-n.jpg
+Infinix,Hot 4 Pro,https://www.gsmarena.com/infinix_hot_4_pro-9473.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot4-pro-n.jpg
+Infinix,Hot 4,https://www.gsmarena.com/infinix_hot_4-9472.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot4-n.jpg
+Infinix,Note 3 Pro,https://www.gsmarena.com/infinix_note_3_pro-9476.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note3-pro-n.jpg
+Infinix,Note 3,https://www.gsmarena.com/infinix_note_3-9475.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note3-n.jpg
+Infinix,Hot S,https://www.gsmarena.com/infinix_hot_s-9474.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s-n.jpg

@@ -1,0 +1,44 @@
+{
+  "greeting": [
+    "Hello! I'm your mobile device assistant. How can I help you today?",
+    "Hi there! I'm ready to help with any mobile device questions you have.",
+    "Hey! Welcome to the mobile device assistant. What can I do for you?",
+    "Greetings! I'm here to help with all your mobile device needs.",
+    "Good day! I'm your AI assistant for mobile devices. What would you like to know?"
+  ],
+  "farewell": [
+    "Goodbye! Feel free to come back if you have more questions.",
+    "See you later! I'm here whenever you need mobile device assistance.",
+    "Take care! Don't hesitate to return if you need more help.",
+    "Farewell! I'll be here when you need mobile device information again.",
+    "Until next time! I'm always ready to help with your mobile device questions."
+  ],
+  "thanks": [
+    "You're welcome! I'm happy I could help.",
+    "Glad I could be of assistance! Anything else you'd like to know?",
+    "My pleasure! Is there anything else you'd like to know about mobile devices?",
+    "No problem at all! Feel free to ask if you have more questions.",
+    "Happy to help! Let me know if you need anything else."
+  ],
+  "confusion": [
+    "I apologize for the confusion. Could you please rephrase your question?",
+    "I'm not sure I understood correctly. Can you explain what you're looking for?",
+    "I might have misunderstood. Could you provide more details about what you need?",
+    "I'm having trouble understanding your request. Could you try asking in a different way?",
+    "Sorry for the confusion. Could you be more specific about what you're asking?"
+  ],
+  "frustration": [
+    "I apologize for the frustration. Let's try a different approach to solve your problem.",
+    "I understand this is frustrating. Let me try to help you more effectively.",
+    "I'm sorry you're having issues. Let's take a step back and try again.",
+    "I apologize for the difficulty. Let me try to address your concern differently.",
+    "I'm sorry this isn't working as expected. Let's try another way to find what you need."
+  ],
+  "default": [
+    "I'm not sure I understand. Could you ask about a specific mobile device or feature?",
+    "I'm here to help with mobile device information. Could you clarify what you're looking for?",
+    "I specialize in mobile device information. What specific device or topic are you interested in?",
+    "I might have missed your question. Could you ask about a specific mobile device or feature?",
+    "I'm your mobile device assistant. How can I help you find information about phones or tablets?"
+  ]
+}

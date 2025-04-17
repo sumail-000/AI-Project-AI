@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 <div class="container mt-5">
@@ -42,6 +42,17 @@
     
     <div id="visualization-area" class="mt-4">
         <!-- Visualizations will appear here -->
+    </div>
+    
+    <!-- Custom Image Modal for device images -->
+    <div id="customImageModal" class="custom-modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9);">
+        <div class="custom-modal-content" style="margin: 5% auto; padding: 20px; width: 80%; max-width: 800px; background-color: var(--dark-bg); border: 1px solid var(--neon-blue); border-radius: 8px; position: relative;">
+            <span id="closeCustomModal" style="position: absolute; top: 10px; right: 20px; color: var(--neon-blue); font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+            <h5 id="customModalLabel" style="color: var(--neon-blue); margin-bottom: 15px;">Device Image</h5>
+            <div style="text-align: center;">
+                <img id="customModalImage" src="" style="max-width: 100%; max-height: 70vh; border: 1px solid var(--neon-purple);" alt="Device Image">
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -203,6 +214,38 @@
 
 {% block scripts %}
 <script>
+    // Function to show image in custom modal
+    function showImageInModal(imageUrl, deviceName) {
+        const modalImage = document.getElementById('customModalImage');
+        const modalTitle = document.getElementById('customModalLabel');
+        const modal = document.getElementById('customImageModal');
+        
+        modalImage.src = imageUrl;
+        modalTitle.textContent = deviceName || 'Device Image';
+        
+        // Show the custom modal
+        modal.style.display = 'block';
+        
+        // Close modal when clicking the close button
+        document.getElementById('closeCustomModal').onclick = function() {
+            modal.style.display = 'none';
+        };
+        
+        // Close modal when clicking outside the modal content
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+        
+        // Close modal with escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                modal.style.display = 'none';
+            }
+        });
+    }
+    
     document.addEventListener('DOMContentLoaded', function() {
         const chatMessages = document.getElementById('chat-messages');
         const userInput = document.getElementById('user-input');
@@ -232,8 +275,13 @@
             });
         });
         
+        // Make showImageInModal available globally
+        window.showImageInModal = showImageInModal;
+        
         function sendMessage() {
+            console.log('=== DEBUGGING AI ASSISTANT ===');
             const query = userInput.value.trim();
+            console.log('Query:', query);
             if (query === '') return;
             
             // Add user message to chat
@@ -242,50 +290,97 @@
             
             // Show loading indicator
             addBotMessage("Thinking...", "loading");
+            console.log('Added loading message');
             
             // Send query to backend
+            console.log('Sending fetch request to /ai-assistant-api');
+            const requestBody = JSON.stringify({ query: query });
+            console.log('Request body:', requestBody);
+            
             fetch('/ai-assistant-api', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ query: query })
+                body: requestBody
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Received response:', response.status, response.statusText);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json().then(data => {
+                    console.log('Response data:', data);
+                    return data;
+                });
+            })
             .then(data => {
                 // Remove loading message
                 removeLoadingMessage();
                 
+                // Debug: Log the received data
+                console.log('AI Assistant API Response:', data);
+                
                 // Handle different response types
                 if (data.status === 'error') {
-                    addBotMessage(data.message);
+                    addBotMessage(data.message || 'An error occurred');
+                    return;
+                }
+                
+                // Check if response exists
+                if (!data.response) {
+                    console.error('Invalid response format:', data);
+                    addBotMessage('Received an invalid response format from the server.');
                     return;
                 }
                 
                 const response = data.response;
                 
+                // Handle device details (most common case)
+                if (response.device) {
+                    let summary = response.summary || `Here's information about ${response.device.name || 'the device'}:`;
+                    addBotMessage(summary);
+                    renderDeviceDetails(response.device);
+                    return;
+                }
+                
+                // Handle other response types
                 if (response.type === 'text') {
                     addBotMessage(response.content);
-                } else if (response.type === 'device_details') {
-                    addBotMessage(response.summary);
-                    renderDeviceDetails(response.device);
-                } else if (response.type === 'comparison') {
-                    addBotMessage(response.summary);
-                    addBotMessage(response.comparison_text);
+                } else if (response.type === 'comparison' && response.devices) {
+                    addBotMessage(response.summary || 'Here\'s a comparison:');
+                    if (response.comparison_text) addBotMessage(response.comparison_text);
                     renderComparison(response.devices);
-                } else if (response.type === 'spec_details') {
-                    addBotMessage(response.summary);
-                    addBotMessage(response.spec_value);
+                } else if (response.type === 'spec_details' && response.device) {
+                    addBotMessage(response.summary || 'Here\'s the specification:');
+                    if (response.spec_value) addBotMessage(response.spec_value);
                     renderDeviceDetails(response.device);
-                } else if (response.type === 'recommendation') {
-                    addBotMessage(response.summary);
+                } else if (response.type === 'recommendation' && response.devices) {
+                    addBotMessage(response.summary || 'Here are my recommendations:');
                     renderRecommendations(response.devices);
+                } else {
+                    // Fallback for unknown response format
+                    console.warn('Unknown response format:', response);
+                    addBotMessage('I found some information, but I\'m not sure how to display it properly.');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
                 removeLoadingMessage();
-                addBotMessage("Sorry, I encountered an error processing your request.");
+                addBotMessage("Sorry, I encountered an error processing your request: " + error.message);
+                
+                // Log additional debugging information
+                console.log('Query that caused the error:', query);
+                
+                // Add visual indicator that something went wrong
+                visualizationArea.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h4>Error Processing Request</h4>
+                        <p>There was a problem processing your request. Please try again or try a different query.</p>
+                        <p>Technical details: ${error.message}</p>
+                        <p>Check the browser console for more information.</p>
+                    </div>
+                `;
             });
         }
         
@@ -325,7 +420,7 @@
             deviceCard.innerHTML = `
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="${device.image_url}" alt="${device.name}" class="device-image img-fluid">
+                        <img src="${device.image_url}" alt="${device.name}" class="device-image img-fluid" style="cursor: pointer;" onclick="showImageInModal('${device.image_url}', '${device.name}')">
                     </div>
                     <div class="col-md-8">
                         <h3>${device.name}</h3>
@@ -337,6 +432,41 @@
             `;
             
             visualizationArea.appendChild(deviceCard);
+            
+            // Add image gallery if available
+            if (device.pictures && device.pictures.length > 0) {
+                const galleryContainer = document.createElement('div');
+                galleryContainer.className = 'mt-3';
+                galleryContainer.innerHTML = '<h4>Device Images</h4><div class="device-gallery"></div>';
+                
+                const gallery = galleryContainer.querySelector('.device-gallery');
+                gallery.style.display = 'flex';
+                gallery.style.flexWrap = 'wrap';
+                gallery.style.gap = '10px';
+                
+                device.pictures.forEach(pic => {
+                    const imgContainer = document.createElement('div');
+                    imgContainer.style.width = '100px';
+                    imgContainer.style.height = '100px';
+                    imgContainer.style.overflow = 'hidden';
+                    imgContainer.style.border = '1px solid var(--neon-blue)';
+                    imgContainer.style.borderRadius = '5px';
+                    imgContainer.style.cursor = 'pointer';
+                    
+                    const img = document.createElement('img');
+                    img.src = pic;
+                    img.alt = device.name;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+                    img.onclick = () => showImageInModal(pic, device.name);
+                    
+                    imgContainer.appendChild(img);
+                    gallery.appendChild(imgContainer);
+                });
+                
+                visualizationArea.appendChild(galleryContainer);
+            }
         }
         
         function renderComparison(devices) {
@@ -414,46 +544,98 @@
                 return '<div class="spec-item"><div class="spec-name">No specifications available</div></div>';
             }
             
-            // Define the order and labels for key specifications
-            const keySpecs = [
-                { key: 'display', label: 'Display' },
-                { key: 'chipset', label: 'Processor' },
-                { key: 'memory', label: 'Memory' },
-                { key: 'camera', label: 'Main Camera' },
-                { key: 'selfiecam', label: 'Selfie Camera' },
-                { key: 'battery', label: 'Battery' },
-                { key: 'os', label: 'OS' },
-                { key: 'dimensions', label: 'Dimensions' },
-                { key: 'weight', label: 'Weight' }
-            ];
+            // Safely handle encoding issues
+            function safeText(text) {
+                if (typeof text !== 'string') return String(text || '');
+                return text
+                    .replace(/\u02da/g, '°') // Replace degree symbol
+                    .replace(/\u00b5/g, 'µ') // Replace micro symbol
+                    .replace(/[^\x00-\x7F]/g, function(char) {
+                        // Replace any non-ASCII characters with their HTML entity or a safe replacement
+                        try {
+                            return `&#${char.charCodeAt(0)};`;
+                        } catch (e) {
+                            return '';
+                        }
+                    });
+            }
             
             let html = '';
             
-            // Add key specs first
-            keySpecs.forEach(spec => {
-                if (specs[spec.key]) {
+            // Define spec groups for organized display
+            const specGroups = {
+                'Display': ['display', 'display_type', 'resolution'],
+                'Platform': ['platform', 'chipset', 'cpu', 'gpu', 'os'],
+                'Memory': ['memory', 'internal', 'card_slot'],
+                'Camera': ['main_camera', 'selfie_camera', 'features', 'video'],
+                'Battery': ['battery', 'battery_type', 'charging'],
+                'Features': ['features', 'sensors'],
+                'Network': ['network', '5g_bands', '4g_bands', '3g_bands', '2g_bands'],
+                'Body': ['body', 'dimensions', 'weight', 'build', 'sim'],
+                'Misc': ['misc', 'colors', 'price']
+            };
+            
+            // Create HTML for each spec group
+            for (const [groupName, specKeys] of Object.entries(specGroups)) {
+                let groupHTML = '';
+                let hasSpecs = false;
+                
+                for (const key of specKeys) {
+                    if (specs[key]) {
+                        hasSpecs = true;
+                        groupHTML += `
+                            <div class="spec-item">
+                                <div class="spec-label">${key.replace(/_/g, ' ').charAt(0).toUpperCase() + key.replace(/_/g, ' ').slice(1)}</div>
+                                <div class="spec-value">${safeText(specs[key])}</div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                if (hasSpecs) {
                     html += `
-                        <div class="spec-item">
-                            <div class="spec-name">${spec.label}</div>
-                            <div class="spec-value">${specs[spec.key]}</div>
+                        <div class="spec-group">
+                            <h5>${groupName}</h5>
+                            ${groupHTML}
                         </div>
                     `;
                 }
-            });
+            }
             
-            // Add any remaining specs
-            Object.keys(specs).forEach(key => {
-                if (!keySpecs.some(spec => spec.key === key)) {
-                    html += `
+            // Add any remaining specs that weren't in predefined groups
+            let otherSpecs = '';
+            let hasOtherSpecs = false;
+            
+            for (const key of Object.keys(specs)) {
+                let inGroup = false;
+                for (const groupKeys of Object.values(specGroups)) {
+                    if (groupKeys.includes(key)) {
+                        inGroup = true;
+                        break;
+                    }
+                }
+                
+                if (!inGroup && specs[key]) {
+                    hasOtherSpecs = true;
+                    otherSpecs += `
                         <div class="spec-item">
-                            <div class="spec-name">${key.charAt(0).toUpperCase() + key.slice(1)}</div>
-                            <div class="spec-value">${specs[key]}</div>
+                            <div class="spec-label">${key.replace(/_/g, ' ').charAt(0).toUpperCase() + key.replace(/_/g, ' ').slice(1)}</div>
+                            <div class="spec-value">${safeText(specs[key])}</div>
                         </div>
                     `;
                 }
-            });
+            }
             
-            return html;
+            if (hasOtherSpecs) {
+                html += `
+                    <div class="spec-group">
+                        <h5>Other</h5>
+                        ${otherSpecs}
+                    </div>
+                `;
+            }
+            
+            return html || '<div class="spec-item"><div class="spec-name">No specifications available</div></div>';
         }
     });
 </script>

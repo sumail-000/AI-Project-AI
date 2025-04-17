@@ -16,6 +16,7 @@ import traceback  # Add this import for better error reporting
 from ai_assistant import DeviceAIAssistant  # Import the AI assistant
 import asyncio
 import aiohttp
+from datetime import datetime  # Add datetime module for timestamp generation
 
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'your-secret-key'
@@ -174,6 +175,39 @@ def start_scraping():
         return jsonify({
             'status': 'error',
             'message': str(e)
+        })
+
+@app.route('/train-conversation', methods=['POST'])
+def train_conversation():
+    try:
+        data = request.get_json()
+        user_input = data.get('user_input')
+        category = data.get('category')
+        response = data.get('response')
+        
+        if not all([user_input, category, response]):
+            return jsonify({
+                'status': 'error',
+                'message': 'Missing required parameters: user_input, category, and response are required'
+            })
+        
+        success = ai_assistant.train_conversation_model(user_input, category, response)
+        
+        if success:
+            return jsonify({
+                'status': 'success',
+                'message': f'Successfully trained model with new {category} response'
+            })
+        else:
+            return jsonify({
+                'status': 'error',
+                'message': 'Failed to train model'
+            })
+    except Exception as e:
+        app.logger.error(f"Error in train conversation API: {str(e)}")
+        return jsonify({
+            'status': 'error',
+            'message': f"An error occurred: {str(e)}"
         })
 
 @app.route('/scrape', methods=['POST'])
@@ -399,16 +433,63 @@ def ai_assistant_page():
 def ai_assistant_api():
     """API endpoint for the AI assistant."""
     try:
+        print("=== AI ASSISTANT API CALLED ===")
         data = request.get_json()
         query = data.get('query')
+        
         if not query:
             return jsonify({'status': 'error', 'message': 'Query required'})
         
-        response = ai_assistant.process_query(query)
-        return jsonify({'status': 'success', 'response': response})
+        print(f"Processing query: {query}")
+        
+        try:
+            # Get response from AI assistant
+            response = ai_assistant.process_query(query)
+            
+            # Convert response to JSON string with ASCII-only encoding
+            json_str = json.dumps({'status': 'success', 'response': response}, 
+                               ensure_ascii=True,  # Force ASCII encoding
+                               default=str)        # Convert any non-serializable objects to strings
+            
+            # Create response with proper content type
+            return Response(json_str, mimetype='application/json')
+            
+        except UnicodeEncodeError as ue:
+            # Handle Unicode encoding errors specifically
+            print(f"Unicode encoding error: {str(ue)}")
+            
+            # Create a simplified response with only ASCII characters
+            if 'device' in response:
+                # For device details, create a simplified version
+                device = response['device']
+                simplified_device = {
+                    'name': str(device.get('name', '')).encode('ascii', 'ignore').decode('ascii'),
+                    'brand': str(device.get('brand', '')).encode('ascii', 'ignore').decode('ascii'),
+                    'model': str(device.get('model', '')).encode('ascii', 'ignore').decode('ascii'),
+                    'url': str(device.get('url', '')).encode('ascii', 'ignore').decode('ascii'),
+                    'image_url': str(device.get('image_url', '')).encode('ascii', 'ignore').decode('ascii'),
+                    'specifications': {'display': 'Details available but contain special characters'}
+                }
+                simplified_response = {
+                    'type': response.get('type', 'device_details'),
+                    'summary': 'Here is the device information (some details simplified due to encoding issues):',
+                    'device': simplified_device
+                }
+            else:
+                # For other responses, create a text-only version
+                simplified_response = {
+                    'type': 'text',
+                    'content': 'Found information about your query, but encountered encoding issues. Please try a different query.'
+                }
+            
+            return jsonify({'status': 'success', 'response': simplified_response})
+            
     except Exception as e:
-        logger.error(f"Error in AI assistant API: {str(e)}")
-        return jsonify({'status': 'error', 'message': str(e)})
+        error_msg = f"Error in AI assistant API: {str(e)}"
+        print(f"EXCEPTION: {error_msg}")
+        print(f"Traceback: {traceback.format_exc()}")
+        logger.error(error_msg)
+        return jsonify({'status': 'error', 'message': 'An error occurred processing your request. Please try again.'})
 
 async def scrape_worker_impl(brands_to_scrape: List[Dict], delete_existing: List[str] = None):
     """Async implementation of scrape worker with option to delete existing data for specific brands."""
@@ -877,126 +958,6 @@ def events():
     
     return Response(event_stream(), mimetype='text/event-stream')
 
-@app.route('/visualization')
-def visualization():
-    """Temporary page for data visualization from CSV files."""
-    try:
-        # Get query parameters
-        selected_brand = request.args.get('brand', '')
-        selected_device = request.args.get('device', '')
-        
-        # Read brands and devices from CSV
-        brands_data = []
-        brand_set = set()
-        total_devices = 0
-        
-        if os.path.exists(scraper.brands_file):
-            with open(scraper.brands_file, 'r', encoding='utf-8') as f:
-                reader = csv.reader(f)
-                next(reader)  # Skip header
-                for row in reader:
-                    if len(row) >= 3:
-                        brand_name, device_name, device_url, device_image = row
-                        brands_data.append({
-                            'brand': brand_name,
-                            'name': device_name,
-                            'url': device_url,
-                            'image': device_image
-                        })
-                        brand_set.add(brand_name)
-                        total_devices += 1
-        
-        # Get all unique brands
-        brands = sorted(list(brand_set))
-        
-        # Get devices for selected brand
-        devices = []
-        brand_device_count = 0
-        if selected_brand:
-            devices = [d for d in brands_data if d['brand'] == selected_brand]
-            brand_device_count = len(devices)
-        
-        # Get specification for selected device
-        specification = None
-        raw_json = ""
-        if selected_device:
-            if os.path.exists(scraper.specs_file):
-                with open(scraper.specs_file, 'r', encoding='utf-8') as f:
-                    reader = csv.reader(f)
-                    next(reader)  # Skip header
-                    for row in reader:
-                        if len(row) >= 4 and row[0] == selected_device:
-                            try:
-                                device_url, name, pictures, specs_json = row
-                                specification = json.loads(specs_json)
-                                # Initialize the image collections
-                                specification['all_images'] = []
-                                specification['main_image'] = ''
-                                
-                                # Extract pictures from the main pictures field
-                                if 'pictures' in specification:
-                                    try:
-                                        # If pictures is a string representation of a list, parse it
-                                        if isinstance(specification['pictures'], str) and specification['pictures'].startswith('['):
-                                            picture_list = json.loads(specification['pictures'])
-                                            if isinstance(picture_list, list) and len(picture_list) > 0:
-                                                specification['main_image'] = picture_list[0]
-                                                specification['all_images'].extend(picture_list)
-                                        else:
-                                            specification['main_image'] = specification['pictures']
-                                            specification['all_images'].append(specification['pictures'])
-                                    except json.JSONDecodeError:
-                                        # If we can't parse it, just use it as is
-                                        specification['main_image'] = specification['pictures']
-                                        specification['all_images'].append(specification['pictures'])
-                                
-                                # Try to extract pictures from the specifications JSON itself
-                                try:
-                                    # The 'specifications' field might contain additional pictures in the raw JSON
-                                    specs_json = json.loads(specs_json)
-                                    if 'pictures' in specs_json and specs_json['pictures']:
-                                        try:
-                                            # Try to parse the pictures field from the specs JSON
-                                            if isinstance(specs_json['pictures'], str) and specs_json['pictures'].startswith('['):
-                                                more_pics = json.loads(specs_json['pictures'])
-                                                if isinstance(more_pics, list):
-                                                    # Add these pictures to our collection if they're not already there
-                                                    for pic in more_pics:
-                                                        if pic not in specification['all_images']:
-                                                            specification['all_images'].append(pic)
-                                                    
-                                                    # If we don't have a main image yet, use the first one
-                                                    if not specification['main_image'] and more_pics:
-                                                        specification['main_image'] = more_pics[0]
-                                        except json.JSONDecodeError:
-                                            # If it's not valid JSON, try to use it directly
-                                            if specs_json['pictures'] not in specification['all_images']:
-                                                specification['all_images'].append(specs_json['pictures'])
-                                                
-                                            # If we don't have a main image yet, use this one
-                                            if not specification['main_image']:
-                                                specification['main_image'] = specs_json['pictures']
-                                except Exception as e:
-                                    logger.error(f"Error extracting pictures from specs JSON: {str(e)}")
-                                        
-                                raw_json = json.dumps(specification, indent=2)
-                                break
-                            except json.JSONDecodeError as e:
-                                logger.error(f"Error parsing JSON for device {selected_device}: {str(e)}")
-        
-        return render_template('visualization.html',
-                              brands=brands,
-                              devices=devices,
-                              selected_brand=selected_brand,
-                              selected_device=selected_device,
-                              specification=specification,
-                              raw_json=raw_json,
-                              total_brands=len(brands),
-                              total_devices=total_devices,
-                              brand_device_count=brand_device_count)
-    except Exception as e:
-        logger.error(f"Error in visualization: {str(e)}\n{traceback.format_exc()}")
-        return f"Error: {str(e)}", 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

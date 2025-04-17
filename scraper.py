@@ -7,6 +7,7 @@ import json
 from typing import Dict, List, Optional, Tuple
 import os
 import asyncio
+import random
 
 class GSMArenaScraper:
     def __init__(self):
@@ -18,19 +19,39 @@ class GSMArenaScraper:
         self.brands_file = 'brands_devices.csv'
         self.specs_file = 'device_specifications.csv'
         self.last_request_time = 0
-        self.min_request_interval = 2  # Minimum seconds between requests (reduced from 3)
-        self.max_retries = 5  # Increased from 3 for better resilience
+        self.min_request_interval = 2  # Minimum seconds between requests
+        self.batch_cooldown_interval = 4  # Longer interval after a batch of requests
+        self.max_retries = 5  # Number of retries for failed requests
+        self.request_counter = 0  # Counter to track number of requests made
+        self.min_batch_size = 15  # Minimum requests before adding a longer interval
+        self.max_batch_size = 25  # Maximum requests before adding a longer interval
+        self.current_batch_size = random.randint(self.min_batch_size, self.max_batch_size)  # Random batch size
 
     def setup_logger(self):
         logger.add("debug.log", rotation="500 MB", level="DEBUG")
 
     async def _make_request_impl(self, url, session, headers=None):
-        """Make a rate-limited request with retries (async implementation)"""
+        """Make a rate-limited request with retries (async implementation)
+        Uses a sophisticated rate limiting strategy with batch processing and random intervals
+        """
         headers = headers or self.headers
         retries = 0
         
         while retries < self.max_retries:
-            # Ensure minimum time between requests
+            # Check if we need to apply a longer cooldown after a batch of requests
+            if self.request_counter >= self.current_batch_size:
+                # Reset counter and generate a new random batch size
+                self.request_counter = 0
+                self.current_batch_size = random.randint(self.min_batch_size, self.max_batch_size)
+                
+                # Add a random variation to the cooldown interval (±0.5 seconds)
+                cooldown_variation = random.uniform(-0.5, 0.5)
+                actual_cooldown = self.batch_cooldown_interval + cooldown_variation
+                
+                logger.info(f"Batch cooldown: waiting {actual_cooldown:.1f} seconds after {self.current_batch_size} requests...")
+                await asyncio.sleep(actual_cooldown)
+            
+            # Standard rate limiting between individual requests
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             if time_since_last < self.min_request_interval:
@@ -41,8 +62,11 @@ class GSMArenaScraper:
             try:
                 async with session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=10)) as response:
                     self.last_request_time = time.time()
+                    self.request_counter += 1  # Increment the request counter
                     
                     if response.status == 429:
+                        # If we hit a rate limit, reset our counter and wait longer
+                        self.request_counter = 0
                         retry_after = int(response.headers.get('Retry-After', self.min_request_interval * (retries + 2)))
                         logger.warning(f"Rate limited. Waiting {retry_after} seconds before retry {retries + 1}/{self.max_retries}")
                         await asyncio.sleep(retry_after)
@@ -120,7 +144,10 @@ class GSMArenaScraper:
             if picture_elements:
                 main_picture = picture_elements[0]['href']
                 if main_picture:
-                    pictures.append(self.base_url + main_picture)
+                    full_url = self.base_url + main_picture
+                    # Filter out URLs ending with .php
+                    if not full_url.endswith('.php'):
+                        pictures.append(full_url)
             
             # Try to find additional pictures on specs page
             thumbnail_elements = soup.select('div.specs-photo-sub a')
@@ -128,7 +155,10 @@ class GSMArenaScraper:
                 if 'href' in thumbnail.attrs:
                     picture_url = thumbnail['href']
                     if picture_url:
-                        pictures.append(self.base_url + picture_url)
+                        full_url = self.base_url + picture_url
+                        # Filter out URLs ending with .php
+                        if not full_url.endswith('.php'):
+                            pictures.append(full_url)
             
             # Try to get additional pictures from the pictures page
             try:
@@ -152,7 +182,8 @@ class GSMArenaScraper:
                     for img in image_elements:
                         if 'src' in img.attrs:
                             picture_url = img['src']
-                            if picture_url and not picture_url.endswith('placeholder.jpg'):
+                            # Filter out URLs ending with .php and placeholder images
+                            if picture_url and not picture_url.endswith('placeholder.jpg') and not picture_url.endswith('.php'):
                                 if picture_url not in pictures:  # Avoid duplicates
                                     pictures.append(picture_url)
                 except Exception as e:
@@ -160,8 +191,11 @@ class GSMArenaScraper:
             except Exception as e:
                 logger.warning(f"Error processing pictures page URL: {str(e)}")
             
-            logger.info(f"Found {len(pictures)} pictures for device")
-            return pictures
+            # Final check to ensure no .php URLs are included
+            filtered_pictures = [pic for pic in pictures if not pic.endswith('.php')]
+            
+            logger.info(f"Found {len(filtered_pictures)} pictures for device (after filtering)")
+            return filtered_pictures
         except Exception as e:
             logger.error(f"Error fetching device pictures: {str(e)}")
             return []

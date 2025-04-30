@@ -1,5 +1,29 @@
-brand,device_name,device_url,image_url
-Google,Pixel 9a,https://www.gsmarena.com/google_pixel_9a-13478.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9a.jpg
+brand_name,device_name,device_url,device_image
+Amazon,Fire Max 11,https://www.gsmarena.com/amazon_fire_max_11-12382.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-max-11.jpg
+Amazon,Fire HD 8 Plus (2022),https://www.gsmarena.com/amazon_fire_hd_8_plus_(2022)-12035.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd-8-plus-2022.jpg
+Amazon,Fire HD 8 (2022),https://www.gsmarena.com/amazon_fire_hd_8_(2022)-12036.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd-8-2022.jpg
+Amazon,Fire HD 10 Plus (2021),https://www.gsmarena.com/amazon_fire_hd_10_plus_(2021)-10882.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd-10-plus-2021.jpg
+Amazon,Fire HD 10 (2021),https://www.gsmarena.com/amazon_fire_hd_10_(2021)-10881.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd-10-2021.jpg
+Amazon,Fire HD 8 Plus (2020),https://www.gsmarena.com/amazon_fire_hd_8_plus_(2020)-10246.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd8-2020.jpg
+Amazon,Fire HD 8 (2020),https://www.gsmarena.com/amazon_fire_hd_8_(2020)-10245.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd8-2020.jpg
+Amazon,Fire HD 10 (2019),https://www.gsmarena.com/amazon_fire_hd_10_(2019)-10620.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd-10-2019.jpg
+Amazon,Fire HD 10 (2017),https://www.gsmarena.com/amazon_fire_hd_10_(2017)-8872.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd-10-2017.jpg
+Amazon,Fire HD 8 (2017),https://www.gsmarena.com/amazon_fire_hd_8_(2017)-8806.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd-8-2017.jpg
+Amazon,Fire 7 (2017),https://www.gsmarena.com/amazon_fire_7_(2017)-8805.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-7-2017.jpg
+Amazon,Fire HD 10,https://www.gsmarena.com/amazon_fire_hd_10-7611.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd-10.jpg
+Amazon,Fire HD 8,https://www.gsmarena.com/amazon_fire_hd_8-7610.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd-8.jpg
+Amazon,Fire 7,https://www.gsmarena.com/amazon_fire_7-7609.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-7.jpg
+Amazon,Fire HDX 8.9 (2014),https://www.gsmarena.com/amazon_fire_hdx_8_9_(2014)-6690.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-Kindle-Fire-HDX-89-2014.jpg
+Amazon,Fire HD 7,https://www.gsmarena.com/amazon_fire_hd_7-6689.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd7.jpg
+Amazon,Fire HD 6,https://www.gsmarena.com/amazon_fire_hd_6-6688.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-hd6.jpg
+Amazon,Fire Phone,https://www.gsmarena.com/amazon_fire_phone-6453.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-phone.jpg
+Amazon,Kindle Fire HDX 8.9,https://www.gsmarena.com/amazon_kindle_fire_hdx_8_9-5728.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-Kindle-Fire-HDX-89.jpg
+Amazon,Kindle Fire HDX,https://www.gsmarena.com/amazon_kindle_fire_hdx-5727.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-Kindle-Fire-HDX.jpg
+Amazon,Kindle Fire HD (2013),https://www.gsmarena.com/amazon_kindle_fire_hd_(2013)-5726.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-Kindle-Fire-HD.jpg
+Amazon,Kindle Fire HD 8.9 LTE,https://www.gsmarena.com/amazon_kindle_fire_hd_8_9_lte-4996.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-kindle-fire-hd-89.jpg
+Amazon,Kindle Fire HD 8.9,https://www.gsmarena.com/amazon_kindle_fire_hd_8_9-4995.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-kindle-fire-hd-89.jpg
+Amazon,Kindle Fire HD,https://www.gsmarena.com/amazon_kindle_fire_hd-4994.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-kindle-fire-hd.jpg
+Amazon,Kindle Fire,https://www.gsmarena.com/amazon_kindle_fire-4524.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-kindle-fire.jpg
 Google,Pixel 9a,https://www.gsmarena.com/google_pixel_9a-13478.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9a.jpg
 Google,Pixel 9 Pro XL,https://www.gsmarena.com/google_pixel_9_pro_xl-13217.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro-xl-.jpg
 Google,Pixel 9 Pro,https://www.gsmarena.com/google_pixel_9_pro-13218.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro-.jpg
@@ -34,139 +58,161 @@ Google,Pixel 2 XL,https://www.gsmarena.com/google_pixel_2_xl-8720.php,https://fd
 Google,Pixel XL,https://www.gsmarena.com/google_pixel_xl-8345.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-xl.jpg
 Google,Pixel,https://www.gsmarena.com/google_pixel-8346.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel.jpg
 Google,Pixel C,https://www.gsmarena.com/google_pixel_c-7826.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-c--.jpg
-Apple,iPad Air 13 (2025),https://www.gsmarena.com/apple_ipad_air_13_(2025)-13704.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-air-13-2025.jpg
-Apple,iPad Air 11 (2025),https://www.gsmarena.com/apple_ipad_air_11_(2025)-13703.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-air-11-2025.jpg
-Apple,iPad (2025),https://www.gsmarena.com/apple_ipad_(2025)-13702.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-11-inch-2025.jpg
-Apple,iPhone 16e,https://www.gsmarena.com/apple_iphone_16e-13395.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16e.jpg
-Apple,iPad mini (2024),https://www.gsmarena.com/apple_ipad_mini_(2024)-13437.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-mini-2024.jpg
-Apple,iPhone 16 Pro Max,https://www.gsmarena.com/apple_iphone_16_pro_max-13123.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg
-Apple,iPhone 16 Pro,https://www.gsmarena.com/apple_iphone_16_pro-13315.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg
-Apple,iPhone 16 Plus,https://www.gsmarena.com/apple_iphone_16_plus-13316.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg
-Apple,iPhone 16,https://www.gsmarena.com/apple_iphone_16-13317.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg
-Apple,Watch Series 10,https://www.gsmarena.com/apple_watch_series_10-13318.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series10.jpg
-Apple,Watch Series 10 Aluminum,https://www.gsmarena.com/apple_watch_series_10_aluminum-13319.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series10-alumin.jpg
-Apple,iPad Pro 13 (2024),https://www.gsmarena.com/apple_ipad_pro_13_(2024)-12987.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-13-2024.jpg
-Apple,iPad Pro 11 (2024),https://www.gsmarena.com/apple_ipad_pro_11_(2024)-12986.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-11-2024.jpg
-Apple,iPad Air 13 (2024),https://www.gsmarena.com/apple_ipad_air_13_(2024)-12985.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-air-13-2024.jpg
-Apple,iPad Air 11 (2024),https://www.gsmarena.com/apple_ipad_air_11_(2024)-12984.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-air-11-2024.jpg
-Apple,iPhone 15 Pro Max,https://www.gsmarena.com/apple_iphone_15_pro_max-12548.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg
-Apple,iPhone 15 Pro,https://www.gsmarena.com/apple_iphone_15_pro-12557.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro.jpg
-Apple,iPhone 15 Plus,https://www.gsmarena.com/apple_iphone_15_plus-12558.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-plus-.jpg
-Apple,iPhone 15,https://www.gsmarena.com/apple_iphone_15-12559.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg
-Apple,Watch Ultra 2,https://www.gsmarena.com/apple_watch_ultra_2-12560.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-ultra2-black.jpg
-Apple,Watch Series 9,https://www.gsmarena.com/apple_watch_series_9-12561.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series9.jpg
-Apple,Watch Series 9 Aluminum,https://www.gsmarena.com/apple_watch_series_9_aluminum-12562.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series9-aluminum.jpg
-Apple,iPad Pro 12.9 (2022),https://www.gsmarena.com/apple_ipad_pro_12_9_(2022)-11939.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-129-2022.jpg
-Apple,iPad Pro 11 (2022),https://www.gsmarena.com/apple_ipad_pro_11_(2022)-11940.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-11-2022.jpg
-Apple,iPad (2022),https://www.gsmarena.com/apple_ipad_(2022)-11941.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-10-2022.jpg
-Apple,iPhone 14 Pro Max,https://www.gsmarena.com/apple_iphone_14_pro_max-11773.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro-max-.jpg
-Apple,iPhone 14 Pro,https://www.gsmarena.com/apple_iphone_14_pro-11860.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro.jpg
-Apple,iPhone 14 Plus,https://www.gsmarena.com/apple_iphone_14_plus-11862.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-plus.jpg
-Apple,iPhone 14,https://www.gsmarena.com/apple_iphone_14-11861.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14.jpg
-Apple,Watch Ultra,https://www.gsmarena.com/apple_watch_ultra-11827.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-ultra.jpg
-Apple,Watch Series 8,https://www.gsmarena.com/apple_watch_series_8-11866.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-8.jpg
-Apple,Watch Series 8 Aluminum,https://www.gsmarena.com/apple_watch_series_8_aluminum-11864.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-8-aluminum.jpg
-Apple,Watch SE (2022),https://www.gsmarena.com/apple_watch_se_(2022)-11865.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-8se-2022.jpg
-Apple,iPhone SE (2022),https://www.gsmarena.com/apple_iphone_se_(2022)-11410.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-se-2022.jpg
-Apple,iPad Air (2022),https://www.gsmarena.com/apple_ipad_air_(2022)-11411.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-air-2022-new.jpg
-Apple,iPhone 13 Pro Max,https://www.gsmarena.com/apple_iphone_13_pro_max-11089.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13-pro-max.jpg
-Apple,iPhone 13 Pro,https://www.gsmarena.com/apple_iphone_13_pro-11102.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13-pro.jpg
-Apple,iPhone 13,https://www.gsmarena.com/apple_iphone_13-11103.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13.jpg
-Apple,iPhone 13 mini,https://www.gsmarena.com/apple_iphone_13_mini-11104.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13-mini.jpg
-Apple,iPad mini (2021),https://www.gsmarena.com/apple_ipad_mini_(2021)-11105.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-mini-2021.jpg
-Apple,iPad 10.2 (2021),https://www.gsmarena.com/apple_ipad_10_2_(2021)-11106.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-102-2021-.jpg
-Apple,Watch Edition Series 7,https://www.gsmarena.com/apple_watch_edition_series_7-11147.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series-7-titanium.jpg
-Apple,Watch Series 7,https://www.gsmarena.com/apple_watch_series_7-11146.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series-7-stainless-steel.jpg
-Apple,Watch Series 7 Aluminum,https://www.gsmarena.com/apple_watch_series_7_aluminum-11107.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series-7-aluminum.jpg
-Apple,iPad Pro 12.9 (2021),https://www.gsmarena.com/apple_ipad_pro_12_9_(2021)-10864.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-129-2021.jpg
-Apple,iPad Pro 11 (2021),https://www.gsmarena.com/apple_ipad_pro_11_(2021)-10865.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-11-2021.jpg
-Apple,iPhone 12 Pro Max,https://www.gsmarena.com/apple_iphone_12_pro_max-10237.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-12-pro-max-.jpg
-Apple,iPhone 12 Pro,https://www.gsmarena.com/apple_iphone_12_pro-10508.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-12-pro--.jpg
-Apple,iPhone 12,https://www.gsmarena.com/apple_iphone_12-10509.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-12.jpg
-Apple,iPhone 12 mini,https://www.gsmarena.com/apple_iphone_12_mini-10510.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-12-mini.jpg
-Apple,iPad Air (2020),https://www.gsmarena.com/apple_ipad_air_(2020)-10444.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-air4-2020.jpg
-Apple,iPad 10.2 (2020),https://www.gsmarena.com/apple_ipad_10_2_(2020)-10445.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad8-102-inches-2020.jpg
-Apple,Watch SE,https://www.gsmarena.com/apple_watch_se-10446.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-se.jpg
-Apple,Watch Series 6 Aluminum,https://www.gsmarena.com/apple_watch_series_6_aluminum-10447.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-s6.jpg
-Apple,Watch Series 6,https://www.gsmarena.com/apple_watch_series_6-10448.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-s6-steel.jpg
-Apple,Watch Edition Series 6,https://www.gsmarena.com/apple_watch_edition_series_6-10449.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-s6-titanium.jpg
-Apple,iPhone SE (2020),https://www.gsmarena.com/apple_iphone_se_(2020)-10170.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-se-2020.jpg
-Apple,iPad Pro 12.9 (2020),https://www.gsmarena.com/apple_ipad_pro_12_9_(2020)-10136.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-12-2020.jpg
-Apple,iPad Pro 11 (2020),https://www.gsmarena.com/apple_ipad_pro_11_(2020)-10137.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-11-2020.jpg
-Apple,iPhone 11 Pro Max,https://www.gsmarena.com/apple_iphone_11_pro_max-9846.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-11-pro.jpg
-Apple,iPhone 11 Pro,https://www.gsmarena.com/apple_iphone_11_pro-9847.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-11-pro-max-.jpg
-Apple,iPhone 11,https://www.gsmarena.com/apple_iphone_11-9848.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-11.jpg
-Apple,iPad 10.2 (2019),https://www.gsmarena.com/apple_ipad_10_2_(2019)-9857.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad7-102-inches.jpg
-Apple,Watch Edition Series 5,https://www.gsmarena.com/apple_watch_edition_series_5-9860.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-edition-series-5.jpg
-Apple,Watch Series 5,https://www.gsmarena.com/apple_watch_series_5-9859.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series-5.jpg
-Apple,Watch Series 5 Aluminum,https://www.gsmarena.com/apple_watch_series_5_aluminum-9858.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-aluminum-series-5.jpg
-Apple,iPad Air (2019),https://www.gsmarena.com/apple_ipad_air_(2019)-9638.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-air3-2019.jpg
-Apple,iPad mini (2019),https://www.gsmarena.com/apple_ipad_mini_(2019)-9637.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-mini-2019.jpg
-Apple,iPad Pro 12.9 (2018),https://www.gsmarena.com/apple_ipad_pro_12_9_(2018)-9387.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-129-2018.jpg
-Apple,iPad Pro 11 (2018),https://www.gsmarena.com/apple_ipad_pro_11_(2018)-9386.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-11-2018.jpg
-Apple,iPhone XS Max,https://www.gsmarena.com/apple_iphone_xs_max-9319.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-xs-max-new1.jpg
-Apple,iPhone XS,https://www.gsmarena.com/apple_iphone_xs-9318.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-xs-new.jpg
-Apple,iPhone XR,https://www.gsmarena.com/apple_iphone_xr-9320.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-xr-new.jpg
-Apple,Watch Series 4,https://www.gsmarena.com/apple_watch_series_4-9321.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series-4-steel.jpg
-Apple,Watch Series 4 Aluminum,https://www.gsmarena.com/apple_watch_series_4_aluminum-9322.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series-4-aluminum.jpg
-Apple,iPad 9.7 (2018),https://www.gsmarena.com/apple_ipad_9_7_(2018)-9142.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-97-2018.jpg
-Apple,iPhone X,https://www.gsmarena.com/apple_iphone_x-8858.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-x.jpg
-Apple,iPhone 8 Plus,https://www.gsmarena.com/apple_iphone_8_plus-8131.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-8-plus-new.jpg
-Apple,iPhone 8,https://www.gsmarena.com/apple_iphone_8-8573.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-8-new.jpg
-Apple,Watch Edition Series 3,https://www.gsmarena.com/apple_watch_edition_series_3-8861.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-edition-series3.jpg
-Apple,Watch Series 3,https://www.gsmarena.com/apple_watch_series_3-8860.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series3-.jpg
-Apple,Watch Series 3 Aluminum,https://www.gsmarena.com/apple_watch_series_3_aluminum-8859.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-series3-sport-.jpg
-Apple,iPad Pro 12.9 (2017),https://www.gsmarena.com/apple_ipad_pro_12_9_(2017)-8717.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-129-2017.jpg
-Apple,iPad Pro 10.5 (2017),https://www.gsmarena.com/apple_ipad_pro_10_5_(2017)-8716.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-105-2017.jpg
-Apple,iPad 9.7 (2017),https://www.gsmarena.com/apple_ipad_9_7_(2017)-8620.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-97-2017.jpg
-Apple,Watch Edition Series 2 42mm,https://www.gsmarena.com/apple_watch_edition_series_2_42mm-8331.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch2-edition-42mm.jpg
-Apple,Watch Edition Series 2 38mm,https://www.gsmarena.com/apple_watch_edition_series_2_38mm-8332.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch2-s2-edition-38mm.jpg
-Apple,Watch Series 2 42mm,https://www.gsmarena.com/apple_watch_series_2_42mm-8329.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch2-s2-42mm.jpg
-Apple,Watch Series 2 38mm,https://www.gsmarena.com/apple_watch_series_2_38mm-8330.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch2-s2-38mm.jpg
-Apple,Watch Series 2 Aluminum 42mm,https://www.gsmarena.com/apple_watch_series_2_aluminum_42mm-8328.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch2-s2-sport-42mm.jpg
-Apple,Watch Series 1 Aluminum 42mm,https://www.gsmarena.com/apple_watch_series_1_aluminum_42mm-8334.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch1-sport-42mm.jpg
-Apple,Watch Series 2 Aluminum 38mm,https://www.gsmarena.com/apple_watch_series_2_aluminum_38mm-8327.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch2-s2-sport-38mm.jpg
-Apple,Watch Series 1 Aluminum 38mm,https://www.gsmarena.com/apple_watch_series_1_aluminum_38mm-8333.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch2-s2-sport-38mm.jpg
-Apple,iPhone 7 Plus,https://www.gsmarena.com/apple_iphone_7_plus-8065.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-7-plus-r2.jpg
-Apple,iPhone 7,https://www.gsmarena.com/apple_iphone_7-8064.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-7r4.jpg
-Apple,iPad Pro 9.7 (2016),https://www.gsmarena.com/apple_ipad_pro_9_7_(2016)-7984.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-97.jpg
-Apple,iPhone SE,https://www.gsmarena.com/apple_iphone_se-7969.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-5se-ofic.jpg
-Apple,iPhone 6s Plus,https://www.gsmarena.com/apple_iphone_6s_plus-7243.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-6s-plus.jpg
-Apple,iPhone 6s,https://www.gsmarena.com/apple_iphone_6s-7242.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-6s1.jpg
-Apple,iPad Pro 12.9 (2015),https://www.gsmarena.com/apple_ipad_pro_12_9_(2015)-7562.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-pro-.jpg
-Apple,iPad mini 4 (2015),https://www.gsmarena.com/apple_ipad_mini_4_(2015)-7561.php,https://fdn2.gsmarena.com/vv/bigpic/ipad-mini-41.jpg
-Apple,Watch Edition 42mm (1st gen),https://www.gsmarena.com/apple_watch_edition_42mm_(1st_gen)-7698.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-edition-42mm.jpg
-Apple,Watch Edition 38mm (1st gen),https://www.gsmarena.com/apple_watch_edition_38mm_(1st_gen)-7697.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-edition-38mm.jpg
-Apple,Watch 42mm (1st gen),https://www.gsmarena.com/apple_watch_42mm_(1st_gen)-7696.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-42mm.jpg
-Apple,Watch 38mm (1st gen),https://www.gsmarena.com/apple_watch_38mm_(1st_gen)-7695.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-38mm.jpg
-Apple,Watch Sport 42mm (1st gen),https://www.gsmarena.com/apple_watch_sport_42mm_(1st_gen)-7694.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-sport-42mm2.jpg
-Apple,Watch Sport 38mm (1st gen),https://www.gsmarena.com/apple_watch_sport_38mm_(1st_gen)-7693.php,https://fdn2.gsmarena.com/vv/bigpic/apple-watch-sport-38mm.jpg
-Apple,iPad Air 2,https://www.gsmarena.com/apple_ipad_air_2-6742.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-air-2-new.jpg
-Apple,iPad mini 3,https://www.gsmarena.com/apple_ipad_mini_3-6741.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-mini-3-new.jpg
-Apple,iPhone 6 Plus,https://www.gsmarena.com/apple_iphone_6_plus-6665.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-6-plus2.jpg
-Apple,iPhone 6,https://www.gsmarena.com/apple_iphone_6-6378.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-6-4.jpg
-Apple,iPad Air,https://www.gsmarena.com/apple_ipad_air-5797.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-air.jpg
-Apple,iPad mini 2,https://www.gsmarena.com/apple_ipad_mini_2-5735.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-mini2.jpg
-Apple,iPhone 5s,https://www.gsmarena.com/apple_iphone_5s-5685.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-5s-ofic.jpg
-Apple,iPhone 5c,https://www.gsmarena.com/apple_iphone_5c-5690.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-5c-new2.jpg
-Apple,iPad mini Wi-Fi,https://www.gsmarena.com/apple_ipad_mini_wi_fi-5070.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-mini-final.jpg
-Apple,iPad mini Wi-Fi + Cellular,https://www.gsmarena.com/apple_ipad_mini_wi_fi_+_cellular-5061.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-mini-final.jpg
-Apple,iPad 4 Wi-Fi,https://www.gsmarena.com/apple_ipad_4_wi_fi-5072.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-3-new.jpg
-Apple,iPad 4 Wi-Fi + Cellular,https://www.gsmarena.com/apple_ipad_4_wi_fi_+_cellular-5071.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-3-new.jpg
-Apple,iPhone 5,https://www.gsmarena.com/apple_iphone_5-4910.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-5-ofic.jpg
-Apple,iPad 3 Wi-Fi + Cellular,https://www.gsmarena.com/apple_ipad_3_wi_fi_+_cellular-4620.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-3-new.jpg
-Apple,iPad 3 Wi-Fi,https://www.gsmarena.com/apple_ipad_3_wi_fi-4621.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-3-new.jpg
-Apple,iPhone 4s,https://www.gsmarena.com/apple_iphone_4s-4212.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-4s-new.jpg
-Apple,iPad 2 Wi-Fi + 3G,https://www.gsmarena.com/apple_ipad_2_wi_fi_+_3g-3848.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad2-new.jpg
-Apple,iPad 2 Wi-Fi,https://www.gsmarena.com/apple_ipad_2_wi_fi-3847.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad2-new.jpg
-Apple,iPad 2 CDMA,https://www.gsmarena.com/apple_ipad_2_cdma-3849.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad2-new.jpg
-Apple,iPhone 4,https://www.gsmarena.com/apple_iphone_4-3275.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-4-ofic-final.jpg
-Apple,iPhone 4 CDMA,https://www.gsmarena.com/apple_iphone_4_cdma-3716.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone4-cdma.jpg
-Apple,iPad Wi-Fi + 3G,https://www.gsmarena.com/apple_ipad_wi_fi_+_3g-3827.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-original.jpg
-Apple,iPad Wi-Fi,https://www.gsmarena.com/apple_ipad_wi_fi-3828.php,https://fdn2.gsmarena.com/vv/bigpic/apple-ipad-original.jpg
-Apple,iPhone 3GS,https://www.gsmarena.com/apple_iphone_3gs-2826.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-3gs-ofic.jpg
-Apple,iPhone 3G,https://www.gsmarena.com/apple_iphone_3g-2424.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone3g.jpg
-Apple,iPhone,https://www.gsmarena.com/apple_iphone-1827.php,https://fdn2.gsmarena.com/vv/bigpic/apple-iphone.gif
+Casio,G'zOne CA-201L,https://www.gsmarena.com/casio_g_zone_ca_201l-5384.php,https://fdn2.gsmarena.com/vv/bigpic/casio-gzone-ca-201l.jpg
+Casio,G'zOne Commando,https://www.gsmarena.com/casio_g_zone_commando-4550.php,https://fdn2.gsmarena.com/vv/bigpic/casio-gzone-commando.jpg
+Casio,G'zOne Ravine 2,https://www.gsmarena.com/casio_g_zone_ravine_2-4551.php,https://fdn2.gsmarena.com/vv/bigpic/casio-gzone-ravine-2.jpg
+Casio,G'zOne Ravine,https://www.gsmarena.com/casio_g_zone_ravine-4553.php,https://fdn2.gsmarena.com/vv/bigpic/casio-gzone-ravine.jpg
+Casio,G'zOne Brigade,https://www.gsmarena.com/casio_g_zone_brigade-4558.php,https://fdn2.gsmarena.com/vv/bigpic/casio-gzone-brigade.jpg
+Infinix,Note 50s,https://www.gsmarena.com/infinix_note_50s_5g-13793.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-50s.jpg
+Infinix,Note 50x,https://www.gsmarena.com/infinix_note_50x-13747.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-50x.jpg
+Infinix,Note 50 Pro+,https://www.gsmarena.com/infinix_note_50_pro+-13746.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note50-pro-plus-5g.jpg
+Infinix,Note 50 Pro 4G,https://www.gsmarena.com/infinix_note_50_pro_4g-13701.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note50-pro.jpg
+Infinix,Note 50 4G,https://www.gsmarena.com/infinix_note_50_4g-13705.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note50.jpg
+Infinix,Smart 9 HD,https://www.gsmarena.com/infinix_smart_9_hd-13590.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-9-hd.jpg
+Infinix,Hot 50 Pro 4G,https://www.gsmarena.com/infinix_hot_50_pro_4g-13461.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-pro-4g.jpg
+Infinix,Hot 50 Pro+ 4G,https://www.gsmarena.com/infinix_hot_50_pro+_4g-13408.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-pro-plus-4g.jpg
+Infinix,Note 40S,https://www.gsmarena.com/infinix_note_40s-13460.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note40s-x6850b.jpg
+Infinix,Hot 50i,https://www.gsmarena.com/infinix_hot_50i-13375.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50i.jpg
+Infinix,Smart 9,https://www.gsmarena.com/infinix_smart_9-13374.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart9.jpg
+Infinix,Hot 50 4G,https://www.gsmarena.com/infinix_hot_50_4g-13367.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-4g.jpg
+Infinix,Zero Flip,https://www.gsmarena.com/infinix_zero_flip-13347.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-flip-.jpg
+Infinix,Hot 50,https://www.gsmarena.com/infinix_hot_50-13305.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-5g-x6720-.jpg
+Infinix,Zero 40,https://www.gsmarena.com/infinix_zero_40-13290.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero40-5g-.jpg
+Infinix,Zero 40 4G,https://www.gsmarena.com/infinix_zero_40_4g-13276.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-40-4g-.jpg
+Infinix,Xpad,https://www.gsmarena.com/infinix_xpad-13263.php,https://fdn2.gsmarena.com/vv/bigpic/ulefone-xpad.jpg
+Infinix,Note 40X 5G,https://www.gsmarena.com/infinix_note_40x_5g-13246.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note40x-5g.jpg
+Infinix,Note 40 5G,https://www.gsmarena.com/infinix_note_40_5g-13035.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note40-5g-.jpg
+Infinix,GT 20 Pro,https://www.gsmarena.com/infinix_gt_20_pro-12962.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-gt20-pro.jpg
+Infinix,Note 40 Pro+,https://www.gsmarena.com/infinix_note_40_pro+-12874.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-pro-plus-5g-.jpg
+Infinix,Note 40 Pro,https://www.gsmarena.com/infinix_note_40_pro-12875.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-pro-5g-.jpg
+Infinix,Note 40 Pro 4G,https://www.gsmarena.com/infinix_note_40_pro_4g-12876.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-pro-4g-.jpg
+Infinix,Note 40,https://www.gsmarena.com/infinix_note_40-12877.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-4g-.jpg
+Infinix,Smart 8 Plus,https://www.gsmarena.com/infinix_smart_8_plus-12817.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-plus.jpg
+Infinix,Smart 8 Pro,https://www.gsmarena.com/infinix_smart_8_pro-12812.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-pro.jpg
+Infinix,Smart 8 (India),https://www.gsmarena.com/infinix_smart_8_(india)-12792.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-india.jpg
+Infinix,Smart 8 HD,https://www.gsmarena.com/infinix_smart_8_hd-12736.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-hd.jpg
+Infinix,Hot 40 Pro,https://www.gsmarena.com/infinix_hot_40_pro-12733.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-40-pro.jpg
+Infinix,Hot 40,https://www.gsmarena.com/infinix_hot_40-12732.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-40.jpg
+Infinix,Hot 40i,https://www.gsmarena.com/infinix_hot_40i-12731.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-40i.jpg
+Infinix,Smart 8,https://www.gsmarena.com/infinix_smart_8-12642.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart8.jpg
+Infinix,Zero 30 4G,https://www.gsmarena.com/infinix_zero_30_4g-12641.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-30-4g.jpg
+Infinix,Zero 30,https://www.gsmarena.com/infinix_zero_30-12518.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero30-5g.jpg
+Infinix,GT 10 Pro,https://www.gsmarena.com/infinix_gt_10_pro-12451.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-gt10-pro-5g.jpg
+Infinix,Hot 30 5G,https://www.gsmarena.com/infinix_hot_30_5g-12424.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30-5g.jpg
+Infinix,Note 30 VIP,https://www.gsmarena.com/infinix_note_30_vip-12365.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-x6710-note-30-vip.jpg
+Infinix,Hot 30 Play NFC,https://www.gsmarena.com/infinix_hot_30_play_nfc-12289.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30-play-nfc.jpg
+Infinix,Note 30 Pro,https://www.gsmarena.com/infinix_note_30_pro-12273.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-30-pro.jpg
+Infinix,Note 30,https://www.gsmarena.com/infinix_note_30-12288.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note30-4g.jpg
+Infinix,Note 30 5G,https://www.gsmarena.com/infinix_note_30_5g-12272.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-30-5g.jpg
+Infinix,Note 30i,https://www.gsmarena.com/infinix_note_30i-12274.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-30i.jpg
+Infinix,Smart 7 HD,https://www.gsmarena.com/infinix_smart_7_hd-12243.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart7-hd.jpg
+Infinix,Hot 30i,https://www.gsmarena.com/infinix_hot_30i-12216.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30i.jpg
+Infinix,Hot 30,https://www.gsmarena.com/infinix_hot_30-12214.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30.jpg
+Infinix,Smart 7 (India),https://www.gsmarena.com/infinix_smart_7_(india)-12131.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-7-india.jpg
+Infinix,Smart 7,https://www.gsmarena.com/infinix_smart_7-12116.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-7.jpg
+Infinix,Zero 5G 2023,https://www.gsmarena.com/infinix_zero_5g_2023-11976.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-5g-2023-turbo.jpg
+Infinix,Hot 20 Play,https://www.gsmarena.com/infinix_hot_20_play-11931.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20-play.jpg
+Infinix,Hot 20S,https://www.gsmarena.com/infinix_hot_20s-11930.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20s.jpg
+Infinix,Hot 20,https://www.gsmarena.com/infinix_hot_20-11929.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20-4g.jpg
+Infinix,Note 12 (2023),https://www.gsmarena.com/infinix_note_12_(2023)-11912.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-pro-4g.jpg
+Infinix,Zero Ultra,https://www.gsmarena.com/infinix_zero_ultra-11922.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-ultra.jpg
+Infinix,Hot 20 5G,https://www.gsmarena.com/infinix_hot_20_5g-11923.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20-5g.jpg
+Infinix,Hot 20i,https://www.gsmarena.com/infinix_hot_20i-11924.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20i.jpg
+Infinix,Zero 20,https://www.gsmarena.com/infinix_zero_20-11913.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero20-.jpg
+Infinix,Note 12i 2022,https://www.gsmarena.com/infinix_note_12i_2022-11919.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12i-2022.jpg
+Infinix,Hot 12 Pro,https://www.gsmarena.com/infinix_hot_12_pro-11822.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12-pro.jpg
+Infinix,Smart 6 Plus (India),https://www.gsmarena.com/infinix_smart_6_plus_(india)-11742.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-6-plus.jpg
+Infinix,Note 12 Pro,https://www.gsmarena.com/infinix_note_12_pro-11695.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-pro-4g.jpg
+Infinix,Note 12 Pro 5G,https://www.gsmarena.com/infinix_note_12_pro_5g-11663.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-pro-5g.jpg
+Infinix,Note 12 5G,https://www.gsmarena.com/infinix_note_12_5g-11662.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-5g.jpg
+Infinix,Hot 11s NFC,https://www.gsmarena.com/infinix_hot_11s_nfc-11605.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-11s-nfc.jpg
+Infinix,Hot 12 Play,https://www.gsmarena.com/infinix_hot_12_play-11547.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12-play.jpg
+Infinix,Hot 12 Play NFC,https://www.gsmarena.com/infinix_hot_12_play_nfc-11876.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12-play.jpg
+Infinix,Note 12 VIP,https://www.gsmarena.com/infinix_note_12_vip-11527.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-vip.jpg
+Infinix,Note 12 G96,https://www.gsmarena.com/infinix_note_12_g96-11526.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-g96.jpg
+Infinix,Note 12i,https://www.gsmarena.com/infinix_note_12i-11523.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12i.jpg
+Infinix,Note 12,https://www.gsmarena.com/infinix_note_12-11497.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12.jpg
+Infinix,Hot 12,https://www.gsmarena.com/infinix_hot_12-11498.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12.jpg
+Infinix,Smart 6 HD,https://www.gsmarena.com/infinix_smart_6_hd-11499.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-6-hd.jpg
+Infinix,Hot 11 2022,https://www.gsmarena.com/infinix_hot_11_2022-11478.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-11-2022.jpg
+Infinix,Hot 12i,https://www.gsmarena.com/infinix_hot_12i-11473.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-12i.jpg
+Infinix,Zero 5G,https://www.gsmarena.com/infinix_zero_5g-11355.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-5g.jpg
+Infinix,Smart 5 Pro,https://www.gsmarena.com/infinix_smart_5_pro-11221.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-5pro.jpg
+Infinix,Hot 11 Play,https://www.gsmarena.com/infinix_hot_11_play-11216.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot11-play.jpg
+Infinix,Note 11i,https://www.gsmarena.com/infinix_note_11i-11214.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-11i.jpg
+Infinix,Note 11s,https://www.gsmarena.com/infinix_note_11s-11202.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-11s.jpg
+Infinix,Note 11,https://www.gsmarena.com/infinix_note_11-11201.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note11.jpg
+Infinix,Smart 6,https://www.gsmarena.com/infinix_smart_6-11189.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-6.jpg
+Infinix,Note 11 Pro,https://www.gsmarena.com/infinix_note_11_pro-11157.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-11-pro.jpg
+Infinix,Hot 11s,https://www.gsmarena.com/infinix_hot_11s-11162.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot11s.jpg
+Infinix,Hot 11,https://www.gsmarena.com/infinix_hot_11-11161.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot11.jpg
+Infinix,Zero X Pro,https://www.gsmarena.com/infinix_zero_x_pro-10989.php,https://fdn2.gsmarena.com/vv/bigpic/zero-x-series.jpg
+Infinix,Zero X,https://www.gsmarena.com/infinix_zero_x-11097.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-x-.jpg
+Infinix,Zero X Neo,https://www.gsmarena.com/infinix_zero_x_neo-11098.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-x-neo-.jpg
+Infinix,Hot 10i,https://www.gsmarena.com/infinix_hot_10i-11031.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10i.jpg
+Infinix,Note 10 Pro NFC,https://www.gsmarena.com/infinix_note_10_pro_nfc-10908.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-10-pro-.jpg
+Infinix,Note 10 Pro,https://www.gsmarena.com/infinix_note_10_pro-10907.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-10-pro-.jpg
+Infinix,Note 10,https://www.gsmarena.com/infinix_note_10-10909.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-10.jpg
+Infinix,Hot 10T,https://www.gsmarena.com/infinix_hot_10t-10891.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10t-.jpg
+Infinix,Hot 10s NFC,https://www.gsmarena.com/infinix_hot_10s_nfc-10869.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10s--.jpg
+Infinix,Hot 10s,https://www.gsmarena.com/infinix_hot_10s-10868.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10s--.jpg
+Infinix,Smart 5 (India),https://www.gsmarena.com/infinix_smart_5_(india)-10735.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10-play.jpg
+Infinix,Hot 10 Play,https://www.gsmarena.com/infinix_hot_10_play-10699.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10-play.jpg
+Infinix,Smart HD 2021,https://www.gsmarena.com/infinix_smart_hd_2021-10646.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-hd-2021.jpg
+Infinix,Zero 8i,https://www.gsmarena.com/infinix_zero_8i-10622.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-8i.jpg
+Infinix,Note 8,https://www.gsmarena.com/infinix_note_8-10514.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note8-.jpg
+Infinix,Note 8i,https://www.gsmarena.com/infinix_note_8i-10515.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-8i-.jpg
+Infinix,Hot 10 Lite,https://www.gsmarena.com/infinix_hot_10_lite-10516.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10-lite-.jpg
+Infinix,Hot 10,https://www.gsmarena.com/infinix_hot_10-10452.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10.jpg
+Infinix,Zero 8,https://www.gsmarena.com/infinix_zero_8-10401.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero8.jpg
+Infinix,Smart 5,https://www.gsmarena.com/infinix_smart_5-10367.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart5-.jpg
+Infinix,Hot 9 Play,https://www.gsmarena.com/infinix_hot_9_play-10285.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot9-play.jpg
+Infinix,Note 7,https://www.gsmarena.com/infinix_note_7-10175.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note7.jpg
+Infinix,Note 7 Lite,https://www.gsmarena.com/infinix_note_7_lite-10177.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note7lite.jpg
+Infinix,Hot 9 Pro,https://www.gsmarena.com/infinix_hot_9_pro-10272.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot9-pro.jpg
+Infinix,Hot 9,https://www.gsmarena.com/infinix_hot_9-10156.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot9.jpg
+Infinix,S5 Pro (16+32),https://www.gsmarena.com/infinix_s5_pro_(16+32)-10128.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-pro-new.jpg
+Infinix,S5 Pro (48+40),https://www.gsmarena.com/infinix_s5_pro_(48+40)-10127.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-pro-new.jpg
+Infinix,S5 Pro,https://www.gsmarena.com/infinix_s5_pro-10116.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-pro-new.jpg
+Infinix,S5 lite,https://www.gsmarena.com/infinix_s5_lite-10008.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-lite-new.jpg
+Infinix,Smart 4,https://www.gsmarena.com/infinix_smart_4-9980.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart4-x653.jpg
+Infinix,Smart 4c,https://www.gsmarena.com/infinix_smart_4c-9975.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart4-x653c.jpg
+Infinix,Hot 8 Lite,https://www.gsmarena.com/infinix_hot_8_lite-9927.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-8-lite.jpg
+Infinix,S5,https://www.gsmarena.com/infinix_s5-9915.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-x652.jpg
+Infinix,Hot 8,https://www.gsmarena.com/infinix_hot_8-9856.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s8.jpg
+Infinix,Note 6,https://www.gsmarena.com/infinix_note_6-9761.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-6-x610.jpg
+Infinix,Smart3 Plus,https://www.gsmarena.com/infinix_smart3_plus-9680.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart3-plus.jpg
+Infinix,S4,https://www.gsmarena.com/infinix_s4-9678.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s4.jpg
+Infinix,Hot 7 Pro,https://www.gsmarena.com/infinix_hot_7_pro-9679.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-7-pro.jpg
+Infinix,Hot 7,https://www.gsmarena.com/infinix_hot_7-9658.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot7.jpg
+Infinix,Zero 6 Pro,https://www.gsmarena.com/infinix_zero_6_pro-9657.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-6.jpg
+Infinix,Zero 6,https://www.gsmarena.com/infinix_zero_6-9656.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-6.jpg
+Infinix,Smart 2 HD,https://www.gsmarena.com/infinix_smart_2_hd-9477.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart2-hd-n.jpg
+Infinix,Hot 6X,https://www.gsmarena.com/infinix_hot_6x-9423.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot6x-n.jpg
+Infinix,Note 5 Stylus,https://www.gsmarena.com/infinix_note_5_stylus-9416.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note5-stylus-n.jpg
+Infinix,S3X,https://www.gsmarena.com/infinix_s3x-9420.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s3x-n.jpg
+Infinix,Hot 6,https://www.gsmarena.com/infinix_hot_6-9426.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot6-n.jpg
+Infinix,Note 5,https://www.gsmarena.com/infinix_note_5-9417.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note5-n.jpg
+Infinix,Smart 2 Pro,https://www.gsmarena.com/infinix_smart_2_pro-9429.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart2-pro-n.jpg
+Infinix,Smart 2,https://www.gsmarena.com/infinix_smart_2-9430.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart2-n.jpg
+Infinix,Hot 6 Pro,https://www.gsmarena.com/infinix_hot_6_pro-9425.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot6-pro-n.jpg
+Infinix,Hot S3,https://www.gsmarena.com/infinix_hot_s3-9421.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s3-n.jpg
+Infinix,Zero 5 Pro,https://www.gsmarena.com/infinix_zero_5_pro-9415.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero5-pro.jpg
+Infinix,Zero 5,https://www.gsmarena.com/infinix_zero_5-9414.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero5-n.jpg
+Infinix,Hot 5 Lite,https://www.gsmarena.com/infinix_hot_5_lite-9428.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot5-lite-n.jpg
+Infinix,Hot 5,https://www.gsmarena.com/infinix_hot_5-9427.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot5-n.jpg
+Infinix,Note 4 Pro,https://www.gsmarena.com/infinix_note_4_pro-9419.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note4-pro-n.jpg
+Infinix,Note 4,https://www.gsmarena.com/infinix_note_4-9418.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note4-n.jpg
+Infinix,Smart,https://www.gsmarena.com/infinix_smart-9431.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-n.jpg
+Infinix,Zero 4 Plus,https://www.gsmarena.com/infinix_zero_4_plus-9479.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero4-plus-n.jpg
+Infinix,Zero 4,https://www.gsmarena.com/infinix_zero_4-9478.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero4-n.jpg
+Infinix,S2 Pro,https://www.gsmarena.com/infinix_s2_pro-9422.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s2-n.jpg
+Infinix,Hot 4 Pro,https://www.gsmarena.com/infinix_hot_4_pro-9473.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot4-pro-n.jpg
+Infinix,Hot 4,https://www.gsmarena.com/infinix_hot_4-9472.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot4-n.jpg
+Infinix,Note 3 Pro,https://www.gsmarena.com/infinix_note_3_pro-9476.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note3-pro-n.jpg
+Infinix,Note 3,https://www.gsmarena.com/infinix_note_3-9475.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note3-n.jpg
+Infinix,Hot S,https://www.gsmarena.com/infinix_hot_s-9474.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s-n.jpg
+Realme,GT7 (China),https://www.gsmarena.com/realme_gt7_5g-13788.php,https://fdn2.gsmarena.com/vv/bigpic/realme-gt7-cn.jpg
 Realme,Narzo 80 Pro,https://www.gsmarena.com/realme_narzo_80_pro_5g-13782.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-80-pro-5g.jpg
 Realme,Narzo 80x,https://www.gsmarena.com/realme_narzo_80x_5g-13771.php,https://fdn2.gsmarena.com/vv/bigpic/realme-narzo-80x-5g.jpg
 Realme,14,https://www.gsmarena.com/realme_14-13729.php,https://fdn2.gsmarena.com/vv/bigpic/realme-14-5g.jpg
@@ -410,700 +456,7 @@ Realme,V21,https://www.gsmarena.com/realme_v21-11409.php,https://fdn2.gsmarena.c
 Realme,X9 Pro,https://www.gsmarena.com/realme_x9_pro-10964.php,https://fdn2.gsmarena.com/vv/bigpic/oppo-reno5-pro-plus-5g.jpg
 Realme,X9,https://www.gsmarena.com/realme_x9-10688.php,https://fdn2.gsmarena.com/vv/bigpic/smartphone.jpg
 Realme,XT 730G,https://www.gsmarena.com/realme_xt_730g-9863.php,https://fdn2.gsmarena.com/vv/bigpic/realme-xt-730g.jpg
-Infinix,Note 50x,https://www.gsmarena.com/infinix_note_50x-13747.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-50x.jpg
-Infinix,Note 50 Pro+,https://www.gsmarena.com/infinix_note_50_pro+-13746.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note50-pro-plus-5g.jpg
-Infinix,Note 50 Pro 4G,https://www.gsmarena.com/infinix_note_50_pro_4g-13701.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note50-pro.jpg
-Infinix,Note 50 4G,https://www.gsmarena.com/infinix_note_50_4g-13705.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note50.jpg
-Infinix,Smart 9 HD,https://www.gsmarena.com/infinix_smart_9_hd-13590.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-9-hd.jpg
-Infinix,Hot 50 Pro 4G,https://www.gsmarena.com/infinix_hot_50_pro_4g-13461.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-pro-4g.jpg
-Infinix,Hot 50 Pro+ 4G,https://www.gsmarena.com/infinix_hot_50_pro+_4g-13408.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-pro-plus-4g.jpg
-Infinix,Note 40S,https://www.gsmarena.com/infinix_note_40s-13460.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note40s-x6850b.jpg
-Infinix,Hot 50i,https://www.gsmarena.com/infinix_hot_50i-13375.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50i.jpg
-Infinix,Smart 9,https://www.gsmarena.com/infinix_smart_9-13374.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart9.jpg
-Infinix,Hot 50 4G,https://www.gsmarena.com/infinix_hot_50_4g-13367.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-4g.jpg
-Infinix,Zero Flip,https://www.gsmarena.com/infinix_zero_flip-13347.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-flip-.jpg
-Infinix,Hot 50,https://www.gsmarena.com/infinix_hot_50-13305.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-5g-x6720-.jpg
-Infinix,Zero 40,https://www.gsmarena.com/infinix_zero_40-13290.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero40-5g-.jpg
-Infinix,Zero 40 4G,https://www.gsmarena.com/infinix_zero_40_4g-13276.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-40-4g-.jpg
-Infinix,Xpad,https://www.gsmarena.com/infinix_xpad-13263.php,https://fdn2.gsmarena.com/vv/bigpic/ulefone-xpad.jpg
-Infinix,Note 40X 5G,https://www.gsmarena.com/infinix_note_40x_5g-13246.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note40x-5g.jpg
-Infinix,Note 40 5G,https://www.gsmarena.com/infinix_note_40_5g-13035.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note40-5g-.jpg
-Infinix,GT 20 Pro,https://www.gsmarena.com/infinix_gt_20_pro-12962.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-gt20-pro.jpg
-Infinix,Note 40 Pro+,https://www.gsmarena.com/infinix_note_40_pro+-12874.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-pro-plus-5g-.jpg
-Infinix,Note 40 Pro,https://www.gsmarena.com/infinix_note_40_pro-12875.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-pro-5g-.jpg
-Infinix,Note 40 Pro 4G,https://www.gsmarena.com/infinix_note_40_pro_4g-12876.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-pro-4g-.jpg
-Infinix,Note 40,https://www.gsmarena.com/infinix_note_40-12877.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-4g-.jpg
-Infinix,Smart 8 Plus,https://www.gsmarena.com/infinix_smart_8_plus-12817.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-plus.jpg
-Infinix,Smart 8 Pro,https://www.gsmarena.com/infinix_smart_8_pro-12812.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-pro.jpg
-Infinix,Smart 8 (India),https://www.gsmarena.com/infinix_smart_8_(india)-12792.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-india.jpg
-Infinix,Smart 8 HD,https://www.gsmarena.com/infinix_smart_8_hd-12736.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8-hd.jpg
-Infinix,Hot 40 Pro,https://www.gsmarena.com/infinix_hot_40_pro-12733.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-40-pro.jpg
-Infinix,Hot 40,https://www.gsmarena.com/infinix_hot_40-12732.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-40.jpg
-Infinix,Hot 40i,https://www.gsmarena.com/infinix_hot_40i-12731.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-40i.jpg
-Infinix,Smart 8,https://www.gsmarena.com/infinix_smart_8-12642.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart8.jpg
-Infinix,Zero 30 4G,https://www.gsmarena.com/infinix_zero_30_4g-12641.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-30-4g.jpg
-Infinix,Zero 30,https://www.gsmarena.com/infinix_zero_30-12518.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero30-5g.jpg
-Infinix,GT 10 Pro,https://www.gsmarena.com/infinix_gt_10_pro-12451.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-gt10-pro-5g.jpg
-Infinix,Hot 30 5G,https://www.gsmarena.com/infinix_hot_30_5g-12424.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30-5g.jpg
-Infinix,Note 30 VIP,https://www.gsmarena.com/infinix_note_30_vip-12365.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-x6710-note-30-vip.jpg
-Infinix,Hot 30 Play NFC,https://www.gsmarena.com/infinix_hot_30_play_nfc-12289.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30-play-nfc.jpg
-Infinix,Note 30 Pro,https://www.gsmarena.com/infinix_note_30_pro-12273.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-30-pro.jpg
-Infinix,Note 30,https://www.gsmarena.com/infinix_note_30-12288.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note30-4g.jpg
-Infinix,Note 30 5G,https://www.gsmarena.com/infinix_note_30_5g-12272.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-30-5g.jpg
-Infinix,Note 30i,https://www.gsmarena.com/infinix_note_30i-12274.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-30i.jpg
-Infinix,Smart 7 HD,https://www.gsmarena.com/infinix_smart_7_hd-12243.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart7-hd.jpg
-Infinix,Hot 30i,https://www.gsmarena.com/infinix_hot_30i-12216.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30i.jpg
-Infinix,Hot 30,https://www.gsmarena.com/infinix_hot_30-12214.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-30.jpg
-Infinix,Smart 7 (India),https://www.gsmarena.com/infinix_smart_7_(india)-12131.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-7-india.jpg
-Infinix,Smart 7,https://www.gsmarena.com/infinix_smart_7-12116.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-7.jpg
-Infinix,Zero 5G 2023,https://www.gsmarena.com/infinix_zero_5g_2023-11976.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-5g-2023-turbo.jpg
-Infinix,Hot 20 Play,https://www.gsmarena.com/infinix_hot_20_play-11931.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20-play.jpg
-Infinix,Hot 20S,https://www.gsmarena.com/infinix_hot_20s-11930.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20s.jpg
-Infinix,Hot 20,https://www.gsmarena.com/infinix_hot_20-11929.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20-4g.jpg
-Infinix,Note 12 (2023),https://www.gsmarena.com/infinix_note_12_(2023)-11912.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-pro-4g.jpg
-Infinix,Zero Ultra,https://www.gsmarena.com/infinix_zero_ultra-11922.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-ultra.jpg
-Infinix,Hot 20 5G,https://www.gsmarena.com/infinix_hot_20_5g-11923.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20-5g.jpg
-Infinix,Hot 20i,https://www.gsmarena.com/infinix_hot_20i-11924.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot20i.jpg
-Infinix,Zero 20,https://www.gsmarena.com/infinix_zero_20-11913.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero20-.jpg
-Infinix,Note 12i 2022,https://www.gsmarena.com/infinix_note_12i_2022-11919.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12i-2022.jpg
-Infinix,Hot 12 Pro,https://www.gsmarena.com/infinix_hot_12_pro-11822.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12-pro.jpg
-Infinix,Smart 6 Plus (India),https://www.gsmarena.com/infinix_smart_6_plus_(india)-11742.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-6-plus.jpg
-Infinix,Note 12 Pro,https://www.gsmarena.com/infinix_note_12_pro-11695.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-pro-4g.jpg
-Infinix,Note 12 Pro 5G,https://www.gsmarena.com/infinix_note_12_pro_5g-11663.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-pro-5g.jpg
-Infinix,Note 12 5G,https://www.gsmarena.com/infinix_note_12_5g-11662.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-5g.jpg
-Infinix,Hot 11s NFC,https://www.gsmarena.com/infinix_hot_11s_nfc-11605.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-11s-nfc.jpg
-Infinix,Hot 12 Play,https://www.gsmarena.com/infinix_hot_12_play-11547.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12-play.jpg
-Infinix,Hot 12 Play NFC,https://www.gsmarena.com/infinix_hot_12_play_nfc-11876.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12-play.jpg
-Infinix,Note 12 VIP,https://www.gsmarena.com/infinix_note_12_vip-11527.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-vip.jpg
-Infinix,Note 12 G96,https://www.gsmarena.com/infinix_note_12_g96-11526.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12-g96.jpg
-Infinix,Note 12i,https://www.gsmarena.com/infinix_note_12i-11523.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12i.jpg
-Infinix,Note 12,https://www.gsmarena.com/infinix_note_12-11497.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note12.jpg
-Infinix,Hot 12,https://www.gsmarena.com/infinix_hot_12-11498.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot12.jpg
-Infinix,Smart 6 HD,https://www.gsmarena.com/infinix_smart_6_hd-11499.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-6-hd.jpg
-Infinix,Hot 11 2022,https://www.gsmarena.com/infinix_hot_11_2022-11478.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-11-2022.jpg
-Infinix,Hot 12i,https://www.gsmarena.com/infinix_hot_12i-11473.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-12i.jpg
-Infinix,Zero 5G,https://www.gsmarena.com/infinix_zero_5g-11355.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-5g.jpg
-Infinix,Smart 5 Pro,https://www.gsmarena.com/infinix_smart_5_pro-11221.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-5pro.jpg
-Infinix,Hot 11 Play,https://www.gsmarena.com/infinix_hot_11_play-11216.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot11-play.jpg
-Infinix,Note 11i,https://www.gsmarena.com/infinix_note_11i-11214.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-11i.jpg
-Infinix,Note 11s,https://www.gsmarena.com/infinix_note_11s-11202.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-11s.jpg
-Infinix,Note 11,https://www.gsmarena.com/infinix_note_11-11201.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note11.jpg
-Infinix,Smart 6,https://www.gsmarena.com/infinix_smart_6-11189.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-6.jpg
-Infinix,Note 11 Pro,https://www.gsmarena.com/infinix_note_11_pro-11157.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-11-pro.jpg
-Infinix,Hot 11s,https://www.gsmarena.com/infinix_hot_11s-11162.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot11s.jpg
-Infinix,Hot 11,https://www.gsmarena.com/infinix_hot_11-11161.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot11.jpg
-Infinix,Zero X Pro,https://www.gsmarena.com/infinix_zero_x_pro-10989.php,https://fdn2.gsmarena.com/vv/bigpic/zero-x-series.jpg
-Infinix,Zero X,https://www.gsmarena.com/infinix_zero_x-11097.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-x-.jpg
-Infinix,Zero X Neo,https://www.gsmarena.com/infinix_zero_x_neo-11098.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-x-neo-.jpg
-Infinix,Hot 10i,https://www.gsmarena.com/infinix_hot_10i-11031.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10i.jpg
-Infinix,Note 10 Pro NFC,https://www.gsmarena.com/infinix_note_10_pro_nfc-10908.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-10-pro-.jpg
-Infinix,Note 10 Pro,https://www.gsmarena.com/infinix_note_10_pro-10907.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-10-pro-.jpg
-Infinix,Note 10,https://www.gsmarena.com/infinix_note_10-10909.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-10.jpg
-Infinix,Hot 10T,https://www.gsmarena.com/infinix_hot_10t-10891.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10t-.jpg
-Infinix,Hot 10s NFC,https://www.gsmarena.com/infinix_hot_10s_nfc-10869.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10s--.jpg
-Infinix,Hot 10s,https://www.gsmarena.com/infinix_hot_10s-10868.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-10s--.jpg
-Infinix,Smart 5 (India),https://www.gsmarena.com/infinix_smart_5_(india)-10735.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10-play.jpg
-Infinix,Hot 10 Play,https://www.gsmarena.com/infinix_hot_10_play-10699.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10-play.jpg
-Infinix,Smart HD 2021,https://www.gsmarena.com/infinix_smart_hd_2021-10646.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-hd-2021.jpg
-Infinix,Zero 8i,https://www.gsmarena.com/infinix_zero_8i-10622.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-8i.jpg
-Infinix,Note 8,https://www.gsmarena.com/infinix_note_8-10514.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note8-.jpg
-Infinix,Note 8i,https://www.gsmarena.com/infinix_note_8i-10515.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-8i-.jpg
-Infinix,Hot 10 Lite,https://www.gsmarena.com/infinix_hot_10_lite-10516.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10-lite-.jpg
-Infinix,Hot 10,https://www.gsmarena.com/infinix_hot_10-10452.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot10.jpg
-Infinix,Zero 8,https://www.gsmarena.com/infinix_zero_8-10401.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero8.jpg
-Infinix,Smart 5,https://www.gsmarena.com/infinix_smart_5-10367.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart5-.jpg
-Infinix,Hot 9 Play,https://www.gsmarena.com/infinix_hot_9_play-10285.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot9-play.jpg
-Infinix,Note 7,https://www.gsmarena.com/infinix_note_7-10175.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note7.jpg
-Infinix,Note 7 Lite,https://www.gsmarena.com/infinix_note_7_lite-10177.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note7lite.jpg
-Infinix,Hot 9 Pro,https://www.gsmarena.com/infinix_hot_9_pro-10272.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot9-pro.jpg
-Infinix,Hot 9,https://www.gsmarena.com/infinix_hot_9-10156.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot9.jpg
-Infinix,S5 Pro (16+32),https://www.gsmarena.com/infinix_s5_pro_(16+32)-10128.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-pro-new.jpg
-Infinix,S5 Pro (48+40),https://www.gsmarena.com/infinix_s5_pro_(48+40)-10127.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-pro-new.jpg
-Infinix,S5 Pro,https://www.gsmarena.com/infinix_s5_pro-10116.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-pro-new.jpg
-Infinix,S5 lite,https://www.gsmarena.com/infinix_s5_lite-10008.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-lite-new.jpg
-Infinix,Smart 4,https://www.gsmarena.com/infinix_smart_4-9980.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart4-x653.jpg
-Infinix,Smart 4c,https://www.gsmarena.com/infinix_smart_4c-9975.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart4-x653c.jpg
-Infinix,Hot 8 Lite,https://www.gsmarena.com/infinix_hot_8_lite-9927.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-8-lite.jpg
-Infinix,S5,https://www.gsmarena.com/infinix_s5-9915.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s5-x652.jpg
-Infinix,Hot 8,https://www.gsmarena.com/infinix_hot_8-9856.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s8.jpg
-Infinix,Note 6,https://www.gsmarena.com/infinix_note_6-9761.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note-6-x610.jpg
-Infinix,Smart3 Plus,https://www.gsmarena.com/infinix_smart3_plus-9680.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart3-plus.jpg
-Infinix,S4,https://www.gsmarena.com/infinix_s4-9678.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s4.jpg
-Infinix,Hot 7 Pro,https://www.gsmarena.com/infinix_hot_7_pro-9679.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-7-pro.jpg
-Infinix,Hot 7,https://www.gsmarena.com/infinix_hot_7-9658.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot7.jpg
-Infinix,Zero 6 Pro,https://www.gsmarena.com/infinix_zero_6_pro-9657.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-6.jpg
-Infinix,Zero 6,https://www.gsmarena.com/infinix_zero_6-9656.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-6.jpg
-Infinix,Smart 2 HD,https://www.gsmarena.com/infinix_smart_2_hd-9477.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart2-hd-n.jpg
-Infinix,Hot 6X,https://www.gsmarena.com/infinix_hot_6x-9423.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot6x-n.jpg
-Infinix,Note 5 Stylus,https://www.gsmarena.com/infinix_note_5_stylus-9416.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note5-stylus-n.jpg
-Infinix,S3X,https://www.gsmarena.com/infinix_s3x-9420.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s3x-n.jpg
-Infinix,Hot 6,https://www.gsmarena.com/infinix_hot_6-9426.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot6-n.jpg
-Infinix,Note 5,https://www.gsmarena.com/infinix_note_5-9417.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note5-n.jpg
-Infinix,Smart 2 Pro,https://www.gsmarena.com/infinix_smart_2_pro-9429.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart2-pro-n.jpg
-Infinix,Smart 2,https://www.gsmarena.com/infinix_smart_2-9430.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart2-n.jpg
-Infinix,Hot 6 Pro,https://www.gsmarena.com/infinix_hot_6_pro-9425.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot6-pro-n.jpg
-Infinix,Hot S3,https://www.gsmarena.com/infinix_hot_s3-9421.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s3-n.jpg
-Infinix,Zero 5 Pro,https://www.gsmarena.com/infinix_zero_5_pro-9415.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero5-pro.jpg
-Infinix,Zero 5,https://www.gsmarena.com/infinix_zero_5-9414.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero5-n.jpg
-Infinix,Hot 5 Lite,https://www.gsmarena.com/infinix_hot_5_lite-9428.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot5-lite-n.jpg
-Infinix,Hot 5,https://www.gsmarena.com/infinix_hot_5-9427.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot5-n.jpg
-Infinix,Note 4 Pro,https://www.gsmarena.com/infinix_note_4_pro-9419.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note4-pro-n.jpg
-Infinix,Note 4,https://www.gsmarena.com/infinix_note_4-9418.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note4-n.jpg
-Infinix,Smart,https://www.gsmarena.com/infinix_smart-9431.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-n.jpg
-Infinix,Zero 4 Plus,https://www.gsmarena.com/infinix_zero_4_plus-9479.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero4-plus-n.jpg
-Infinix,Zero 4,https://www.gsmarena.com/infinix_zero_4-9478.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-zero4-n.jpg
-Infinix,S2 Pro,https://www.gsmarena.com/infinix_s2_pro-9422.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-s2-n.jpg
-Infinix,Hot 4 Pro,https://www.gsmarena.com/infinix_hot_4_pro-9473.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot4-pro-n.jpg
-Infinix,Hot 4,https://www.gsmarena.com/infinix_hot_4-9472.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot4-n.jpg
-Infinix,Note 3 Pro,https://www.gsmarena.com/infinix_note_3_pro-9476.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note3-pro-n.jpg
-Infinix,Note 3,https://www.gsmarena.com/infinix_note_3-9475.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-note3-n.jpg
-Infinix,Hot S,https://www.gsmarena.com/infinix_hot_s-9474.php,https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-s-n.jpg
-vivo,iQOO Z10,https://www.gsmarena.com/vivo_iqoo_z10-13755.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z10.jpg
-vivo,iQOO Z10x,https://www.gsmarena.com/vivo_iqoo_z10x_5g-13773.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z10x.jpg
-vivo,V50e,https://www.gsmarena.com/vivo_v50e_5g-13768.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v50e.jpg
-vivo,Y300t,https://www.gsmarena.com/vivo_y300t_5g-13766.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y300t.jpg
-vivo,Y300 Pro+,https://www.gsmarena.com/vivo_y300_pro+-13754.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y300-pro-plus.jpg
-vivo,Y39,https://www.gsmarena.com/vivo_y39_5g-13763.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y39-5g.jpg
-vivo,V50 Lite,https://www.gsmarena.com/vivo_v50_lite-13745.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v50-lite-5g.jpg
-vivo,V50 Lite 4G,https://www.gsmarena.com/vivo_v50_lite_4g-13718.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v50-lite-4g.jpg
-vivo,Y29s,https://www.gsmarena.com/vivo_y29s-13717.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y04.jpg
-vivo,iQOO Neo 10R,https://www.gsmarena.com/vivo_iqoo_neo_10r-13682.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo-10r.jpg
-vivo,Y300i,https://www.gsmarena.com/vivo_y300i-13713.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y300i-cn.jpg
-vivo,T4x,https://www.gsmarena.com/vivo_t4x-13707.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t4x-5g.jpg
-vivo,Y04,https://www.gsmarena.com/vivo_y04-13683.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y04.jpg
-vivo,Y29 4G,https://www.gsmarena.com/vivo_y29_4g-13670.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y29-4g.jpg
-vivo,V50,https://www.gsmarena.com/vivo_v50-13656.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v50.jpg
-vivo,Y200 4G,https://www.gsmarena.com/vivo_y200_4g-13655.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y300-5g.jpg
-vivo,Y200 (Asia),https://www.gsmarena.com/vivo_y200_(asia)-13629.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y200-5g-gl.jpg
-vivo,Y200,https://www.gsmarena.com/vivo_y200_(global)-13628.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y200-5g-gl.jpg
-vivo,iQOO Z9 Turbo Endurance,https://www.gsmarena.com/vivo_iqoo_z9_turbo_endurance-13599.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z9-turbo-endurance.jpg
-vivo,Y200+,https://www.gsmarena.com/vivo_y200+-13602.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y37-pro.jpg
-vivo,Y29,https://www.gsmarena.com/vivo_y29-13587.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y19s.jpg
-vivo,Y300 (China),https://www.gsmarena.com/vivo_y300_(china)-13567.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y300-5g-cn.jpg
-vivo,iQOO Neo10 Pro (China),https://www.gsmarena.com/vivo_iqoo_neo10_pro_(china)-13489.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-neo10-pro-cn.jpg
-vivo,iQOO Neo10 (China),https://www.gsmarena.com/vivo_iqoo_neo10_(china)-13531.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-neo10-cn.jpg
-vivo,S20 Pro,https://www.gsmarena.com/vivo_s20_pro-13527.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s20-pro-.jpg
-vivo,S20,https://www.gsmarena.com/vivo_s20-13528.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s20.jpg
-vivo,Y300,https://www.gsmarena.com/vivo_y300-13498.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y300-5g.jpg
-vivo,Y18t,https://www.gsmarena.com/vivo_y18t-13492.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y03.jpg
-vivo,iQOO 13,https://www.gsmarena.com/vivo_iqoo_13-13462.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-13.jpg
-vivo,Y300 Plus,https://www.gsmarena.com/vivo_y300_plus-13427.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y300-plus-5g-.jpg
-vivo,X200 Pro mini,https://www.gsmarena.com/vivo_x200_pro_mini-13434.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x200-pro-mini.jpg
-vivo,X200 Pro,https://www.gsmarena.com/vivo_x200_pro-13410.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x200-pro.jpg
-vivo,X200,https://www.gsmarena.com/vivo_x200-13433.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x200.jpg
-vivo,Y19s,https://www.gsmarena.com/vivo_y19s-13436.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y19s.jpg
-vivo,V40 Lite 4G (IDN),https://www.gsmarena.com/vivo_v40_lite_4g_(idn)-13360.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v40-lite-idn.jpg
-vivo,V40 Lite (IDN),https://www.gsmarena.com/vivo_v40_lite_(idn)-13353.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v40-lite-5g-idn.jpg
-vivo,V40e,https://www.gsmarena.com/vivo_v40e-13339.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v40e.jpg
-vivo,iQOO Z9 Turbo+,https://www.gsmarena.com/vivo_iqoo_z9_turbo+-13359.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z9-turbo-plus.jpg
-vivo,T3 Ultra,https://www.gsmarena.com/vivo_t3_ultra-13321.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t3-ultra.jpg
-vivo,Y300 Pro,https://www.gsmarena.com/vivo_y300_pro-13306.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y300-pro.jpg
-vivo,Y37 Pro,https://www.gsmarena.com/vivo_y37_pro-13308.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y37-pro.jpg
-vivo,Y37,https://www.gsmarena.com/vivo_y37-13309.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y37-2024.jpg
-vivo,T3 Pro,https://www.gsmarena.com/vivo_t3_pro-13285.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t3-pro.jpg
-vivo,Y18i,https://www.gsmarena.com/vivo_y18i-13280.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y03.jpg
-vivo,Y03t,https://www.gsmarena.com/vivo_y03t-13277.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y03.jpg
-vivo,iQOO Z9s Pro,https://www.gsmarena.com/vivo_iqoo_z9s_pro-13272.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z9s-pro-5g.jpg
-vivo,iQOO Z9s,https://www.gsmarena.com/vivo_iqoo_z9s-13273.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z9s-5g.jpg
-vivo,V40 Pro,https://www.gsmarena.com/vivo_v40_pro-13239.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v40-pro.jpg
-vivo,V40 Lite,https://www.gsmarena.com/vivo_v40_lite-13207.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v40-lite.jpg
-vivo,iQOO Z9 Lite,https://www.gsmarena.com/vivo_iqoo_z9_lite-13194.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z9-lite.jpg
-vivo,iQOO Watch GT,https://www.gsmarena.com/vivo_iqoo_watch_gt-13199.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-watch-gt.jpg
-vivo,iQOO Neo9S Pro+,https://www.gsmarena.com/vivo_iqoo_neo9s_pro+-13187.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo9s-pro-plus.jpg
-vivo,V40,https://www.gsmarena.com/vivo_v40-13121.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v40.jpg
-vivo,Pad3,https://www.gsmarena.com/vivo_pad3-13170.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-pad3.jpg
-vivo,T3 Lite,https://www.gsmarena.com/vivo_t3_lite-13177.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t3-lite.jpg
-vivo,Y28s,https://www.gsmarena.com/vivo_y28s-13171.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y28s.jpg
-vivo,Y28 4G,https://www.gsmarena.com/vivo_y28_4g-13201.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y28-4g.jpg
-vivo,Y58,https://www.gsmarena.com/vivo_y58-13156.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-u38.jpg
-vivo,iQOO Pad2 Pro,https://www.gsmarena.com/vivo_iqoo_pad2_pro-13091.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-pad2-pro.jpg
-vivo,iQOO Pad2,https://www.gsmarena.com/vivo_iqoo_pad2-13092.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-pad2.jpg
-vivo,S19 Pro,https://www.gsmarena.com/vivo_s19_pro-13087.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s19-pro.jpg
-vivo,S19,https://www.gsmarena.com/vivo_s19-13088.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s19.jpg
-vivo,Watch GT,https://www.gsmarena.com/vivo_watch_gt-13089.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-watch-gt.jpg
-vivo,Y200 Pro,https://www.gsmarena.com/vivo_y200_pro-13019.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y100-china-1.jpg
-vivo,iQOO Neo9S Pro,https://www.gsmarena.com/vivo_iqoo_neo9s_pro-13018.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-neo9-pro.jpg
-vivo,Y200 GT,https://www.gsmarena.com/vivo_y200_gt-13015.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y200-gt.jpg
-vivo,Y200 (China),https://www.gsmarena.com/vivo_y200_(china)-13016.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y200-cn.jpg
-vivo,Y200t,https://www.gsmarena.com/vivo_y200t-13017.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y200t.jpg
-vivo,X100 Ultra,https://www.gsmarena.com/vivo_x100_ultra-12994.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x100-ultra.jpg
-vivo,X100s Pro,https://www.gsmarena.com/vivo_x100s_pro-12998.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x100s-pro.jpg
-vivo,X100s,https://www.gsmarena.com/vivo_x100s-12999.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x100s.jpg
-vivo,Y18,https://www.gsmarena.com/vivo_y18-13129.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y18.jpg
-vivo,Y18 (India),https://www.gsmarena.com/vivo_y18_(india)-12977.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y03.jpg
-vivo,Y18e,https://www.gsmarena.com/vivo_y18e-12978.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y18e.jpg
-vivo,Y100 4G,https://www.gsmarena.com/vivo_y100_4g-12974.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y100-4g.jpg
-vivo,V30e,https://www.gsmarena.com/vivo_v30e-12971.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v30e.jpg
-vivo,Y38,https://www.gsmarena.com/vivo_y38-12973.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-u38.jpg
-vivo,V30 SE,https://www.gsmarena.com/vivo_v30_se-12970.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v40-se.jpg
-vivo,iQOO Z9 Turbo,https://www.gsmarena.com/vivo_iqoo_z9_turbo-12872.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z9-turbo.jpg
-vivo,iQOO Z9x,https://www.gsmarena.com/vivo_iqoo_z9x-12958.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z9x.jpg
-vivo,iQOO Z9 (China),https://www.gsmarena.com/vivo_iqoo_z9_(china)-12959.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z9-cn.jpg
-vivo,iQOO Watch,https://www.gsmarena.com/vivo_iqoo_watch-12960.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-watch.jpg
-vivo,Y200i,https://www.gsmarena.com/vivo_y200i-12946.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y200i.jpg
-vivo,T3x,https://www.gsmarena.com/vivo_t3x-12938.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t3x.jpg
-vivo,V30 Lite 4G,https://www.gsmarena.com/vivo_v30_lite_4g-12912.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v30-lite-4g.jpg
-vivo,V30 Lite (ME),https://www.gsmarena.com/vivo_v30_lite_(me)-12907.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v30-lite-me.jpg
-vivo,V40 SE,https://www.gsmarena.com/vivo_v40_se-12905.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v40-se.jpg
-vivo,X Fold3 Pro,https://www.gsmarena.com/vivo_x_fold3_pro-12899.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x-fold3-pro.jpg
-vivo,X Fold3,https://www.gsmarena.com/vivo_x_fold3-12900.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x-fold3.jpg
-vivo,Pad3 Pro,https://www.gsmarena.com/vivo_pad3_pro-12901.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-pad3-pro.jpg
-vivo,T3,https://www.gsmarena.com/vivo_t3-12887.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t3-.jpg
-vivo,Y03,https://www.gsmarena.com/vivo_y03-12868.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y03.jpg
-vivo,iQOO Z9,https://www.gsmarena.com/vivo_iqoo_z9-12865.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z9.jpg
-vivo,V30 Pro,https://www.gsmarena.com/vivo_v30_pro-12829.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v30-pro.jpg
-vivo,Y100t,https://www.gsmarena.com/vivo_y100t-12839.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z8-china.jpg
-vivo,iQOO Neo9 Pro,https://www.gsmarena.com/vivo_iqoo_neo9_pro-12819.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-neo9.jpg
-vivo,Y200e,https://www.gsmarena.com/vivo_y200e-12836.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y200e-5g.jpg
-vivo,V30,https://www.gsmarena.com/vivo_v30-12818.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s18.jpg
-vivo,Y100 (IDN),https://www.gsmarena.com/vivo_y100_(idn)-12806.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y100-5g-indonesia.jpg
-vivo,Y28,https://www.gsmarena.com/vivo_y28-12860.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y28-5g-.jpg
-vivo,G2,https://www.gsmarena.com/vivo_g2-12800.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-g2.jpg
-vivo,V30 Lite,https://www.gsmarena.com/vivo_v30_lite-12768.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v30-lite.jpg
-vivo,iQOO Neo9 Pro (China),https://www.gsmarena.com/vivo_iqoo_neo9_pro_(china)-12764.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-neo9-pro.jpg
-vivo,iQOO Neo9,https://www.gsmarena.com/vivo_iqoo_neo9-12765.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-neo9.jpg
-vivo,S18 Pro,https://www.gsmarena.com/vivo_s18_pro-12743.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s18-pro.jpg
-vivo,S18,https://www.gsmarena.com/vivo_s18-12744.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s18.jpg
-vivo,S18e,https://www.gsmarena.com/vivo_s18e-12745.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s18e.jpg
-vivo,Y36i,https://www.gsmarena.com/vivo_y36i-12738.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y36i.jpg
-vivo,Y100i,https://www.gsmarena.com/vivo_y100i-12718.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y100i.jpg
-vivo,X100 Pro,https://www.gsmarena.com/vivo_x100_pro-12694.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x100-pro.jpg
-vivo,X100,https://www.gsmarena.com/vivo_x100-12695.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x100.jpg
-vivo,Watch 3,https://www.gsmarena.com/vivo_watch_3-12696.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-watch3.jpg
-vivo,iQOO 12 Pro,https://www.gsmarena.com/vivo_iqoo_12_pro-12690.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo12-pro.jpg
-vivo,iQOO 12,https://www.gsmarena.com/vivo_iqoo_12-12691.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo12.jpg
-vivo,Y27s,https://www.gsmarena.com/vivo_y27s-12687.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y27s.jpg
-vivo,Y100 (China),https://www.gsmarena.com/vivo_y100_(china)-12635.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y100-china-1.jpg
-vivo,T2,https://www.gsmarena.com/vivo_t2-12639.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t2-global.jpg
-vivo,V29e,https://www.gsmarena.com/vivo_v29e-12633.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v29e-international.jpg
-vivo,Y200 (India),https://www.gsmarena.com/vivo_y200_(india)-12632.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y200-.jpg
-vivo,Y78t,https://www.gsmarena.com/vivo_y78t-12631.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y78t.jpg
-vivo,V29 Pro,https://www.gsmarena.com/vivo_v29_pro-12608.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v29-pro.jpg
-vivo,iQOO Z8x,https://www.gsmarena.com/vivo_iqoo_z8x-12610.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z8x.jpg
-vivo,iQOO Z8 (China),https://www.gsmarena.com/vivo_iqoo_z8_(china)-12513.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z8-china.jpg
-vivo,T2 Pro,https://www.gsmarena.com/vivo_t2_pro-12566.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t2-pro.jpg
-vivo,Y17s,https://www.gsmarena.com/vivo_y17s-12568.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y17s.jpg
-vivo,iQOO Z7 Pro,https://www.gsmarena.com/vivo_iqoo_z7_pro-12484.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z7-pro.jpg
-vivo,V29e (India),https://www.gsmarena.com/vivo_v29e_(india)-12483.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v29-e.jpg
-vivo,Pad Air,https://www.gsmarena.com/vivo_pad_air-12462.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-pad-air-.jpg
-vivo,Y77t,https://www.gsmarena.com/vivo_y77t-12482.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y78.jpg
-vivo,V29,https://www.gsmarena.com/vivo_v29-12461.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s17-pro.jpg
-vivo,Y27 5G,https://www.gsmarena.com/vivo_y27_5g-12624.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y27-5g.jpg
-vivo,Y27,https://www.gsmarena.com/vivo_y27-12430.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y35-plus.jpg
-vivo,Y02t,https://www.gsmarena.com/vivo_y02t-12429.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y02t.jpg
-vivo,iQOO 11S,https://www.gsmarena.com/vivo_iqoo_11s-12397.php,https://fdn2.gsmarena.com/vv/bigpic/iqoo-11s.jpg
-vivo,iQOO Neo 7 Pro,https://www.gsmarena.com/vivo_iqoo_neo_7_pro-12364.php,https://fdn2.gsmarena.com/vv/bigpic/iqoo-neo-7-pro-1.jpg
-vivo,X90s,https://www.gsmarena.com/vivo_x90s-12376.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x90s.jpg
-vivo,Y36 (India),https://www.gsmarena.com/vivo_y36_(india)-12385.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y36-india.jpg
-vivo,Y36 5G,https://www.gsmarena.com/vivo_y36_5g-12375.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y36-5g.jpg
-vivo,Y36,https://www.gsmarena.com/vivo_y36-12374.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y36.jpg
-vivo,V29 Lite,https://www.gsmarena.com/vivo_v29_lite-12323.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v29-lite.jpg
-vivo,S17 Pro,https://www.gsmarena.com/vivo_s17_pro-12307.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s17-pro.jpg
-vivo,S17,https://www.gsmarena.com/vivo_s17-12308.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s17.jpg
-vivo,S17t,https://www.gsmarena.com/vivo_s17t-12309.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s17t.jpg
-vivo,Y35+,https://www.gsmarena.com/vivo_y35+-12300.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y35-plus.jpg
-vivo,Y78,https://www.gsmarena.com/vivo_y78-12299.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y78-global.jpg
-vivo,S17e,https://www.gsmarena.com/vivo_s17e-12294.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s17e.jpg
-vivo,iQOO Neo8 Pro,https://www.gsmarena.com/vivo_iqoo_neo8_pro-12292.php,https://fdn2.gsmarena.com/vv/bigpic/iqoo-neo8-pro.jpg
-vivo,iQOO Neo8,https://www.gsmarena.com/vivo_iqoo_neo8-12291.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo8.jpg
-vivo,iQOO Pad,https://www.gsmarena.com/vivo_iqoo_pad-12293.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-pad.jpg
-vivo,iQOO Z7s,https://www.gsmarena.com/vivo_iqoo_z7s-12287.php,https://fdn2.gsmarena.com/vv/bigpic/iqoo-z7s.jpg
-vivo,Y78 (China),https://www.gsmarena.com/vivo_y78_(china)-12260.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y78.jpg
-vivo,Y78+,https://www.gsmarena.com/vivo_y78+-12242.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y78-plus.jpg
-vivo,X Fold2,https://www.gsmarena.com/vivo_x_fold2-12203.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x-fold2.jpg
-vivo,X Flip,https://www.gsmarena.com/vivo_x_flip-12240.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x-flip.jpg
-vivo,Pad2,https://www.gsmarena.com/vivo_pad2-12231.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-pad2.jpg
-vivo,T2 (India),https://www.gsmarena.com/vivo_t2_(india)-12225.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t2-india.jpg
-vivo,T2x (India),https://www.gsmarena.com/vivo_t2x_(india)-12226.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t2x-india-.jpg
-vivo,Y11 (2023),https://www.gsmarena.com/vivo_y11_(2023)-12212.php,https://fdn2.gsmarena.com/vv/bigpic/viv0-y02.jpg
-vivo,Y02A,https://www.gsmarena.com/vivo_y02a-12211.php,https://fdn2.gsmarena.com/vv/bigpic/viv0-y02.jpg
-vivo,iQOO Z7,https://www.gsmarena.com/vivo_iqoo_z7-12163.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z7-in.jpg
-vivo,iQOO Z7 (China),https://www.gsmarena.com/vivo_iqoo_z7_(china)-12182.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z7-cn.jpg
-vivo,iQOO Z7x,https://www.gsmarena.com/vivo_iqoo_z7x-12183.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z7x.jpg
-vivo,iQOO Z7i,https://www.gsmarena.com/vivo_iqoo_z7i-12171.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z7i.jpg
-vivo,V27 Pro,https://www.gsmarena.com/vivo_v27_pro-12117.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v27-pro.jpg
-vivo,V27,https://www.gsmarena.com/vivo_v27-12119.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v27.jpg
-vivo,V27e,https://www.gsmarena.com/vivo_v27e-12118.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s16e.jpg
-vivo,Y56,https://www.gsmarena.com/vivo_y56-12125.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y56-5g.jpg
-vivo,Y100,https://www.gsmarena.com/vivo_y100-12121.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y100.jpg
-vivo,iQOO Neo 7,https://www.gsmarena.com/vivo_iqoo_neo_7-12084.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo7-se.jpg
-vivo,Y55s (2023),https://www.gsmarena.com/vivo_y55s_(2023)-12089.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y55-5g.jpg
-vivo,iQOO Neo7 Racing,https://www.gsmarena.com/vivo_iqoo_neo7_racing-12050.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo7.jpg
-vivo,S16 Pro,https://www.gsmarena.com/vivo_s16_pro-12037.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s16-pro.jpg
-vivo,S16,https://www.gsmarena.com/vivo_s16-12038.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s16.jpg
-vivo,S16e,https://www.gsmarena.com/vivo_s16e-12039.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s16e.jpg
-vivo,Y35 5G,https://www.gsmarena.com/vivo_y35_5g-12019.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y35-5g.jpg
-vivo,iQOO 11 Pro,https://www.gsmarena.com/vivo_iqoo_11_pro-12007.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo11-pro.jpg
-vivo,iQOO 11,https://www.gsmarena.com/vivo_iqoo_11-11960.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo11.jpg
-vivo,iQOO Neo7 SE,https://www.gsmarena.com/vivo_iqoo_neo7_se-12011.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo7-se.jpg
-vivo,Y02,https://www.gsmarena.com/vivo_y02-12003.php,https://fdn2.gsmarena.com/vv/bigpic/viv0-y02.jpg
-vivo,X90 Pro+,https://www.gsmarena.com/vivo_x90_pro+-11979.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x90-pro-plus.jpg
-vivo,X90 Pro,https://www.gsmarena.com/vivo_x90_pro-11989.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x90-pro.jpg
-vivo,X90,https://www.gsmarena.com/vivo_x90-11990.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x90.jpg
-vivo,V21s,https://www.gsmarena.com/vivo_v21s-11985.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v21.jpg
-vivo,iQOO Neo7 (China),https://www.gsmarena.com/vivo_iqoo_neo7_(china)-11935.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo7.jpg
-vivo,Y73t,https://www.gsmarena.com/vivo_y73t-11914.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y73t.jpg
-vivo,X Fold+,https://www.gsmarena.com/vivo_x_fold+-11891.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x-fold-plus.jpg
-vivo,X80 Lite,https://www.gsmarena.com/vivo_x80_lite-11895.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v25.jpg
-vivo,Y52t,https://www.gsmarena.com/vivo_y52t-11885.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y52t.jpg
-vivo,iQOO Z6 Lite,https://www.gsmarena.com/vivo_iqoo_z6_lite-11879.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z6-lite-5g.jpg
-vivo,Y16,https://www.gsmarena.com/vivo_y16-11874.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y16.jpg
-vivo,Y75s,https://www.gsmarena.com/vivo_y75s-11863.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y75s.jpg
-vivo,Y22,https://www.gsmarena.com/vivo_y22-11852.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y22-2022.jpg
-vivo,V25e,https://www.gsmarena.com/vivo_v25e-11833.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v25e.jpg
-vivo,iQOO Z6 (China),https://www.gsmarena.com/vivo_iqoo_z6_(china)-11800.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z6-china.jpg
-vivo,iQOO Z6x,https://www.gsmarena.com/vivo_iqoo_z6x-11824.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z6x.jpg
-vivo,Y22s (Europe),https://www.gsmarena.com/vivo_y22s_(europe)-13620.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y22s-eu.jpg
-vivo,Y22s,https://www.gsmarena.com/vivo_y22s-11809.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y22s.jpg
-vivo,Y77e (t1),https://www.gsmarena.com/vivo_y77e_(t1)-11780.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y77e.jpg
-vivo,V25 Pro,https://www.gsmarena.com/vivo_v25_pro-11771.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v25-pro.jpg
-vivo,V25,https://www.gsmarena.com/vivo_v25-11772.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v25-.jpg
-vivo,Y35,https://www.gsmarena.com/vivo_y35-11770.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y35-2022.jpg
-vivo,Y77e,https://www.gsmarena.com/vivo_y77e-11767.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y77e.jpg
-vivo,Y02s,https://www.gsmarena.com/vivo_y02s-11697.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y02s.jpg
-vivo,iQOO 9T,https://www.gsmarena.com/vivo_iqoo_9t-11658.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-9t-5g.jpg
-vivo,Y30 5G,https://www.gsmarena.com/vivo_y30_5g-11696.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y33e.jpg
-vivo,T1x (India),https://www.gsmarena.com/vivo_t1x_(india)-11704.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t1x-india.jpg
-vivo,iQOO 10 Pro,https://www.gsmarena.com/vivo_iqoo_10_pro-11701.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo10-pro.jpg
-vivo,iQOO 10,https://www.gsmarena.com/vivo_iqoo_10-11703.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo10.jpg
-vivo,Y77 (China),https://www.gsmarena.com/vivo_y77_(china)-11661.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y77-5g-china.jpg
-vivo,Y77,https://www.gsmarena.com/vivo_y77-11650.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y77-5g.jpg
-vivo,iQOO U5e,https://www.gsmarena.com/vivo_iqoo_u5e-11637.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-u5e.jpg
-vivo,iQOO Neo 6,https://www.gsmarena.com/vivo_iqoo_neo_6-11578.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo6.jpg
-vivo,Y33e,https://www.gsmarena.com/vivo_y33e-11573.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y33e.jpg
-vivo,T2x,https://www.gsmarena.com/vivo_t2x-11554.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t2x.jpg
-vivo,Y72t,https://www.gsmarena.com/vivo_y72t-11548.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y72t.jpg
-vivo,T2 (China),https://www.gsmarena.com/vivo_t2_(china)-11528.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t2.jpg
-vivo,Y75,https://www.gsmarena.com/vivo_y75-11545.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y75.jpg
-vivo,S15 Pro,https://www.gsmarena.com/vivo_s15_pro-11540.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s15-pro.jpg
-vivo,S15,https://www.gsmarena.com/vivo_s15-11515.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s15.jpg
-vivo,iQOO Neo6 SE,https://www.gsmarena.com/vivo_iqoo_neo6_se-11507.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo6-se.jpg
-vivo,T1 Pro,https://www.gsmarena.com/vivo_t1_pro-11511.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t1-5g-778g.jpg
-vivo,T1 (Snapdragon 680),https://www.gsmarena.com/vivo_t1_(snapdragon_680)-11512.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t1-sndrgn680.jpg
-vivo,iQOO Z6 Pro,https://www.gsmarena.com/vivo_iqoo_z6_pro-11501.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z6-pro.jpg
-vivo,Y55,https://www.gsmarena.com/vivo_y55-11744.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y55-pk.jpg
-vivo,iQOO Z6 44W,https://www.gsmarena.com/vivo_iqoo_z6_44w-11502.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z6-44w.jpg
-vivo,X80 Pro,https://www.gsmarena.com/vivo_x80_pro-11407.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x80-pro.jpg
-vivo,X80,https://www.gsmarena.com/vivo_x80-11492.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x80.jpg
-vivo,T1 (Snapdragon 778G),https://www.gsmarena.com/vivo_t1_(snapdragon_778g)-11494.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t1-5g-778g.jpg
-vivo,T1x 4G,https://www.gsmarena.com/vivo_t1x_4g-11493.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t1x-4g.jpg
-vivo,S15e,https://www.gsmarena.com/vivo_s15e-11484.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s15e.jpg
-vivo,iQOO Neo6 (China),https://www.gsmarena.com/vivo_iqoo_neo6_(china)-11461.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo6-r.jpg
-vivo,X Note,https://www.gsmarena.com/vivo_x_note-11469.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x-note.jpg
-vivo,X Fold,https://www.gsmarena.com/vivo_x_fold-11460.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x-fold.jpg
-vivo,Pad,https://www.gsmarena.com/vivo_pad-11470.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-pad.jpg
-vivo,Y21G,https://www.gsmarena.com/vivo_y21g-11466.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y21-.jpg
-vivo,iQOO U5x,https://www.gsmarena.com/vivo_iqoo_u5x-11443.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-u5x.jpg
-vivo,iQOO Z6,https://www.gsmarena.com/vivo_iqoo_z6-11416.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z6.jpg
-vivo,Y01,https://www.gsmarena.com/vivo_y01-11413.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y01.jpg
-vivo,Y33s 5G,https://www.gsmarena.com/vivo_y33s_5g-11391.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y33s-5g.jpg
-vivo,iQOO 9,https://www.gsmarena.com/vivo_iqoo_9-11375.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-9-global.jpg
-vivo,iQOO 9 SE,https://www.gsmarena.com/vivo_iqoo_9_se-11374.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-9-se.jpg
-vivo,iQOO 9 Pro,https://www.gsmarena.com/vivo_iqoo_9_pro-11309.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-9-pro-global.jpg
-vivo,T1 5G,https://www.gsmarena.com/vivo_t1_5g-11351.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t1-5g.jpg
-vivo,Y33,https://www.gsmarena.com/vivo_y33-11330.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y53s-4g.jpg
-vivo,Y75 5G,https://www.gsmarena.com/vivo_y75_5g-11338.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y55-5g.jpg
-vivo,Y55 5G,https://www.gsmarena.com/vivo_y55_5g-11324.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y55-5g.jpg
-vivo,iQOO 9 (China),https://www.gsmarena.com/vivo_iqoo_9_(china)-11310.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-9.jpg
-vivo,V23 Pro,https://www.gsmarena.com/vivo_v23_pro-11286.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v23-pro.jpg
-vivo,V23 5G,https://www.gsmarena.com/vivo_v23_5g-11308.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v23-5g.jpg
-vivo,Y33t,https://www.gsmarena.com/vivo_y33t-11313.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y33t.jpg
-vivo,Y21t (India),https://www.gsmarena.com/vivo_y21t_(india)-11301.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y21s.jpg
-vivo,Y21a,https://www.gsmarena.com/vivo_y21a-11329.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y21-.jpg
-vivo,Y21e,https://www.gsmarena.com/vivo_y21e-11325.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y21-.jpg
-vivo,Y21t,https://www.gsmarena.com/vivo_y21t-11294.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y21s.jpg
-vivo,iQOO U5,https://www.gsmarena.com/vivo_iqoo_u5-11276.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-u5.jpg
-vivo,S12 Pro,https://www.gsmarena.com/vivo_s12_pro-11283.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s12-pro.jpg
-vivo,S12,https://www.gsmarena.com/vivo_s12-11272.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s12.jpg
-vivo,Watch 2,https://www.gsmarena.com/vivo_watch_2-11284.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-watch2.jpg
-vivo,iQOO Neo5 S,https://www.gsmarena.com/vivo_iqoo_neo5_s-11278.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo-5s-.jpg
-vivo,iQOO Neo5 SE,https://www.gsmarena.com/vivo_iqoo_neo5_se-11279.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo-5se.jpg
-vivo,Y32,https://www.gsmarena.com/vivo_y32-11275.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y32.jpg
-vivo,Y55s (2021),https://www.gsmarena.com/vivo_y55s_(2021)-11249.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y55s-5g.jpg
-vivo,V23e 5G,https://www.gsmarena.com/vivo_v23e_5g-11232.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v23e.jpg
-vivo,Y76 5G,https://www.gsmarena.com/vivo_y76_5g-11231.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y76-5g.jpg
-vivo,Y54s,https://www.gsmarena.com/vivo_y54s-11226.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y54s-5g.jpg
-vivo,V23e,https://www.gsmarena.com/vivo_v23e-11204.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v23e.jpg
-vivo,Y50t,https://www.gsmarena.com/vivo_y50t-11219.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y50t.jpg
-vivo,Y15a,https://www.gsmarena.com/vivo_y15a-11213.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y15s-new.jpg
-vivo,Y74s,https://www.gsmarena.com/vivo_y74s-11230.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y76s.jpg
-vivo,Y76s,https://www.gsmarena.com/vivo_y76s-11209.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y76s.jpg
-vivo,Y15s,https://www.gsmarena.com/vivo_y15s-11205.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y15s-new.jpg
-vivo,Y71t,https://www.gsmarena.com/vivo_y71t-11169.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y71t.jpg
-vivo,iQOO Z5x,https://www.gsmarena.com/vivo_iqoo_z5x-11168.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z5x.jpg
-vivo,T1x,https://www.gsmarena.com/vivo_t1x-11167.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t1x.jpg
-vivo,T1,https://www.gsmarena.com/vivo_t1-11166.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t1.jpg
-vivo,Y3s (2021),https://www.gsmarena.com/vivo_y3s_(2021)-11165.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y3s-2021.jpg
-vivo,S10e,https://www.gsmarena.com/vivo_s10e-11158.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s10e.jpg
-vivo,Y20t,https://www.gsmarena.com/vivo_y20t-11150.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y20s.jpg
-vivo,iQOO Z5,https://www.gsmarena.com/vivo_iqoo_z5-11118.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z5.jpg
-vivo,Y21s,https://www.gsmarena.com/vivo_y21s-11113.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y21s.jpg
-vivo,X70 Pro+,https://www.gsmarena.com/vivo_x70_pro+-10833.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x70-pro-plus.jpg
-vivo,X70 Pro,https://www.gsmarena.com/vivo_x70_pro-11085.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x70-pro-r.jpg
-vivo,X70,https://www.gsmarena.com/vivo_x70-11086.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x70.jpg
-vivo,Y33s,https://www.gsmarena.com/vivo_y33s-11067.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y33s.jpg
-vivo,Y21,https://www.gsmarena.com/vivo_y21-11063.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y21-.jpg
-vivo,iQOO 8 Pro,https://www.gsmarena.com/vivo_iqoo_8_pro-11057.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-8-pro--.jpg
-vivo,iQOO U3x Standard,https://www.gsmarena.com/vivo_iqoo_u3x_standard-11198.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-u3x-standard.jpg
-vivo,iQOO 8,https://www.gsmarena.com/vivo_iqoo_8-11058.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-8.jpg
-vivo,Y12a,https://www.gsmarena.com/vivo_y12a-11033.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y12s.jpg
-vivo,S10 Pro,https://www.gsmarena.com/vivo_s10_pro-11003.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s10-pro.jpg
-vivo,S10,https://www.gsmarena.com/vivo_s10-11014.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s10-pro.jpg
-vivo,Y73,https://www.gsmarena.com/vivo_y73-11022.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v21e.jpg
-vivo,Y72 5G (India),https://www.gsmarena.com/vivo_y72_5g_(india)-11012.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y72-5g-india.jpg
-vivo,Y53s 4G,https://www.gsmarena.com/vivo_y53s_4g-11007.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y53s-4g.jpg
-vivo,X60t Pro+,https://www.gsmarena.com/vivo_x60t_pro+-10982.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x60-pro-plus.jpg
-vivo,V21e 5G,https://www.gsmarena.com/vivo_v21e_5g-10968.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v21e-5g.jpg
-vivo,Y53s,https://www.gsmarena.com/vivo_y53s-10956.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y53s.jpg
-vivo,Y70t,https://www.gsmarena.com/vivo_y70t-10946.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y70t.jpg
-vivo,X60s,https://www.gsmarena.com/vivo_x60s-11092.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x60s.jpg
-vivo,iQOO Neo5 Lite,https://www.gsmarena.com/vivo_iqoo_neo5_lite-10920.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-neo5-lite.jpg
-vivo,Y52 5G,https://www.gsmarena.com/vivo_y52_5g-10913.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y52-5g.jpg
-vivo,Y12s 2021,https://www.gsmarena.com/vivo_y12s_2021-10903.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y12s.jpg
-vivo,Y52s t1,https://www.gsmarena.com/vivo_y52s_t1-10889.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y52-t1.jpg
-vivo,V21 5G,https://www.gsmarena.com/vivo_v21_5g-10879.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v21-5g.jpg
-vivo,V21,https://www.gsmarena.com/vivo_v21-10877.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v21.jpg
-vivo,V21e,https://www.gsmarena.com/vivo_v21e-10878.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v21e.jpg
-vivo,iQOO 7 (India),https://www.gsmarena.com/vivo_iqoo_7_(india)-10859.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-7-india-.jpg
-vivo,Y20s [G],https://www.gsmarena.com/vivo_y20s_[g]-10847.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y20s.jpg
-vivo,X60t,https://www.gsmarena.com/vivo_x60t-10831.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x60t.jpg
-vivo,Y30g,https://www.gsmarena.com/vivo_y30g-10819.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y30g.jpg
-vivo,X60 Pro,https://www.gsmarena.com/vivo_x60_pro-10797.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x60-pro-global-new.jpg
-vivo,X60,https://www.gsmarena.com/vivo_x60-10796.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x60-global-new.jpg
-vivo,iQOO Z3,https://www.gsmarena.com/vivo_iqoo_z3-10811.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-qoo-z3.jpg
-vivo,Y72 5G,https://www.gsmarena.com/vivo_y72_5g-10801.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y72.jpg
-vivo,iQOO U3x,https://www.gsmarena.com/vivo_iqoo_u3x-10803.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-u3x-5g.jpg
-vivo,iQOO Neo5,https://www.gsmarena.com/vivo_iqoo_neo5-10795.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo5.jpg
-vivo,S9,https://www.gsmarena.com/vivo_s9-10767.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s9.jpg
-vivo,S9e,https://www.gsmarena.com/vivo_s9e-10779.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s9e.jpg
-vivo,S7t,https://www.gsmarena.com/vivo_s7t-10704.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s7.jpg
-vivo,X60 Pro+,https://www.gsmarena.com/vivo_x60_pro+-10696.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x60-pro-plus.jpg
-vivo,Y31,https://www.gsmarena.com/vivo_y31-10692.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y31-2021.jpg
-vivo,Y20g,https://www.gsmarena.com/vivo_y20g-10691.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y20g.jpg
-vivo,Y31s,https://www.gsmarena.com/vivo_y31s-10660.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y31s-5g.jpg
-vivo,iQOO 7,https://www.gsmarena.com/vivo_iqoo_7-10674.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-7.jpg
-vivo,Y20a,https://www.gsmarena.com/vivo_y20a-10659.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y20-2021.jpg
-vivo,Y20 2021,https://www.gsmarena.com/vivo_y20_2021-10658.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y20-2021.jpg
-vivo,X60 Pro (China),https://www.gsmarena.com/vivo_x60_pro_(china)-10655.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x60-pro.jpg
-vivo,X60 (China),https://www.gsmarena.com/vivo_x60_(china)-10657.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x60.jpg
-vivo,V20 2021,https://www.gsmarena.com/vivo_v20_2021-10653.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v20-new.jpg
-vivo,Y30 Standard,https://www.gsmarena.com/vivo_y30_standard-10643.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y12s.jpg
-vivo,iQOO U3,https://www.gsmarena.com/vivo_iqoo_u3-10639.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-u3.jpg
-vivo,Y52s,https://www.gsmarena.com/vivo_y52s-10623.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y52s-5g.jpg
-vivo,Y51a,https://www.gsmarena.com/vivo_y51a-10684.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y51-2020-dec.jpg
-vivo,"Y51 (2020, December)","https://www.gsmarena.com/vivo_y51_(2020,_december)-10621.php",https://fdn2.gsmarena.com/vv/bigpic/vivo-y51-2020-dec.jpg
-vivo,Y12s,https://www.gsmarena.com/vivo_y12s-10602.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y12s.jpg
-vivo,Y12i,https://www.gsmarena.com/vivo_y12i-10713.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y11-2019.jpg
-vivo,Y1s,https://www.gsmarena.com/vivo_y1s-10721.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y1s.jpg
-vivo,S7e,https://www.gsmarena.com/vivo_s7e-10572.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s7e-5g.jpg
-vivo,X51 5G,https://www.gsmarena.com/vivo_x51_5g-10542.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x51-5g.jpg
-vivo,iQOO U1x,https://www.gsmarena.com/vivo_iqoo_u1x-10543.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-u1x.jpg
-vivo,Y3s,https://www.gsmarena.com/vivo_y3s-10544.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y3s.jpg
-vivo,Y30 (China),https://www.gsmarena.com/vivo_y30_(china)-10552.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y30-china.jpg
-vivo,Y11s,https://www.gsmarena.com/vivo_y11s-10545.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y11s.jpg
-vivo,Y70,https://www.gsmarena.com/vivo_y70-10531.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v20se.jpg
-vivo,Y20s,https://www.gsmarena.com/vivo_y20s-10530.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y20s.jpg
-vivo,Y73s,https://www.gsmarena.com/vivo_y73s-10504.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y73s.jpg
-vivo,X50e,https://www.gsmarena.com/vivo_x50e-10479.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x50e-5g.jpg
-vivo,V20,https://www.gsmarena.com/vivo_v20-10435.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v20-new.jpg
-vivo,Watch,https://www.gsmarena.com/vivo_watch-10466.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-watch-2020.jpg
-vivo,V20 SE,https://www.gsmarena.com/vivo_v20_se-10467.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v20se.jpg
-vivo,V20 Pro,https://www.gsmarena.com/vivo_v20_pro-10462.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v20-pro.jpg
-vivo,"Y51 (2020, September)","https://www.gsmarena.com/vivo_y51_(2020,_september)-10443.php",https://fdn2.gsmarena.com/vv/bigpic/vivo-y51-2020.jpg
-vivo,Y20i,https://www.gsmarena.com/vivo_y20i-10395.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y20.jpg
-vivo,Y20,https://www.gsmarena.com/vivo_y20-10394.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y20.jpg
-vivo,iQOO 5 Pro 5G,https://www.gsmarena.com/vivo_iqoo_5_pro_5g-10372.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-5-pro.jpg
-vivo,iQOO 5 5G,https://www.gsmarena.com/vivo_iqoo_5_5g-10373.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-5-5g.jpg
-vivo,S1 Prime,https://www.gsmarena.com/vivo_s1_prime-10366.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x50-lite.jpg
-vivo,S7,https://www.gsmarena.com/vivo_s7-10347.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s7.jpg
-vivo,iQOO U1,https://www.gsmarena.com/vivo_iqoo_u1-10334.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-u1.jpg
-vivo,Y51s,https://www.gsmarena.com/vivo_y51s-10330.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y51s.jpg
-vivo,iQOO Z1x,https://www.gsmarena.com/vivo_iqoo_z1x-10311.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z1x-5g1.jpg
-vivo,V19 Neo,https://www.gsmarena.com/vivo_v19_neo-10295.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v19.jpg
-vivo,Z5x (2020),https://www.gsmarena.com/vivo_z5x_(2020)-10291.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z5x-2020.jpg
-vivo,X50 Pro+,https://www.gsmarena.com/vivo_x50_pro+-10280.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x50-pro-plus.jpg
-vivo,X50 Pro,https://www.gsmarena.com/vivo_x50_pro-10260.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x50-pro-.jpg
-vivo,X50 5G,https://www.gsmarena.com/vivo_x50_5g-10271.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x50.jpg
-vivo,X50,https://www.gsmarena.com/vivo_x50-10356.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x50-4g.jpg
-vivo,Y70s,https://www.gsmarena.com/vivo_y70s-10263.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y70s.jpg
-vivo,iQOO Z1,https://www.gsmarena.com/vivo_iqoo_z1-10251.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-z1-5g.jpg
-vivo,X50 Lite,https://www.gsmarena.com/vivo_x50_lite-10238.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x50-lite.jpg
-vivo,Y30,https://www.gsmarena.com/vivo_y30-10230.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y30.jpg
-vivo,iQOO Neo3 5G,https://www.gsmarena.com/vivo_iqoo_neo3_5g-10201.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo3.jpg
-vivo,Y50,https://www.gsmarena.com/vivo_y50-10174.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y50.jpg
-vivo,V19,https://www.gsmarena.com/vivo_v19-10134.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v19-dual-selfie.jpg
-vivo,S6 5G,https://www.gsmarena.com/vivo_s6_5g-10151.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s6-5g.jpg
-vivo,NEX 3S 5G,https://www.gsmarena.com/vivo_nex_3s_5g-10122.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-nex-3s-5g.jpg
-vivo,V19 (Indonesia),https://www.gsmarena.com/vivo_v19_(indonesia)-10121.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v19.jpg
-vivo,Z6 5G,https://www.gsmarena.com/vivo_z6_5g-10092.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z6-5g.jpg
-vivo,iQOO 3 5G,https://www.gsmarena.com/vivo_iqoo_3_5g-10075.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-3-5g.jpg
-vivo,X30 Pro,https://www.gsmarena.com/vivo_x30_pro-9943.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x30-pro.jpg
-vivo,X30,https://www.gsmarena.com/vivo_x30-9997.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x30.jpg
-vivo,V17,https://www.gsmarena.com/vivo_v17-9982.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v17-india.jpg
-vivo,iQOO Neo 855 Racing,https://www.gsmarena.com/vivo_iqoo_neo_855_racing-9987.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo-855-racing.jpg
-vivo,Y9s,https://www.gsmarena.com/vivo_y9s-9984.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y9s.jpg
-vivo,Z5i,https://www.gsmarena.com/vivo_z5i-9978.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z5i.jpg
-vivo,V17 (Russia),https://www.gsmarena.com/vivo_v17_(russia)-9966.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v17.jpg
-vivo,S1 Pro,https://www.gsmarena.com/vivo_s1_pro-9972.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s1-pro-global.jpg
-vivo,S5,https://www.gsmarena.com/vivo_s5-9948.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s5.jpg
-vivo,U20,https://www.gsmarena.com/vivo_u20-9964.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-u20.jpg
-vivo,Y3 Standard,https://www.gsmarena.com/vivo_y3_standard-9950.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y3-standard.jpg
-vivo,Y5s,https://www.gsmarena.com/vivo_y5s-9947.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y5s.jpg
-vivo,Y19,https://www.gsmarena.com/vivo_y19-9940.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y19.jpg
-vivo,iQOO Neo 855,https://www.gsmarena.com/vivo_iqoo_neo_855-9934.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo-855.jpg
-vivo,Y11 (2019),https://www.gsmarena.com/vivo_y11_(2019)-9925.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y11-2019.jpg
-vivo,U3,https://www.gsmarena.com/vivo_u3-9923.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-u3.jpg
-vivo,U10,https://www.gsmarena.com/vivo_u10-9890.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-u10-.jpg
-vivo,Y3 (4GB+64GB),https://www.gsmarena.com/vivo_y3_(4gb+64gb)-9951.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y3-64-4.jpg
-vivo,Y3,https://www.gsmarena.com/vivo_y3-9949.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-u10-.jpg
-vivo,V17 Pro,https://www.gsmarena.com/vivo_v17_pro-9849.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v17-pro-r.jpg
-vivo,NEX 3 5G,https://www.gsmarena.com/vivo_nex_3_5g-9817.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-nex3-5g.jpg
-vivo,NEX 3,https://www.gsmarena.com/vivo_nex_3-9873.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-nex3.jpg
-vivo,Z1x,https://www.gsmarena.com/vivo_z1x-9820.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z1x.jpg
-vivo,iQOO Pro 5G,https://www.gsmarena.com/vivo_iqoo_pro_5g-9794.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-pro-5g.jpg
-vivo,iQOO Pro,https://www.gsmarena.com/vivo_iqoo_pro-9807.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-pro.jpg
-vivo,Y90,https://www.gsmarena.com/vivo_y90-9785.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y90.jpg
-vivo,V17 Neo,https://www.gsmarena.com/vivo_v17_neo-9783.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v17-neo.jpg
-vivo,Z5,https://www.gsmarena.com/vivo_z5-9782.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z5.jpg
-vivo,S1,https://www.gsmarena.com/vivo_s1-9766.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s1-v1907.jpg
-vivo,Z1Pro,https://www.gsmarena.com/vivo_z1pro-9743.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z5x.jpg
-vivo,iQOO Neo,https://www.gsmarena.com/vivo_iqoo_neo-9750.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-neo.jpg
-vivo,Z5x,https://www.gsmarena.com/vivo_z5x-9717.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z5x.jpg
-vivo,S1 Pro (China),https://www.gsmarena.com/vivo_s1_pro_(china)-9696.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s1-pro.jpg
-vivo,Z3x,https://www.gsmarena.com/vivo_z3x-9681.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z3x.jpg
-vivo,Y17,https://www.gsmarena.com/vivo_y17-9666.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y17.jpg
-vivo,Y15,https://www.gsmarena.com/vivo_y15-9719.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y15-new.jpg
-vivo,Y12,https://www.gsmarena.com/vivo_y12-9729.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y12.jpg
-vivo,X27 Pro,https://www.gsmarena.com/vivo_x27_pro-9660.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x27-pro.jpg
-vivo,S1 (China),https://www.gsmarena.com/vivo_s1_(china)-9649.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-s1.jpg
-vivo,X27,https://www.gsmarena.com/vivo_x27-9629.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x27-.jpg
-vivo,V15,https://www.gsmarena.com/vivo_v15-9614.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v15.jpg
-vivo,iQOO,https://www.gsmarena.com/vivo_iqoo-9613.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo.jpg
-vivo,V15 Pro,https://www.gsmarena.com/vivo_v15_pro-9553.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v15-pro.jpg
-vivo,Y89,https://www.gsmarena.com/vivo_y89-9526.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y89.jpg
-vivo,NEX Dual Display,https://www.gsmarena.com/vivo_nex_dual_display-9435.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-nex2-.jpg
-vivo,Y93 (Mediatek),https://www.gsmarena.com/vivo_y93_(mediatek)-9496.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y93-india.jpg
-vivo,Y93s,https://www.gsmarena.com/vivo_y93s-9467.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y93.jpg
-vivo,Z1 Lite,https://www.gsmarena.com/vivo_z1_lite-9402.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z1-lite-.jpg
-vivo,Y95,https://www.gsmarena.com/vivo_y95-9399.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y95-.jpg
-vivo,Y91i,https://www.gsmarena.com/vivo_y91i-9958.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y91i-dual-camera.jpg
-vivo,Y93,https://www.gsmarena.com/vivo_y93-9388.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y93.jpg
-vivo,Y91i (India),https://www.gsmarena.com/vivo_y91i_(india)-9624.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y91i-.jpg
-vivo,Y91 (Mediatek),https://www.gsmarena.com/vivo_y91_(mediatek)-9520.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y91.jpg
-vivo,Y91,https://www.gsmarena.com/vivo_y91-9480.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y91.jpg
-vivo,Y81i,https://www.gsmarena.com/vivo_y81i-9404.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y81i.jpg
-vivo,Z3,https://www.gsmarena.com/vivo_z3-9370.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z3.jpg
-vivo,Z3i,https://www.gsmarena.com/vivo_z3i-9365.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z3i.jpg
-vivo,Y71i,https://www.gsmarena.com/vivo_y71i-9358.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y71-.jpg
-vivo,V11i,https://www.gsmarena.com/vivo_v11i-9315.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v11i-.jpg
-vivo,Y97,https://www.gsmarena.com/vivo_y97-9316.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y97.jpg
-vivo,X23,https://www.gsmarena.com/vivo_x23-9312.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x23.jpg
-vivo,V11 (V11 Pro),https://www.gsmarena.com/vivo_v11_(v11_pro)-9298.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v11-pro-2.jpg
-vivo,Y83 Pro,https://www.gsmarena.com/vivo_y83_pro-9296.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y83-pro.jpg
-vivo,Z1i,https://www.gsmarena.com/vivo_z1i-9261.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z1i-.jpg
-vivo,V9 6GB,https://www.gsmarena.com/vivo_v9_6gb-9258.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v9-.jpg
-vivo,NEX S,https://www.gsmarena.com/vivo_nex_s-9227.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-nex-s.jpg
-vivo,NEX A,https://www.gsmarena.com/vivo_nex_a-9231.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-nex-r1.jpg
-vivo,Z1,https://www.gsmarena.com/vivo_z1-9212.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-z1a.jpg
-vivo,Y83,https://www.gsmarena.com/vivo_y83-9180.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y83-new.jpg
-vivo,Y81,https://www.gsmarena.com/vivo_y81-9250.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y81.jpg
-vivo,X21i,https://www.gsmarena.com/vivo_x21i-9201.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x21i-.jpg
-vivo,Y53i,https://www.gsmarena.com/vivo_y53i-9186.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y53i-.jpg
-vivo,Y71,https://www.gsmarena.com/vivo_y71-9148.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y71-.jpg
-vivo,V9 Youth,https://www.gsmarena.com/vivo_v9_youth-9167.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v9-.jpg
-vivo,V9,https://www.gsmarena.com/vivo_v9-9117.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v9-.jpg
-vivo,X21 UD,https://www.gsmarena.com/vivo_x21_ud-9123.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x21ud.jpg
-vivo,X21,https://www.gsmarena.com/vivo_x21-9124.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x21.jpg
-vivo,V7,https://www.gsmarena.com/vivo_v7-8937.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v7.jpg
-vivo,X20 Plus UD,https://www.gsmarena.com/vivo_x20_plus_ud-9005.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x20-plus-ud.jpg
-vivo,X20 Plus,https://www.gsmarena.com/vivo_x20_plus-8873.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x20-plus.jpg
-vivo,X20,https://www.gsmarena.com/vivo_x20-8852.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x20.jpg
-vivo,V7+,https://www.gsmarena.com/vivo_v7+-8853.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v7-plus.jpg
-vivo,Y65,https://www.gsmarena.com/vivo_y65-9113.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y65.jpg
-vivo,Y69,https://www.gsmarena.com/vivo_y69-8831.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y69.jpg
-vivo,Y53,https://www.gsmarena.com/vivo_y53-8775.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y53.jpg
-vivo,X9s Plus,https://www.gsmarena.com/vivo_x9s_plus-8680.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x9s-plus-r.jpg
-vivo,X9s,https://www.gsmarena.com/vivo_x9s-8745.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x9s-plus-r.jpg
-vivo,V5s,https://www.gsmarena.com/vivo_v5s-8664.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v5s.jpg
-vivo,Y25,https://www.gsmarena.com/vivo_y25-8616.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y25.jpg
-vivo,Y55L (vivo 1603),https://www.gsmarena.com/vivo_y55l_(vivo_1603)-9522.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y55l-1603.jpg
-vivo,Y55s (2017),https://www.gsmarena.com/vivo_y55s_(2017)-8588.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y55s.jpg
-vivo,V5 Lite (vivo 1609),https://www.gsmarena.com/vivo_v5_lite_(vivo_1609)-8532.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v5-lite.jpg
-vivo,V5 Plus,https://www.gsmarena.com/vivo_v5_plus-8528.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v5-plus.jpg
-vivo,Y67,https://www.gsmarena.com/vivo_y67-8417.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y67.jpg
-vivo,Xplay6,https://www.gsmarena.com/vivo_xplay6-8436.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-xplay6.jpg
-vivo,X9 Plus,https://www.gsmarena.com/vivo_x9_plus-8434.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x9-plus.jpg
-vivo,X9,https://www.gsmarena.com/vivo_x9-8433.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x9-.jpg
-vivo,V5,https://www.gsmarena.com/vivo_v5-8430.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v5.jpg
-vivo,X7 Plus,https://www.gsmarena.com/vivo_x7_plus-8181.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x7-plus.jpg
-vivo,X7,https://www.gsmarena.com/vivo_x7-8180.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x7.jpg
-vivo,V3Max,https://www.gsmarena.com/vivo_v3max-8024.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v3.jpg
-vivo,V3,https://www.gsmarena.com/vivo_v3-8023.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v3.jpg
-vivo,X6S Plus,https://www.gsmarena.com/vivo_x6s_plus-8020.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x6s-plus.jpg
-vivo,X6S,https://www.gsmarena.com/vivo_x6s-8019.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x6-.jpg
-vivo,Xplay5 Elite,https://www.gsmarena.com/vivo_xplay5_elite-7970.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-xplay5-elite.jpg
-vivo,Xplay5,https://www.gsmarena.com/vivo_xplay5-7966.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-xplay5.jpg
-vivo,Y51 (2015),https://www.gsmarena.com/vivo_y51_(2015)-7785.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y51.jpg
-vivo,X6,https://www.gsmarena.com/vivo_x6-7778.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x6-.jpg
-vivo,X6Plus,https://www.gsmarena.com/vivo_x6plus-7779.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x6-.jpg
-vivo,V1,https://www.gsmarena.com/vivo_v1-7522.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v1.jpg
-vivo,Y15S (2015),https://www.gsmarena.com/vivo_y15s_(2015)-7518.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y15s.jpg
-vivo,V1 Max,https://www.gsmarena.com/vivo_v1_max-7521.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-v1-max.jpg
-vivo,Y31 (2015),https://www.gsmarena.com/vivo_y31_(2015)-7734.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y31.jpg
-vivo,Y37 (2015),https://www.gsmarena.com/vivo_y37_(2015)-7520.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y37.jpg
-vivo,Y35 (2015),https://www.gsmarena.com/vivo_y35_(2015)-7519.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y35.jpg
-vivo,X5Max Platinum Edition,https://www.gsmarena.com/vivo_x5max_platinum_edition-7277.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x5-max-platinum-edition.jpg
-vivo,X5Pro,https://www.gsmarena.com/vivo_x5pro-7246.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x5-pro.jpg
-vivo,X5Max+,https://www.gsmarena.com/vivo_x5max+-7104.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-max-plus.jpg
-vivo,X5Max,https://www.gsmarena.com/vivo_x5max-6865.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x5-max.jpg
-vivo,Y11,https://www.gsmarena.com/vivo_y11-7219.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y11.jpg
-vivo,X5,https://www.gsmarena.com/vivo_x5-6870.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x5v.jpg
-vivo,Xplay3S,https://www.gsmarena.com/vivo_xplay3s-6800.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-xplay-3s.jpg
-vivo,Xshot,https://www.gsmarena.com/vivo_xshot-6799.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-xshot.jpg
-vivo,X3S,https://www.gsmarena.com/vivo_x3s-6801.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-x3s.jpg
-vivo,Y28 (2014),https://www.gsmarena.com/vivo_y28_(2014)-6881.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y28.jpg
-vivo,Y27 (2014),https://www.gsmarena.com/vivo_y27_(2014)-6880.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y27.jpg
-vivo,Y22 (2013),https://www.gsmarena.com/vivo_y22_(2013)-6805.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y22.jpg
-vivo,Y15 (2013),https://www.gsmarena.com/vivo_y15_(2013)-6804.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-y15.jpg
-vivo,iQOO U6,https://www.gsmarena.com/vivo_iqoo_u6-12068.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-iqoo-u6-r.jpg
-vivo,iQOO Z5 (2022),https://www.gsmarena.com/vivo_iqoo_z5_(2022)-11539.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-t1-5g.jpg
-vivo,X80 Pro+,https://www.gsmarena.com/vivo_x80_pro+-11408.php,https://fdn2.gsmarena.com/vv/bigpic/smartphone.jpg
-vivo,Xplay7,https://www.gsmarena.com/vivo_xplay7-8921.php,https://fdn2.gsmarena.com/vv/bigpic/vivo-xplay-7-r.jpg
-Fujitsu Siemens,T830,https://www.gsmarena.com/fujitsu_siemens_t830-1954.php,https://fdn2.gsmarena.com/vv/bigpic/fs-t810.gif
-Fujitsu Siemens,T810,https://www.gsmarena.com/fujitsu_siemens_t810-1953.php,https://fdn2.gsmarena.com/vv/bigpic/fs-t810.gif
-Google,Pixel 9a,https://www.gsmarena.com/google_pixel_9a-13478.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9a.jpg
-Google,Pixel 9 Pro XL,https://www.gsmarena.com/google_pixel_9_pro_xl-13217.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro-xl-.jpg
-Google,Pixel 9 Pro,https://www.gsmarena.com/google_pixel_9_pro-13218.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro-.jpg
-Google,Pixel 9,https://www.gsmarena.com/google_pixel_9-13219.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-.jpg
-Google,Pixel 9 Pro Fold,https://www.gsmarena.com/google_pixel_9_pro_fold-13220.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro-fold-.jpg
-Google,Pixel Watch 3,https://www.gsmarena.com/google_pixel_watch_3-13253.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-watch3-.jpg
-Google,Pixel 8a,https://www.gsmarena.com/google_pixel_8a-12937.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8a.jpg
-Google,Pixel 8 Pro,https://www.gsmarena.com/google_pixel_8_pro-12545.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8-pro.jpg
-Google,Pixel 8,https://www.gsmarena.com/google_pixel_8-12546.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8.jpg
-Google,Pixel Watch 2,https://www.gsmarena.com/google_pixel_watch_2-12547.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-watch-2.jpg
-Google,Pixel Fold,https://www.gsmarena.com/google_pixel_fold-12265.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-fold.jpg
-Google,Pixel Tablet,https://www.gsmarena.com/google_pixel_tablet-11905.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-tablet-1.jpg
-Google,Pixel 7a,https://www.gsmarena.com/google_pixel_7a-12170.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-7a.jpg
-Google,Pixel 7 Pro,https://www.gsmarena.com/google_pixel_7_pro-11908.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel7-pro-new.jpg
-Google,Pixel 7,https://www.gsmarena.com/google_pixel_7-11903.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel7-new.jpg
-Google,Pixel Watch,https://www.gsmarena.com/google_pixel_watch-11546.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-watch-.jpg
-Google,Pixel 6a,https://www.gsmarena.com/google_pixel_6a-11229.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-6a.jpg
-Google,Pixel 6 Pro,https://www.gsmarena.com/google_pixel_6_pro-10918.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-6-pro.jpg
-Google,Pixel 6,https://www.gsmarena.com/google_pixel_6-11037.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-6.jpg
-Google,Pixel 5a 5G,https://www.gsmarena.com/google_pixel_5a_5g-11059.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-5a-5g.jpg
-Google,Pixel 5,https://www.gsmarena.com/google_pixel_5-10386.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-5-5g.jpg
-Google,Pixel 4a 5G,https://www.gsmarena.com/google_pixel_4a_5g-10385.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-4a-5g.jpg
-Google,Pixel 4a,https://www.gsmarena.com/google_pixel_4a-10123.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-4a.jpg
-Google,Pixel 4 XL,https://www.gsmarena.com/google_pixel_4_xl-9895.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-4-r1.jpg
-Google,Pixel 4,https://www.gsmarena.com/google_pixel_4-9896.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-4-r1.jpg
-Google,Pixel 3a XL,https://www.gsmarena.com/google_pixel_3a_xl-9690.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-3a-xl-.jpg
-Google,Pixel 3a,https://www.gsmarena.com/google_pixel_3a-9408.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-3a.jpg
-Google,Pixel 3 XL,https://www.gsmarena.com/google_pixel_3_xl-9257.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-3xl-.jpg
-Google,Pixel 3,https://www.gsmarena.com/google_pixel_3-9256.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-3-.jpg
-Google,Pixel 2,https://www.gsmarena.com/google_pixel_2-8733.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-2.jpg
-Google,Pixel 2 XL,https://www.gsmarena.com/google_pixel_2_xl-8720.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-xl2-.jpg
-Google,Pixel XL,https://www.gsmarena.com/google_pixel_xl-8345.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-xl.jpg
-Google,Pixel,https://www.gsmarena.com/google_pixel-8346.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel.jpg
-Google,Pixel C,https://www.gsmarena.com/google_pixel_c-7826.php,https://fdn2.gsmarena.com/vv/bigpic/google-pixel-c--.jpg
-Thuraya,One,https://www.gsmarena.com/thuraya_one-13660.php,https://fdn2.gsmarena.com/vv/bigpic/thuraya1.jpg
-Thuraya,SG-2520,https://www.gsmarena.com/thuraya_sg_2520-1925.php,https://fdn2.gsmarena.com/vv/bigpic/thuraya-sg2520.gif
+AT&T,Quickfire,https://www.gsmarena.com/at&t_quickfire-2598.php,https://fdn2.gsmarena.com/vv/bigpic/quickfire.jpg
+AT&T,SMT5700,https://www.gsmarena.com/at&t_smt5700-2603.php,https://fdn2.gsmarena.com/vv/bigpic/att-5700.jpg
+AT&T,Mustang,https://www.gsmarena.com/at&t_mustang-2602.php,https://fdn2.gsmarena.com/vv/bigpic/att-mustang.jpg
+AT&T,8525,https://www.gsmarena.com/at&t_8525-2601.php,https://fdn2.gsmarena.com/vv/bigpic/att-8525.jpg

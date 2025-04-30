@@ -7,9 +7,11 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pickle
 import re
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 
 class ConversationModel:
-    """A trainable conversation model for the AI assistant."""
+    """A trainable conversation model for the AI assistant with neural capabilities."""
     
     def __init__(self, data_dir='conversation_data'):
         """Initialize the conversation model.
@@ -27,6 +29,19 @@ class ConversationModel:
         self.vectorizer = None
         self.load_or_initialize_vectorizer()
         
+        # Initialize transformers model for improved responses
+        try:
+            # Use smaller model for resource constraints
+            self.tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
+            self.lm_model = None  # Lazy loading to save memory until needed
+            self.generation_pipeline = None
+            logger.info("Initialized conversation model with distilgpt2 tokenizer")
+        except Exception as e:
+            logger.error(f"Error initializing transformer model: {str(e)}")
+            self.tokenizer = None
+            self.lm_model = None
+            self.generation_pipeline = None
+        
         # Define conversation categories
         self.categories = {
             'greeting': ['hi', 'hello', 'hey', 'greetings', 'good morning', 'good afternoon', 'good evening', 'howdy'],
@@ -42,6 +57,10 @@ class ConversationModel:
             'identity': ['who are you', 'what are you', 'what is your name', 'your name', 'about you', 'tell me about you', 
                         'sumail', 'sumail-000', 'who created you', 'what can you do', 'your purpose', 'what do you do']
         }
+        
+        # Initialize conversation context
+        self.conversation_context = []
+        self.max_context_length = 5
         
         # Add default responses if none exist
         if not self.conversation_data:
@@ -104,64 +123,44 @@ class ConversationModel:
             logger.info("Saved TF-IDF vectorizer")
         except Exception as e:
             logger.error(f"Error saving vectorizer: {str(e)}")
+            
+    def _initialize_language_model(self):
+        """Initialize the language model for improved response generation."""
+        if self.lm_model is None and self.tokenizer is not None:
+            try:
+                self.lm_model = AutoModelForCausalLM.from_pretrained("distilgpt2")
+                self.generation_pipeline = pipeline(
+                    "text-generation",
+                    model=self.lm_model,
+                    tokenizer=self.tokenizer,
+                    max_length=100,
+                    do_sample=True,
+                    temperature=0.7,
+                    top_p=0.9
+                )
+                logger.info("Initialized language model for conversation generation")
+            except Exception as e:
+                logger.error(f"Error initializing language model: {str(e)}")
+                
+    def update_conversation_context(self, role, message):
+        """Update the conversation context with a new message.
+        
+        Args:
+            role: 'user' or 'assistant'
+            message: Message content
+        """
+        self.conversation_context.append({
+            'role': role,
+            'content': message
+        })
+        
+        # Keep context to a manageable size
+        if len(self.conversation_context) > self.max_context_length:
+            self.conversation_context = self.conversation_context[-self.max_context_length:]
     
     def add_default_responses(self):
         """Add default responses for various conversation patterns."""
-        # Greetings
-        self.conversation_data['greeting'] = [
-            "Hello! I'm Sumail-000, your mobile device assistant. How can I help you today?",
-            "Hi there! I'm Sumail-000, and I'm ready to help with any mobile device questions you have.",
-            "Hey! I'm Sumail-000. What can I do for you today?",
-            "Greetings! Sumail-000 at your service. I'm here to help with all your mobile device needs.",
-            "Good day! I'm Sumail-000, your personal AI assistant for mobile devices. What would you like to know?"
-        ]
-        
-        # Farewells
-        self.conversation_data['farewell'] = [
-            "Goodbye! Feel free to come back if you have more questions. Sumail-000 will be here for you.",
-            "See you later! I'm here whenever you need mobile device assistance. Just ask for Sumail-000.",
-            "Take care! Don't hesitate to return if you need more help. I'll be waiting.",
-            "Farewell! Sumail-000 will be here when you need mobile device information again.",
-            "Until next time! I'm always ready to help with your mobile device questions."
-        ]
-        
-        # Thanks
-        self.conversation_data['thanks'] = [
-            "You're welcome! I'm happy I could help. That's what Sumail-000 is here for!",
-            "Glad I could be of assistance! Anything else you'd like to know? I'm all ears.",
-            "My pleasure! Is there anything else you'd like to know about mobile devices? Sumail-000 knows quite a bit.",
-            "No problem at all! Feel free to ask if you have more questions. I enjoy helping.",
-            "Happy to help! Let me know if you need anything else. Sumail-000 is always ready to assist."
-        ]
-        
-        # Confusion
-        self.conversation_data['confusion'] = [
-            "I apologize for the confusion. Could you please rephrase your question? I want to make sure I understand correctly.",
-            "I'm not sure I understood correctly. Can you explain what you're looking for? Sumail-000 wants to help accurately.",
-            "I might have misunderstood. Could you provide more details about what you need? I'm eager to assist properly.",
-            "I'm having trouble understanding your request. Could you try asking in a different way? I want to give you the right information.",
-            "Sorry for the confusion. Could you be more specific about what you're asking? Sumail-000 wants to be helpful."
-        ]
-        
-        # Frustration
-        self.conversation_data['frustration'] = [
-            "I apologize for the frustration. Let's try a different approach to solve your problem. Sumail-000 won't give up until we find a solution.",
-            "I understand this is frustrating. Let me try to help you more effectively. I'm determined to get this right for you.",
-            "I'm sorry you're having issues. Let's take a step back and try again. Sumail-000 is here to make things easier, not harder.",
-            "I apologize for the difficulty. Let me try to address your concern differently. I want to make sure you get what you need.",
-            "I'm sorry this isn't working as expected. Let's try another way to find what you need. Sumail-000 is committed to helping you."
-        ]
-        
-        # Default fallback
-        self.conversation_data['default'] = [
-            "I'm Sumail-000, your mobile device assistant. Could you ask about a specific device or feature?",
-            "Sumail-000 here! I'm specialized in mobile device information. Could you clarify what you're looking for?",
-            "I'm Sumail-000, and I know a lot about mobile devices. What specific device or topic are you interested in?",
-            "I might have missed your question. Could you ask Sumail-000 about a specific mobile device or feature?",
-            "Sumail-000 at your service! How can I help you find information about phones or tablets?"
-        ]
-        
-        # Identity
+        # Identity only as requested
         self.conversation_data['identity'] = [
             "I'm Sumail-000, your personal mobile device assistant. I was created to help you with all your mobile device questions and needs.",
             "My name is Sumail-000. I'm a specialized AI designed to provide information and assistance with mobile devices.",
@@ -171,58 +170,72 @@ class ConversationModel:
         ]
     
     def categorize_input(self, user_input):
-        """Categorize user input into a conversation category.
+        """Categorize user input into one of the defined categories.
         
         Args:
             user_input: User's input text
             
         Returns:
-            Category string
+            Category name
         """
+        if not user_input or user_input.strip() == '':
+            return 'default'
+            
         user_input_lower = user_input.lower()
         
-        # Check for category matches
-        for category, keywords in self.categories.items():
-            for keyword in keywords:
-                if keyword in user_input_lower:
+        # Check for exact matches in categories
+        for category, patterns in self.categories.items():
+            for pattern in patterns:
+                if pattern in user_input_lower:
                     return category
         
-        # If no category matches, try semantic matching
-        if self.vectorizer and self.conversation_data:
-            try:
-                # Get all patterns we know
-                all_patterns = []
-                pattern_to_category = {}
-                
-                for category, responses in self.conversation_data.items():
-                    if category != 'default':  # Skip default category
-                        all_patterns.extend([category] * 3)  # Add category name as a pattern
-                        pattern_to_category.update({category: category for _ in range(3)})
-                
-                if not all_patterns:
-                    return 'default'
-                
-                # Vectorize patterns and input
-                all_vectors = self.vectorizer.fit_transform(all_patterns + [user_input_lower])
-                input_vector = all_vectors[-1]
-                pattern_vectors = all_vectors[:-1]
-                
-                # Calculate similarities
-                similarities = cosine_similarity(input_vector, pattern_vectors)[0]
-                
-                # Find best match
-                if len(similarities) > 0:
-                    best_idx = np.argmax(similarities)
-                    if similarities[best_idx] > 0.3:  # Threshold for a good match
-                        return pattern_to_category[all_patterns[best_idx]]
+        # Try semantic matching if no exact match
+        try:
+            all_patterns = []
+            pattern_to_category = {}
             
-            except Exception as e:
-                logger.error(f"Error in semantic matching: {str(e)}")
+            # Collect all patterns
+            for category, patterns in self.categories.items():
+                for pattern in patterns:
+                    all_patterns.append(pattern)
+                    pattern_to_category[pattern] = category
+                    
+                # Also add any existing responses as patterns
+                if category in self.conversation_data:
+                    for response in self.conversation_data[category]:
+                        # Add the category as a pattern for itself (helps with classification)
+                        all_patterns.append(category)
+                        pattern_to_category[category] = category
+                        
+                # Add multiple instances of the category name itself to weight it more heavily
+                for _ in range(3):
+                    all_patterns.append(category)
+                    pattern_to_category.update({category: category for _ in range(3)})
+                
+            if not all_patterns:
+                return 'default'
+            
+            # Vectorize patterns and input
+            all_vectors = self.vectorizer.fit_transform(all_patterns + [user_input_lower])
+            input_vector = all_vectors[-1]
+            pattern_vectors = all_vectors[:-1]
+            
+            # Calculate similarities
+            similarities = cosine_similarity(input_vector, pattern_vectors)[0]
+            
+            # Find best match
+            if len(similarities) > 0:
+                best_idx = np.argmax(similarities)
+                if similarities[best_idx] > 0.3:  # Threshold for a good match
+                    return pattern_to_category[all_patterns[best_idx]]
+        
+        except Exception as e:
+            logger.error(f"Error in semantic matching: {str(e)}")
         
         return 'default'
     
     def get_response(self, user_input):
-        """Get a response based on user input.
+        """Get a response based on user input using both pattern matching and neural generation.
         
         Args:
             user_input: User's input text
@@ -230,12 +243,134 @@ class ConversationModel:
         Returns:
             Response text
         """
+        # Update conversation context
+        self.update_conversation_context('user', user_input)
+        
+        # First, categorize the input
         category = self.categorize_input(user_input)
         
+        # Try to generate a neural response if available
+        neural_response = self._generate_neural_response(user_input, category)
+        
+        # If we have a good neural response, use it
+        if neural_response:
+            # Update conversation context with response
+            self.update_conversation_context('assistant', neural_response)
+            return neural_response
+        
+        # Otherwise, fall back to pattern-based response
         if category in self.conversation_data and self.conversation_data[category]:
-            return random.choice(self.conversation_data[category])
+            pattern_response = random.choice(self.conversation_data[category])
+            # Update conversation context
+            self.update_conversation_context('assistant', pattern_response)
+            return pattern_response
         else:
-            return random.choice(self.conversation_data['default'])
+            default_response = "I'm Sumail-000, your mobile device assistant. How can I help you today?"
+            # Update conversation context
+            self.update_conversation_context('assistant', default_response)
+            return default_response
+    
+    def _generate_neural_response(self, user_input, category):
+        """Generate a response using neural language model.
+        
+        Args:
+            user_input: User's input text
+            category: Detected conversation category
+            
+        Returns:
+            Generated response or None if generation failed
+        """
+        if self.tokenizer is None or (self.lm_model is None and self.generation_pipeline is None):
+            try:
+                self._initialize_language_model()
+            except Exception as e:
+                logger.error(f"Error initializing language model for response: {str(e)}")
+                return None
+        
+        try:
+            # If still not initialized, return None
+            if self.generation_pipeline is None:
+                return None
+                
+            # Create prompt from conversation context
+            prompt = self._create_prompt_from_context(category)
+            
+            # Generate response
+            generated_texts = self.generation_pipeline(prompt, max_length=100, num_return_sequences=1)
+            
+            if generated_texts and len(generated_texts) > 0:
+                generated_text = generated_texts[0]['generated_text']
+                
+                # Extract just the assistant's response (after the prompt)
+                response = generated_text[len(prompt):].strip()
+                
+                # Clean up the response
+                response = self._clean_generated_response(response)
+                
+                # If the response is too short or empty, fall back to pattern-based
+                if len(response) < 10:
+                    return None
+                    
+                return response
+                
+            return None
+        except Exception as e:
+            logger.error(f"Error generating neural response: {str(e)}")
+            return None
+            
+    def _create_prompt_from_context(self, category):
+        """Create a prompt for the language model from conversation context.
+        
+        Args:
+            category: Detected conversation category
+            
+        Returns:
+            Prompt string
+        """
+        # Start with a system prompt
+        prompt = "I am Sumail-000, a helpful AI assistant for mobile devices. "
+        
+        # Add some category-specific context
+        if category == 'greeting':
+            prompt += "I greet users warmly. "
+        elif category == 'farewell':
+            prompt += "I say goodbye politely. "
+        elif category == 'thanks':
+            prompt += "I respond to gratitude graciously. "
+        elif category == 'identity':
+            prompt += "I explain who I am and what I can do. "
+        elif category == 'confusion':
+            prompt += "I help clarify misunderstandings. "
+        
+        # Add recent conversation context
+        for item in self.conversation_context[-3:]:  # Last 3 messages
+            role = "User" if item['role'] == 'user' else "Sumail-000"
+            prompt += f"{role}: {item['content']} "
+            
+        # Add a start for the assistant's response
+        prompt += "Sumail-000: "
+        
+        return prompt
+        
+    def _clean_generated_response(self, response):
+        """Clean up the generated response.
+        
+        Args:
+            response: Raw generated response
+            
+        Returns:
+            Cleaned response
+        """
+        # Remove any further "User:" or "Sumail-000:" parts
+        response = re.split(r'User:|Sumail-000:', response)[0].strip()
+        
+        # Remove unwanted characters
+        response = response.replace('\n', ' ').strip()
+        
+        # Fix spacing
+        response = re.sub(r'\s+', ' ', response)
+        
+        return response
     
     def train(self, user_input, category, response):
         """Train the model with a new pattern and response.
@@ -259,6 +394,10 @@ class ConversationModel:
         
         # Update the vectorizer
         self.save_vectorizer()
+        
+        # Simulate learning by adding to conversation context
+        self.update_conversation_context('user', user_input)
+        self.update_conversation_context('assistant', response)
     
     def get_all_categories(self):
         """Get all available conversation categories.

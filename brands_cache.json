@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-04-17T10:54:56.647209",
+  "timestamp": "2025-04-24T07:54:13.198855",
   "brands": [
     {
       "name": "AT&T",
@@ -29,7 +29,7 @@
     {
       "name": "Apple",
       "url": "https://www.gsmarena.com/apple-phones-48.php",
-      "device_count": 134
+      "device_count": 135
     },
     {
       "name": "Archos",
@@ -199,12 +199,12 @@
     {
       "name": "Honor",
       "url": "https://www.gsmarena.com/honor-phones-121.php",
-      "device_count": 254
+      "device_count": 258
     },
     {
       "name": "Huawei",
       "url": "https://www.gsmarena.com/huawei-phones-58.php",
-      "device_count": 472
+      "device_count": 474
     },
     {
       "name": "Icemobile",
@@ -309,7 +309,7 @@
     {
       "name": "Motorola",
       "url": "https://www.gsmarena.com/motorola-phones-4.php",
-      "device_count": 645
+      "device_count": 647
     },
     {
       "name": "NEC",
@@ -439,7 +439,7 @@
     {
       "name": "Samsung",
       "url": "https://www.gsmarena.com/samsung-phones-9.php",
-      "device_count": 1424
+      "device_count": 1425
     },
     {
       "name": "Sendo",
@@ -569,7 +569,7 @@
     {
       "name": "Xiaomi",
       "url": "https://www.gsmarena.com/xiaomi-phones-80.php",
-      "device_count": 446
+      "device_count": 447
     },
     {
       "name": "YU",
@@ -624,7 +624,7 @@
     {
       "name": "vivo",
       "url": "https://www.gsmarena.com/vivo-phones-98.php",
-      "device_count": 516
+      "device_count": 519
     }
   ],
   "brand_count": 125

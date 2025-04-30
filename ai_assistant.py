@@ -3,21 +3,20 @@ import numpy as np
 import json
 import re
 import os
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-from sentence_transformers import SentenceTransformer
 from loguru import logger
-
-# Import the conversation model
-try:
-    from conversation_model import ConversationModel
-    logger.info("Loaded conversation model module")
-except ImportError as e:
-    logger.error(f"Error importing conversation model: {str(e)}")
-    ConversationModel = None
+import traceback
+import random
+# Import responses from the responses module
+from responses import (
+    CATEGORY_RESPONSES, FALLBACK_RESPONSES, DEVICE_TEMPLATES, 
+    FEATURE_KEYWORDS, RECOMMENDATION_KEYWORDS, DEVICE_TYPES, 
+    POPULAR_BRANDS, COMPARISON_KEYWORDS, SPECIFICATION_KEYWORDS,
+    QUERY_TYPES, SENTIMENT_KEYWORDS, USAGE_PATTERN_KEYWORDS,
+    ADVANCED_RESPONSES, USAGE_PATTERN_RESPONSES, TROUBLESHOOTING_RESPONSES
+)
 
 class DeviceAIAssistant:
-    """AI Assistant for mobile device data analysis and NLP-based interactions."""
+    """AI Assistant for mobile device data search using direct CSV linking."""
     
     def __init__(self, device_data_path='brands_devices.csv', specs_data_path='device_specifications.csv'):
         """Initialize the AI assistant with device data.
@@ -31,82 +30,48 @@ class DeviceAIAssistant:
         
         # Load and process data
         self.unified_data = self._process_device_data()
-        
-        # Build search index
-        self.device_index = self._build_device_index()
-        
-        # Load NLP model
-        try:
-            self.model = SentenceTransformer('all-MiniLM-L6-v2')
-            logger.info("Loaded sentence transformer model successfully")
-        except Exception as e:
-            logger.error(f"Error loading sentence transformer model: {str(e)}")
-            self.model = None
-            
-        # Initialize conversation model
-        try:
-            if ConversationModel is not None:
-                self.conversation_model = ConversationModel()
-                logger.info("Initialized conversation model")
-            else:
-                self.conversation_model = None
-                logger.warning("Conversation model not available")
-        except Exception as e:
-            logger.error(f"Error initializing conversation model: {str(e)}")
-            self.conversation_model = None
-            
-        # Define intents
-        self.intents = {
-            'search': ['show', 'find', 'search', 'look for', 'get', 'display'],
-            'compare': ['compare', 'versus', 'vs', 'difference', 'better'],
-            'specs': ['specs', 'specifications', 'features', 'what is the', 'how much', 'how many'],
-            'recommend': ['recommend', 'suggest', 'best', 'top', 'good']
-        }
-        
-        # Define spec categories for mapping natural language to actual spec fields
-        self.spec_categories = {
-            'battery': ['battery', 'battery capacity', 'battery life', 'mah'],
-            'camera': ['camera', 'rear camera', 'front camera', 'selfie', 'mp', 'megapixel'],
-            'display': ['display', 'screen', 'resolution', 'size', 'inch', 'ppi'],
-            'processor': ['processor', 'cpu', 'chipset', 'soc'],
-            'memory': ['memory', 'ram', 'storage', 'rom', 'gb'],
-            'os': ['os', 'operating system', 'android', 'ios'],
-            'network': ['network', '5g', '4g', 'lte', 'connectivity'],
-            'dimensions': ['dimensions', 'size', 'weight', 'thickness']
-        }
-        
-        # Create embeddings for devices
-        self._create_device_embeddings()
+        logger.info("AI Assistant initialized with direct CSV linking")
     
     def _process_device_data(self):
-        """Load and process device data from CSV files."""
+        """Load and process device data from CSV files according to file structure.
+        
+        brands_devices.csv structure:
+        Brand,DeviceName,DeviceURL,ImageURL
+        
+        Example: 
+        Amazon,Fire Max 11,https://www.gsmarena.com/amazon_fire_max_11-12382.php,https://fdn2.gsmarena.com/vv/bigpic/amazon-fire-max-11.jpg
+        
+        device_specifications.csv structure:
+        device_url,full_device_name,pictures,specifications
+        
+        Example:
+        https://www.gsmarena.com/amazon_fire_max_11-12382.php,Amazon Fire Max 11,...
+        """
         try:
-            # Load device basic info
-            devices_df = pd.read_csv(self.device_data_path)
-            logger.info(f"Loaded {len(devices_df)} devices from {self.device_data_path}")
+            # Load brands_devices.csv (no header in file)
+            # Format: Brand,DeviceName,DeviceURL,ImageURL
+            brands_df = pd.read_csv(self.device_data_path, header=None)
+            if len(brands_df.columns) >= 4:
+                brands_df.columns = ['brand_name', 'device_name', 'device_url', 'device_image']
+                logger.info(f"Loaded {len(brands_df)} devices from {self.device_data_path}")
+            else:
+                logger.error(f"Unexpected format in {self.device_data_path}, needs 4 columns")
+                return pd.DataFrame()
             
-            # Rename columns to match expected format
-            devices_df = devices_df.rename(columns={
-                'brand': 'brand_name',
-                'image_url': 'device_image'
-            })
-            
-            # Load specifications
+            # Load device_specifications.csv with header
+            # Format: device_url,full_device_name,pictures,specifications
             specs_df = pd.read_csv(self.specs_data_path)
-            logger.info(f"Loaded {len(specs_df)} device specifications from {self.specs_data_path}")
-            
-            # Rename columns to match expected format
-            specs_df = specs_df.rename(columns={
-                'device_name': 'name',
-                'device_pictures': 'pictures',
-                'device_data': 'specifications'
-            })
+            if len(specs_df.columns) >= 4:
+                logger.info(f"Loaded {len(specs_df)} device specifications from {self.specs_data_path}")
+            else:
+                logger.error(f"Unexpected format in {self.specs_data_path}, needs 4 columns")
+                return brands_df
             
             # Join the data on device_url
-            unified_data = pd.merge(devices_df, specs_df, on='device_url', how='left')
+            unified_data = pd.merge(brands_df, specs_df, on='device_url', how='left')
             logger.info(f"Created unified data with {len(unified_data)} entries")
             
-            # Process specifications (convert JSON strings to structured data)
+            # Parse specifications JSON
             def parse_specs(specs_str):
                 try:
                     if pd.isna(specs_str):
@@ -116,998 +81,1126 @@ class DeviceAIAssistant:
                     logger.warning(f"Error parsing specs JSON: {str(e)}")
                     return {}
             
+            # Parse specifications JSON
             unified_data['specs_dict'] = unified_data['specifications'].apply(parse_specs)
             
             return unified_data
         except Exception as e:
             logger.error(f"Error processing device data: {str(e)}")
+            logger.error(traceback.format_exc())
             # Return empty DataFrame with expected columns
             return pd.DataFrame(columns=['brand_name', 'device_name', 'device_url', 'device_image', 
-                                         'name', 'pictures', 'specifications', 'specs_dict'])
+                                        'specifications', 'specs_dict'])
     
-    def _build_device_index(self):
-        """Build a searchable index for quick device retrieval."""
-        device_index = {}
-        
-        for _, row in self.unified_data.iterrows():
-            try:
-                # Skip rows with missing data
-                if pd.isna(row['brand_name']) or pd.isna(row['device_name']):
-                    continue
-                    
-                # Index by full name (brand + device)
-                device_name = f"{row['brand_name']} {row['device_name']}"
-                device_index[device_name.lower()] = row['device_url']
-                
-                # Index by device name only
-                device_index[row['device_name'].lower()] = row['device_url']
-                
-                # Add common variations
-                if "galaxy" in device_name.lower():
-                    device_index[device_name.lower().replace("galaxy", "").strip()] = row['device_url']
-                
-                # Add brand-specific variations
-                if "google" in device_name.lower() and "pixel" in device_name.lower():
-                    # Index as just "pixel X" for Google Pixel devices
-                    pixel_name = re.search(r'pixel\s+([\w\d]+)', device_name.lower())
-                    if pixel_name:
-                        device_index[f"pixel {pixel_name.group(1)}"] = row['device_url']
-                
-                if "iphone" in device_name.lower():
-                    # Index as just "iphone X" for Apple iPhone devices
-                    iphone_name = re.search(r'iphone\s+([\w\d]+)', device_name.lower())
-                    if iphone_name:
-                        device_index[f"iphone {iphone_name.group(1)}"] = row['device_url']
-            except Exception as e:
-                logger.warning(f"Error indexing device {row.get('device_name', 'unknown')}: {str(e)}")
-                continue
-            
-        logger.info(f"Built device index with {len(device_index)} entries")
-        return device_index
-    
-    def _create_device_embeddings(self):
-        """Create embeddings for all devices for semantic search."""
-        if self.model is None:
-            logger.warning("Sentence transformer model not available, skipping embeddings creation")
-            self.device_embeddings = None
-            self.device_texts = None
-            self.device_urls = None
-            return
-            
-        try:
-            # Create text representations for all devices
-            device_texts = []
-            device_urls = []
-            
-            for _, row in self.unified_data.iterrows():
-                try:
-                    if pd.isna(row['brand_name']) or pd.isna(row['device_name']):
-                        continue
-                        
-                    # Create a text representation of the device
-                    text = f"{row['brand_name']} {row['device_name']}"
-                    
-                    # Add some key specifications if available
-                    if 'specs_dict' in row and isinstance(row['specs_dict'], dict) and row['specs_dict']:
-                        specs = row['specs_dict']
-                        # Add some key specs to the text representation
-                        for key in ['display', 'camera', 'chipset', 'battery', 'cpu', 'memory', 'ram']:
-                            if key in specs and specs[key]:
-                                text += f" {specs[key]}"
-                    
-                    device_texts.append(text)
-                    device_urls.append(row['device_url'])
-                except Exception as e:
-                    logger.warning(f"Error processing device for embeddings: {str(e)}")
-                    continue
-            
-            # Only create embeddings if we have devices
-            if device_texts:
-                # Create embeddings
-                self.device_embeddings = self.model.encode(device_texts)
-                self.device_texts = device_texts
-                self.device_urls = device_urls
-                
-                logger.info(f"Created embeddings for {len(device_texts)} devices")
-            else:
-                logger.warning("No valid devices found for creating embeddings")
-                self.device_embeddings = None
-                self.device_texts = None
-                self.device_urls = None
-        except Exception as e:
-            logger.error(f"Error creating device embeddings: {str(e)}")
-            self.device_embeddings = None
-            self.device_texts = None
-            self.device_urls = None
-    
-    def process_query(self, query):
-        """Process a natural language query and generate a response.
+    def analyze_query_intent(self, query):
+        """
+        Advanced algorithm to analyze user query, extract intents and entities.
         
         Args:
-            query: Natural language query from the user
+            query: User's original query text
             
         Returns:
-            A dictionary containing the response type and content
+            dict: Analysis results containing intents, entities, and suggested action
         """
-        try:
-            # Initialize conversation category storage if it doesn't exist
-            if not hasattr(self, '_last_conversation_category'):
-                self._last_conversation_category = None
-                
-            # Recognize intent
-            intent = self._recognize_intent(query)
-            logger.info(f"Recognized intent: {intent}")
-            
-            # Extract entities
-            entities = self._extract_entities(query)
-            logger.info(f"Extracted entities: {entities}")
-            
-            # Process based on intent
-            if intent == 'conversation':
-                response = self._handle_conversation_intent(query)
-            elif intent == 'search':
-                response = self._handle_search_intent(entities)
-            elif intent == 'compare':
-                response = self._handle_compare_intent(entities)
-            elif intent == 'specs':
-                response = self._handle_specs_intent(entities)
-            elif intent == 'recommend':
-                response = self._handle_recommend_intent(entities)
-            elif intent == 'count':
-                response = self._handle_count_intent(query, entities)
-            elif intent == 'general':
-                response = self._handle_general_intent(query, entities)
-            else:
-                return {
-                    "type": "text",
-                    "content": "I'm not sure what you're asking for. You can search for devices, compare them, ask about specifications, or get recommendations."
-                }
-            
-            # For non-conversation intents, add conversational elements to the response
-            if intent != 'conversation' and "summary" in response:
-                conversational_prefix = self._generate_conversational_prefix(query, intent)
-                response["summary"] = f"{conversational_prefix} {response['summary']}"
-            
-            return response
-        except Exception as e:
-            logger.error(f"Error processing query: {str(e)}")
-            return {
-                "type": "text",
-                "content": "Sorry, I encountered an error while processing your request. Please try again."
-            }
-    
-    def _recognize_intent(self, query):
-        """Recognize the intent of the user query.
+        logger.info(f"Performing advanced intent analysis on query: {query}")
         
-        Args:
-            query: Natural language query from the user
-            
-        Returns:
-            Intent string: 'search', 'compare', 'specs', 'recommend', 'general', 'count', or 'conversation'
-        """
-        query = query.lower()
+        # Normalize query text
+        query_text = query.lower().strip()
         
-        # Check for conversational intent first (greetings, thanks, etc.)
-        if self.conversation_model is not None:
-            # Use the conversation model to categorize the input
-            category = self.conversation_model.categorize_input(query)
-            
-            # If it's a recognized conversational category (not default), return conversation intent
-            if category != 'default':
-                # Store the category for later use
-                self._last_conversation_category = category
-                return 'conversation'
-        
-        # Check for count intent (counting brands, devices, etc.)
-        count_patterns = [
-            'how many brands', 'number of brands', 'total brands',
-            'how many devices', 'number of devices', 'total devices',
-            'count of', 'quantity of'
-        ]
-        for pattern in count_patterns:
-            if pattern in query:
-                return 'count'
-        
-        # Check for general questions about mobile devices
-        general_patterns = [
-            'what is', 'tell me about', 'explain', 'what are',
-            'how does', 'why is', 'when was', 'who makes',
-            'should i buy', 'is it worth', 'good choice', 'better option',
-            'your opinion', 'what do you think', 'advice', 'suggest'
-        ]
-        
-        # Check if it's a general question without specific device mention
-        for pattern in general_patterns:
-            if pattern in query:
-                # If no specific device is mentioned, it's a general question
-                device_names = self._extract_device_names(query)
-                if not device_names:
-                    return 'general'
-        
-        # Check for compare intent (highest priority for specific devices)
-        for keyword in self.intents['compare']:
-            if keyword in query:
-                return 'compare'
-        
-        # Check for specs intent
-        for keyword in self.intents['specs']:
-            if keyword in query:
-                # Check if a specific spec is mentioned
-                for spec_category in self.spec_categories:
-                    for spec_keyword in self.spec_categories[spec_category]:
-                        if spec_keyword in query:
-                            return 'specs'
-        
-        # Check for recommend intent
-        for keyword in self.intents['recommend']:
-            if keyword in query:
-                return 'recommend'
-        
-        # Check if query is very short (1-2 words) - likely conversational
-        words = query.split()
-        if len(words) <= 2:
-            return 'conversation'
-        
-        # Default to search intent
-        return 'search'
-    
-    def _extract_entities(self, query):
-        """Extract entities from the user query.
-        
-        Args:
-            query: Natural language query from the user
-            
-        Returns:
-            Dictionary of extracted entities
-        """
-        entities = {
-            'device_names': [],
-            'spec_category': None
+        # Initialize analysis structure
+        analysis = {
+            "original_query": query,
+            "normalized_query": query_text,
+            "intents": {},
+            "entities": {
+                "devices": [],
+                "brands": [],
+                "features": [],
+                "specifications": []
+            },
+            "primary_intent": None,
+            "secondary_intent": None,
+            "response_type": None,
+            "confidence_score": 0.0
         }
         
-        # Extract device names
-        device_names = self._extract_device_names(query)
-        entities['device_names'] = device_names
+        # Extract device names and brands
+        device_names = self._extract_device_names(query_text)
+        for device in device_names:
+            analysis["entities"]["devices"].append({
+                "brand": device.get("brand", ""),
+                "device": device.get("device", ""),
+                "full_name": f"{device.get('brand', '')} {device.get('device', '')}"
+            })
+            if device.get("brand") and device.get("brand") not in analysis["entities"]["brands"]:
+                analysis["entities"]["brands"].append(device.get("brand"))
         
-        # Extract spec category
-        for category, keywords in self.spec_categories.items():
+        # Extract specifications
+        requested_specs = self._extract_specification_requests(query_text)
+        for spec in requested_specs:
+            analysis["entities"]["specifications"].append(spec)
+        
+        # Extract features of interest
+        for feature, keywords in FEATURE_KEYWORDS.items():
             for keyword in keywords:
-                if keyword in query.lower():
-                    entities['spec_category'] = category
+                if keyword in query_text:
+                    if feature not in analysis["entities"]["features"]:
+                        analysis["entities"]["features"].append(feature)
                     break
-            if entities['spec_category']:
+        
+        # Calculate intent confidence scores
+        intent_scores = {}
+        
+        # Device search intent
+        if analysis["entities"]["devices"]:
+            intent_scores["device_search"] = 0.7
+        
+        # Recommendation intent
+        for keyword in RECOMMENDATION_KEYWORDS:
+            if keyword in query_text:
+                intent_scores["recommendation"] = 0.7
                 break
         
-        return entities
+        # Specification intent
+        if analysis["entities"]["specifications"]:
+            intent_scores["specification"] = 0.7
+        
+        # Comparison intent
+        for keyword in COMPARISON_KEYWORDS:
+            if keyword in query_text:
+                intent_scores["comparison"] = 0.7
+                break
+        
+        # Feature-specific intents
+        for feature in analysis["entities"]["features"]:
+            if feature in ["camera", "battery", "performance", "display"]:
+                intent_scores[feature] = 0.7
+        
+        # Simple intents
+        simple_intents = {
+            'greeting': ['hi', 'hello', 'hey', 'greetings'],
+            'farewell': ['bye', 'goodbye', 'see you'],
+            'thanks': ['thank you', 'thanks'],
+            'help': ['help', 'assist', 'how to use']
+        }
+        
+        for intent, keywords in simple_intents.items():
+            for keyword in keywords:
+                if keyword in query_text:
+                    intent_scores[intent] = 0.5
+                    break
+        
+        # Default intent
+        if not intent_scores:
+            intent_scores["general"] = 0.3
+        
+        # Sort intents by confidence score
+        analysis["intents"] = dict(sorted(intent_scores.items(), key=lambda x: x[1], reverse=True))
+        
+        # Assign primary and secondary intents
+        if analysis["intents"]:
+            intents_list = list(analysis["intents"].items())
+            analysis["primary_intent"] = intents_list[0][0]
+            analysis["confidence_score"] = intents_list[0][1]
+            if len(intents_list) > 1:
+                analysis["secondary_intent"] = intents_list[1][0]
+        
+        # Determine response type
+        if "comparison" in analysis["intents"] and len(analysis["entities"]["devices"]) >= 2:
+            analysis["response_type"] = "comparison"
+        elif "device_search" in analysis["intents"] and "specification" in analysis["intents"]:
+            analysis["response_type"] = "device_specs"
+        elif "device_search" in analysis["intents"]:
+            analysis["response_type"] = "device_details"
+        elif "recommendation" in analysis["intents"]:
+            analysis["response_type"] = "recommendations"
+        else:
+            # Default to conversational
+            analysis["response_type"] = "conversation"
+        
+        logger.info(f"Query intent analysis complete. Primary intent: {analysis['primary_intent']}, Response type: {analysis['response_type']}")
+        
+        return analysis
     
-    def _generate_conversational_prefix(self, query, intent):
-        """Generate a conversational prefix for the response based on the query and intent.
+    def _log_intent_analysis(self, analysis):
+        """
+        Log the query intent analysis in a formatted, easy-to-read way.
         
         Args:
-            query: Natural language query from the user
-            intent: Recognized intent
-            
-        Returns:
-            Conversational prefix string
+            analysis: The analysis dictionary returned by analyze_query_intent
         """
-        # List of conversational prefixes for different intents
-        search_prefixes = [
-            "I found some information about",
-            "Here's what I know about",
-            "Let me tell you about",
-            "I'd be happy to share details about",
-            "Great question! Here's information on"
-        ]
+        logger.info("===== QUERY INTENT ANALYSIS =====")
+        logger.info(f"Original query: '{analysis['original_query']}'")
+        logger.info(f"Primary intent: {analysis['primary_intent']} (confidence: {analysis['confidence_score']:.2f})")
         
-        specs_prefixes = [
-            "Looking at the specifications,",
-            "According to the device details,",
-            "The technical specifications show that",
-            "I can tell you that",
-            "Based on the device data,"
-        ]
+        if analysis.get('secondary_intent'):
+            logger.info(f"Secondary intent: {analysis['secondary_intent']}")
         
-        compare_prefixes = [
-            "When comparing these devices,",
-            "Looking at both devices side by side,",
-            "Here's how these devices stack up:",
-            "Let me break down the comparison for you:",
-            "If we look at the differences,"
-        ]
+        logger.info(f"Response type: {analysis['response_type']}")
         
-        recommend_prefixes = [
-            "Based on your interests, I'd recommend",
-            "You might want to consider",
-            "From what I understand, these devices would suit your needs:",
-            "Here are some great options for you:",
-            "I think you'd be happy with"
-        ]
+        # Log all detected intents with scores
+        if analysis['intents']:
+            logger.info("Detected intents (ordered by confidence):")
+            for intent, score in analysis['intents'].items():
+                logger.info(f"  - {intent}: {score:.2f}")
         
-        # Select a random prefix based on intent
-        import random
-        if intent == 'search':
-            return random.choice(search_prefixes)
-        elif intent == 'specs':
-            return random.choice(specs_prefixes)
-        elif intent == 'compare':
-            return random.choice(compare_prefixes)
-        elif intent == 'recommend':
-            return random.choice(recommend_prefixes)
-        else:
-            return "Here's what I found:"
+        # Log entities
+        if analysis['entities']['devices']:
+            logger.info("Detected devices:")
+            for device in analysis['entities']['devices']:
+                if isinstance(device, dict) and 'full_name' in device:
+                    logger.info(f"  - {device['full_name']}")
+                elif isinstance(device, dict) and 'type' in device:
+                    logger.info(f"  - Device type: {device['type']}")
+        
+        if analysis['entities']['brands']:
+            logger.info(f"Detected brands: {', '.join(analysis['entities']['brands'])}")
+        
+        if analysis['entities']['features']:
+            logger.info(f"Detected features: {', '.join(analysis['entities']['features'])}")
+        
+        if analysis['entities']['specifications']:
+            logger.info(f"Requested specifications: {', '.join(analysis['entities']['specifications'])}")
+        
+        logger.info("==================================")
+    
+    def handle_conversation(self, user_input):
+        """Handle conversation input with advanced intent analysis and targeted responses."""
+        # Log the query
+        logger.info(f"Processing query: {user_input}")
+        
+        # Perform comprehensive query analysis
+        query_analysis = self.analyze_query_intent(user_input)
+        
+        # Log the full analysis
+        self._log_intent_analysis(query_analysis)
+        
+        # Extract key analysis results
+        primary_intent = query_analysis["primary_intent"]
+        response_type = query_analysis["response_type"]
+        devices = query_analysis["entities"]["devices"]
+        brands = query_analysis["entities"]["brands"]
+        features = query_analysis["entities"]["features"]
+        specs = query_analysis["entities"]["specifications"]
+        
+        # Convert device entries to a format compatible with existing methods
+        device_names = []
+        for device in devices:
+            if isinstance(device, dict) and "brand" in device and "device" in device:
+                device_names.append({
+                    "brand": device["brand"],
+                    "device": device["device"]
+                })
+        
+        # Handle different response types based on the analysis
+        if response_type == "comparison" and len(device_names) >= 2:
+            # Handle device comparison
+            logger.info(f"Handling comparison between devices: {device_names}")
+            return self.compare_devices(user_input)
+            
+        elif response_type == "device_specs" and device_names:
+            # Get device info with specific specs highlighted
+            devices_df = self._search_devices_by_name(device_names)
+            if not devices_df.empty:
+                device_info = self._format_device_data(devices_df.iloc[0])
+                # Extract requested specs
+                if specs and 'specifications' in device_info:
+                    requested_specs = self._extract_requested_specs(
+                        device_info['specifications'],
+                        specs
+                    )
+                    return self._generate_spec_response(device_info, specs, requested_specs)
+            else:
+                logger.info(f"No device found matching names: {device_names}")
+                return FALLBACK_RESPONSES['no_device_found']
+                
+        elif response_type == "device_details" and device_names:
+            # Get general device details
+            devices_df = self._search_devices_by_name(device_names)
+            if not devices_df.empty:
+                device_info = self._format_device_data(devices_df.iloc[0])
+                return self._generate_general_device_response(device_info)
+            else:
+                logger.info(f"No device found matching names: {device_names}")
+                return FALLBACK_RESPONSES['no_device_found']
+                
+        elif response_type == "recommendations":
+            # Get device recommendations
+            recommendations = self.get_device_recommendations(user_input)
+            if recommendations:
+                # Determine appropriate message based on features
+                if features and len(features) > 0:
+                    feature = features[0]  # Use the first detected feature
+                    message = DEVICE_TEMPLATES['recommendation_specific'].format(feature=feature)
+                elif brands and len(brands) > 0:
+                    brand = brands[0]  # Use the first detected brand
+                    message = DEVICE_TEMPLATES['recommendation_brand'].format(brand=brand)
+                else:
+                    message = DEVICE_TEMPLATES['recommendation_intro']
+                
+                logger.info(f"Returning {len(recommendations)} recommendations with message: {message}")
+                return {
+                    'type': 'recommendations',
+                    'devices': recommendations,
+                    'message': message
+                }
+            else:
+                logger.info("No recommendations found, using fallback")
+                return FALLBACK_RESPONSES['no_recommendations']
+        
+        # Handle feature-specific queries (camera, battery, etc.)
+        elif primary_intent in ["camera", "battery", "performance", "display"] and device_names:
+            # Get specific feature details for a device
+            devices_df = self._search_devices_by_name(device_names)
+            if not devices_df.empty:
+                device_info = self._format_device_data(devices_df.iloc[0])
+                
+                # Map features to spec categories
+                feature_to_spec = {
+                    "camera": ["camera", "main_camera", "selfie_camera"],
+                    "battery": ["battery", "battery_life", "charging"],
+                    "performance": ["processor", "cpu", "chipset", "platform"],
+                    "display": ["display", "screen"]
+                }
+                
+                if primary_intent in feature_to_spec:
+                    requested_specs = self._extract_requested_specs(
+                        device_info.get('specifications', {}),
+                        feature_to_spec[primary_intent]
+                    )
+                    return self._generate_spec_response(device_info, feature_to_spec[primary_intent], requested_specs)
+                else:
+                    return self._generate_general_device_response(device_info)
+            else:
+                # If no specific device, show recommendations for this feature
+                recommendations = self.get_device_recommendations(user_input)
+                if recommendations:
+                    message = DEVICE_TEMPLATES['recommendation_specific'].format(feature=primary_intent)
+                    return {
+                        'type': 'recommendations',
+                        'devices': recommendations,
+                        'message': message
+                    }
+        
+        # For conversation and other intents, use the standard category-based approach
+        return self._get_response_for_category(primary_intent, user_input)
     
     def _extract_device_names(self, query):
-        """Extract device names from the query using semantic search.
+        """Extract potential device names from the query."""
+        device_names = []
         
-        Args:
-            query: Natural language query from the user
-            
-        Returns:
-            List of extracted device names
-        """
-        # First try exact matches from the device index
-        exact_matches = []
-        for device_name in self.device_index.keys():
-            if device_name in query.lower():
-                exact_matches.append(device_name)
+        # Create a list of all brand and device name combinations
+        all_devices = []
+        for _, row in self.unified_data.iterrows():
+            brand = row.get('brand_name', '').lower()
+            device = row.get('device_name', '').lower()
+            # Add full name (brand + device)
+            all_devices.append({
+                'full_name': f"{brand} {device}",
+                'brand': brand,
+                'device': device
+            })
+            # Also add just device name for cases where brand isn't mentioned
+            all_devices.append({
+                'full_name': device,
+                'brand': brand,
+                'device': device
+            })
         
-        if exact_matches:
-            return exact_matches
+        # Sort by length (descending) to match longest names first
+        all_devices.sort(key=lambda x: len(x['full_name']), reverse=True)
         
-        # If no exact matches, try semantic search
-        if self.model is not None and self.device_embeddings is not None and len(self.device_embeddings) > 0:
-            try:
-                # Encode the query
-                query_embedding = self.model.encode([query])
-                
-                # Make sure query_embedding is 2D
-                if len(query_embedding.shape) == 1:
-                    query_embedding = query_embedding.reshape(1, -1)
-                
-                # Calculate similarity with all device embeddings
-                similarities = cosine_similarity(query_embedding, self.device_embeddings)[0]
-                
-                # Get the top 2 matches (only if we have at least 2 devices)
-                num_matches = min(2, len(self.device_embeddings))
-                if num_matches > 0:
-                    top_indices = similarities.argsort()[-num_matches:][::-1]
-                    
-                    # Only consider matches with similarity above threshold
-                    threshold = 0.5
-                    device_names = []
-                    for idx in top_indices:
-                        if similarities[idx] > threshold:
-                            device_names.append(self.device_texts[idx])
-                    
-                    if device_names:
-                        return device_names
-            except Exception as e:
-                logger.error(f"Error in semantic search: {str(e)}")
-        
-        # Extract potential device names by looking for brand names followed by model names
+        # Convert query to lowercase for matching
         query_lower = query.lower()
-        potential_devices = []
         
-        # Look for common brand names in the query
-        common_brands = ['google', 'pixel', 'apple', 'iphone', 'samsung', 'galaxy', 'huawei', 'xiaomi', 'oppo', 'vivo', 'oneplus']
-        for brand in common_brands:
-            if brand in query_lower:
-                # Look for patterns like "google pixel 6" or "iphone 15"
-                pattern = f"{brand}\s+([\w\d]+)"
-                matches = re.findall(pattern, query_lower)
-                if matches:
-                    for match in matches:
-                        potential_device = f"{brand} {match}"
-                        potential_devices.append(potential_device)
+        # Find matches in query
+        for device_info in all_devices:
+            if device_info['full_name'] in query_lower:
+                # Avoid duplicate additions
+                if not any(d['device'] == device_info['device'] and d['brand'] == device_info['brand'] for d in device_names):
+                    device_names.append({
+                        'brand': device_info['brand'],
+                        'device': device_info['device']
+                    })
         
-        # If we found potential devices, return them
-        if potential_devices:
-            return potential_devices
-        
-        # Fallback to simple keyword extraction
-        words = re.findall(r'\b\w+\b', query_lower)
-        for i in range(len(words)):
-            for j in range(i+1, min(i+5, len(words)+1)):
-                potential_device = ' '.join(words[i:j])
-                if potential_device in self.device_index:
-                    potential_devices.append(potential_device)
-        
-        return potential_devices
+        return device_names
     
-    def _get_device_data(self, device_name):
-        """Get device data from the unified data.
+    def _extract_specification_requests(self, query):
+        """Extract requested specifications from query."""
+        query_lower = query.lower()
         
-        Args:
-            device_name: Name of the device
-            
-        Returns:
-            DataFrame row with device data or None if not found
-        """
-        device_name = device_name.lower()
-        
-        # Check if device is in the index
-        if device_name in self.device_index:
-            device_url = self.device_index[device_name]
-            device_data = self.unified_data[self.unified_data['device_url'] == device_url]
-            if not device_data.empty:
-                return device_data.iloc[0]
-        
-        # Try semantic search
-        if self.model is not None and self.device_embeddings is not None:
-            query_embedding = self.model.encode([device_name])
-            similarities = cosine_similarity(query_embedding, self.device_embeddings)[0]
-            top_idx = similarities.argmax()
-            
-            if similarities[top_idx] > 0.7:  # Higher threshold for confidence
-                device_url = self.device_urls[top_idx]
-                device_data = self.unified_data[self.unified_data['device_url'] == device_url]
-                if not device_data.empty:
-                    return device_data.iloc[0]
-        
-        return None
-    
-    def _handle_search_intent(self, entities):
-        """Handle search intent.
-        
-        Args:
-            entities: Dictionary of extracted entities
-            
-        Returns:
-            Response dictionary
-        """
-        if not entities['device_names']:
-            return {
-                "type": "text",
-                "content": "I couldn't identify a device in your query. Could you please specify which mobile device you're interested in learning about?"
-            }
-        
-        # Get data for the first device
-        device_name = entities['device_names'][0]
-        device_data = self._get_device_data(device_name)
-        
-        if device_data is None:
-            # Provide a more helpful response with suggestions
-            similar_devices = self._find_similar_devices(device_name)
-            suggestion_text = ""
-            
-            if similar_devices:
-                suggestion_text = f" Did you perhaps mean one of these: {', '.join(similar_devices[:3])}?"
-            
-            return {
-                "type": "text",
-                "content": f"I couldn't find any information about {device_name}.{suggestion_text} Please try again with a different device name."
-            }
-        
-        # Format the device data for display
-        formatted_device = self._format_device_data(device_data)
-        
-        # Create a more conversational summary with key highlights
-        highlights = self._extract_device_highlights(formatted_device)
-        
-        return {
-            "type": "device_details",
-            "summary": f"{formatted_device['name']}. {highlights}",
-            "device": formatted_device
+        # Common specification keywords to look for
+        spec_keywords = {
+            'battery': ['battery', 'battery capacity', 'battery life', 'charge', 'charging'],
+            'camera': ['camera', 'megapixel', 'mp', 'photo', 'selfie', 'front camera', 'rear camera'],
+            'display': ['display', 'screen', 'resolution', 'refresh rate', 'hz', 'amoled', 'lcd', 'oled'],
+            'processor': ['processor', 'cpu', 'chipset', 'snapdragon', 'exynos', 'mediatek', 'tensor'],
+            'memory': ['memory', 'ram', 'storage', 'gb', 'tb'],
+            'dimensions': ['dimensions', 'size', 'width', 'height', 'weight'],
+            'os': ['os', 'android', 'ios', 'operating system', 'software'],
+            'price': ['price', 'cost', 'value', 'dollars', 'expensive', 'cheap']
         }
+        
+        # Track which specifications were requested
+        requested_specs = []
+        
+        # Check for each specification type
+        for spec_type, keywords in spec_keywords.items():
+            for keyword in keywords:
+                if keyword in query_lower:
+                    requested_specs.append(spec_type)
+                    break  # Once we find one keyword for this spec type, move to next
+        
+        return requested_specs
     
-    def _handle_compare_intent(self, entities):
-        """Handle compare intent.
+    def _search_devices_by_name(self, device_names):
+        """Search for devices using extracted device names."""
+        if not device_names:
+            return pd.DataFrame()
         
-        Args:
-            entities: Dictionary of extracted entities
+        # Build filter mask for each device
+        all_masks = []
+        for device_info in device_names:
+            brand = device_info.get('brand', '').lower()
+            device = device_info.get('device', '').lower()
             
-        Returns:
-            Response dictionary
-        """
-        if len(entities['device_names']) < 2:
-            return {
-                "type": "text",
-                "content": "To compare devices, please specify at least two device names."
-            }
+            # Match by brand and device name
+            mask = (
+                self.unified_data['brand_name'].str.lower() == brand
+            ) & (
+                self.unified_data['device_name'].str.lower() == device
+            )
+            
+            all_masks.append(mask)
         
-        # Get data for the first two devices
-        device_name1 = entities['device_names'][0]
-        device_name2 = entities['device_names'][1]
+        # Combine all masks with OR logic
+        final_mask = all_masks[0]
+        for mask in all_masks[1:]:
+            final_mask = final_mask | mask
         
-        device_data1 = self._get_device_data(device_name1)
-        device_data2 = self._get_device_data(device_name2)
+        matching_devices = self.unified_data[final_mask]
         
-        if device_data1 is None:
-            return {
-                "type": "text",
-                "content": f"I couldn't find any information about {device_name1}. Please check the device name and try again."
-            }
+        if len(matching_devices) > 0:
+            return matching_devices
         
-        if device_data2 is None:
-            return {
-                "type": "text",
-                "content": f"I couldn't find any information about {device_name2}. Please check the device name and try again."
-            }
+        # If no exact matches, try partial matches
+        all_masks = []
+        for device_info in device_names:
+            brand = device_info.get('brand', '').lower()
+            device = device_info.get('device', '').lower()
+            
+            # Match by partial brand and device name
+            mask = (
+                self.unified_data['brand_name'].str.lower().str.contains(brand, na=False)
+            ) & (
+                self.unified_data['device_name'].str.lower().str.contains(device, na=False)
+            )
+            
+            all_masks.append(mask)
         
-        # Format the device data for comparison
-        formatted_device1 = self._format_device_data(device_data1)
-        formatted_device2 = self._format_device_data(device_data2)
+        # Combine all masks with OR logic
+        final_mask = all_masks[0]
+        for mask in all_masks[1:]:
+            final_mask = final_mask | mask
         
-        # Generate comparison summary
-        comparison_summary = self._generate_comparison_summary(formatted_device1, formatted_device2)
+        return self.unified_data[final_mask].head(10)  # Limit to top 10 matches
+    
+    def _search_by_exact_match(self, query):
+        """Search for devices by exact name match."""
+        query = query.lower()
         
-        return {
-            "type": "comparison",
-            "summary": f"Here's a comparison between {formatted_device1['name']} and {formatted_device2['name']}:",
-            "comparison_text": comparison_summary,
-            "devices": [formatted_device1, formatted_device2]
+        # Try exact match on device name
+        exact_matches = self.unified_data[
+            self.unified_data['device_name'].str.lower().str.contains(query, na=False) |
+            (self.unified_data['brand_name'].str.lower() + " " + self.unified_data['device_name'].str.lower()).str.contains(query, na=False)
+        ]
+        
+        if len(exact_matches) > 0:
+            return exact_matches.head(10)  # Limit to top 10 matches
+        
+        return pd.DataFrame()  # No matches
+    
+    def _extract_requested_specs(self, specs_dict, requested_specs):
+        """Extract requested specifications from the full specs dictionary."""
+        if not specs_dict or not requested_specs:
+            return {}
+            
+        result = {}
+        
+        # Map requested spec categories to relevant paths in specs dictionary
+        spec_mapping = {
+            'battery': ['battery', 'Battery', 'battery_type', 'battery life', 'charging'],
+            'camera': ['main_camera', 'selfie_camera', 'Main Camera', 'Selfie camera'],
+            'display': ['display', 'Display', 'display_type', 'resolution'],
+            'processor': ['platform', 'Platform', 'cpu', 'chipset', 'gpu'],
+            'memory': ['memory', 'Memory', 'internal', 'ram'],
+            'dimensions': ['dimensions', 'body', 'Body', 'weight'],
+            'os': ['os', 'platform', 'Platform'],
+            'price': ['price', 'price_info', 'Misc']
         }
-    
-    def _handle_specs_intent(self, entities):
-        """Handle specs intent.
         
-        Args:
-            entities: Dictionary of extracted entities
-            
-        Returns:
-            Response dictionary
-        """
-        if not entities['device_names']:
-            return {
-                "type": "text",
-                "content": "I couldn't identify which device you're asking about. Please specify a device name."
-            }
+        # Track added keys to prevent duplicates
+        added_keys = set()
         
-        device_name = entities['device_names'][0]
-        device_data = self._get_device_data(device_name)
-        
-        if device_data is None:
-            return {
-                "type": "text",
-                "content": f"I couldn't find any information about {device_name}. Please check the device name and try again."
-            }
-        
-        # Format the device data
-        formatted_device = self._format_device_data(device_data)
-        
-        # If a specific spec category was requested
-        if entities['spec_category']:
-            category = entities['spec_category']
-            spec_value = self._get_spec_value(formatted_device, category)
-            
-            if spec_value:
-                return {
-                    "type": "spec_details",
-                    "summary": f"The {category} of {formatted_device['name']} is:",
-                    "spec_category": category,
-                    "spec_value": spec_value,
-                    "device": formatted_device
-                }
-            else:
-                return {
-                    "type": "text",
-                    "content": f"I couldn't find information about the {category} of {formatted_device['name']}."
-                }
-        
-        # If no specific category, return all specs
-        return {
-            "type": "device_details",
-            "summary": f"Here are the specifications of {formatted_device['name']}:",
-            "device": formatted_device
-        }
-    
-    def _find_similar_devices(self, device_name):
-        """Find devices with similar names to the given device name.
-        
-        Args:
-            device_name: The device name to find similar devices for
-            
-        Returns:
-            List of similar device names
-        """
-        similar_devices = []
-        device_name_lower = device_name.lower()
-        
-        # Try to find devices that contain parts of the query
-        for name in self.device_index.keys():
-            # Skip exact matches (which we already determined don't exist)
-            if name == device_name_lower:
-                continue
+        # For each requested spec, try to find it in the specs dictionary
+        for spec_type in requested_specs:
+            if spec_type in spec_mapping:
+                # Initialize result for this spec type if not already present
+                if spec_type not in result:
+                    result[spec_type] = {}
                 
-            # Check if the device name contains parts of the query
-            words = device_name_lower.split()
-            match_score = 0
-            
-            for word in words:
-                if len(word) > 2 and word in name:  # Only consider words with more than 2 characters
-                    match_score += 1
-            
-            if match_score > 0:
-                similar_devices.append((name, match_score))
+                # Try each possible path for this spec type
+                for path in spec_mapping[spec_type]:
+                    # Look for the path in the top level
+                    if path in specs_dict:
+                        # If it's a dictionary, add all its contents that haven't been added yet
+                        if isinstance(specs_dict[path], dict):
+                            for key, value in specs_dict[path].items():
+                                # Check for similar keys that might already be added with different casing
+                                key_lower = key.lower()
+                                if not any(k.lower() == key_lower for k in added_keys):
+                                    result[spec_type][key] = value
+                                    added_keys.add(key)
+                        else:
+                            # If it's a string or other value, add it directly if not already added
+                            path_lower = path.lower()
+                            if not any(k.lower() == path_lower for k in added_keys):
+                                result[spec_type][path] = specs_dict[path]
+                                added_keys.add(path)
+                    
+                    # Also check in nested dictionaries
+                    for key, value in specs_dict.items():
+                        if isinstance(value, dict) and path in value:
+                            if isinstance(value[path], dict):
+                                for sub_key, sub_value in value[path].items():
+                                    # Check if similar key already exists
+                                    sub_key_lower = sub_key.lower()
+                                    if not any(k.lower() == sub_key_lower for k in added_keys):
+                                        result[spec_type][sub_key] = sub_value
+                                        added_keys.add(sub_key)
+                            else:
+                                # Skip if a similar key is already present
+                                path_lower = path.lower()
+                                if not any(k.lower() == path_lower for k in added_keys):
+                                    result[spec_type][path] = value[path]
+                                    added_keys.add(path)
         
-        # Sort by match score (descending)
-        similar_devices.sort(key=lambda x: x[1], reverse=True)
-        
-        # Return just the names
-        return [name for name, _ in similar_devices[:5]]
+        return result
     
-    def _extract_device_highlights(self, device):
-        """Extract key highlights from device specifications for a more conversational response.
-        
-        Args:
-            device: Formatted device data
+    def _format_device_data(self, device_data):
+        """Format device data for API response."""
+        try:
+            formatted_device = {
+                'brand_name': device_data.get('brand_name', ''),
+                'device_name': device_data.get('device_name', ''),
+                'device_url': device_data.get('device_url', ''),
+                'device_image': device_data.get('device_image', '')
+            }
             
-        Returns:
-            String with key highlights
-        """
+            # Add full name
+            formatted_device['name'] = f"{formatted_device['brand_name']} {formatted_device['device_name']}"
+            
+            # For URL compatibility
+            formatted_device['url'] = formatted_device['device_url']
+            formatted_device['image_url'] = formatted_device['device_image']
+            
+            # Add image from pictures if available
+            if 'pictures' in device_data and not pd.isna(device_data['pictures']):
+                try:
+                    pictures_str = device_data['pictures']
+                    if isinstance(pictures_str, str):
+                        pictures = json.loads(pictures_str.replace("'", '"'))
+                        if isinstance(pictures, list) and len(pictures) > 0:
+                            formatted_device['pictures'] = pictures
+                    elif isinstance(pictures_str, list):
+                        formatted_device['pictures'] = pictures_str
+                except Exception as e:
+                    logger.warning(f"Error parsing pictures JSON: {str(e)}")
+                    # If we can't parse it, try to convert it to a string
+                    if isinstance(device_data['pictures'], (list, dict)):
+                        try:
+                            formatted_device['pictures'] = [str(p) for p in device_data['pictures'] if p]
+                        except:
+                            pass
+            
+            # Add specifications
+            if 'specs_dict' in device_data:
+                specs = {}
+                if isinstance(device_data['specs_dict'], dict):
+                    specs = device_data['specs_dict']
+                # Ensure all values are serializable
+                for key, value in specs.items():
+                    if isinstance(value, pd.Series) or hasattr(value, 'to_dict'):
+                        specs[key] = value.to_dict() if hasattr(value, 'to_dict') else {str(k): str(v) for k, v in value.items()}
+                
+                # Log the structure of the specs_dict
+                logger.info(f"Specs structure for {device_data.get('device_name', 'unknown device')}: {list(specs.keys())}")
+                formatted_device['specifications'] = specs
+            
+            return formatted_device
+        except Exception as e:
+            logger.error(f"Error formatting device data: {str(e)}")
+            return {'error': str(e)}
+    
+    def _generate_spec_response(self, device_info, requested_specs, spec_data):
+        """Generate a response about specific device specifications."""
+        device_name = f"{device_info.get('brand_name', '')} {device_info.get('device_name', '')}"
+        
+        if not spec_data:
+            return FALLBACK_RESPONSES['no_specs_found']
+        
+        # Start with device name
+        response = DEVICE_TEMPLATES['spec_intro'].format(
+            specs=', '.join(requested_specs),
+            device_name=device_name
+        ) + "\n\n"
+        
+        # Add each requested spec
+        for spec_type, data in spec_data.items():
+            response += f"• {spec_type.capitalize()}:\n"
+            for key, value in data.items():
+                # Format the key for better readability
+                readable_key = key.replace('_', ' ').title()
+                if isinstance(value, dict):
+                    response += f"  - {readable_key}: "
+                    for sub_key, sub_value in value.items():
+                        sub_readable_key = sub_key.replace('_', ' ').title()
+                        response += f"{sub_readable_key}: {sub_value}, "
+                    response = response.rstrip(', ') + "\n"
+                else:
+                    response += f"  - {readable_key}: {value}\n"
+            response += "\n"
+        
+        return response.strip()
+    
+    def _generate_general_device_response(self, device_info):
+        """Generate a general response about a device."""
+        device_name = f"{device_info.get('brand_name', '')} {device_info.get('device_name', '')}"
+        
+        response = DEVICE_TEMPLATES['found_device'].format(
+            brand_name=device_info.get('brand_name', ''),
+            device_name=device_info.get('device_name', '')
+        )
+        
+        # Add some basic specs if available
+        specs = device_info.get('specifications', {})
         highlights = []
-        specs = device.get('specifications', {})
         
-        # Extract key specifications that users typically care about
-        if specs:
-            # Display
-            if 'display' in specs:
-                highlights.append(f"It features a {specs['display']} display")
-                
-            # Camera
-            if 'main_camera' in specs:
-                highlights.append(f"The main camera is {specs['main_camera']}")
-            elif 'camera' in specs:
-                highlights.append(f"It has a {specs['camera']} camera")
-                
-            # Processor/Chipset
-            if 'chipset' in specs:
-                highlights.append(f"Powered by a {specs['chipset']} processor")
-            elif 'cpu' in specs:
-                highlights.append(f"Equipped with a {specs['cpu']} CPU")
-                
-            # Battery
-            if 'battery' in specs:
-                highlights.append(f"The battery capacity is {specs['battery']}")
-                
-            # Memory
-            if 'memory' in specs:
-                highlights.append(f"It comes with {specs['memory']} storage options")
+        # Look for display information
+        if 'display' in specs or 'Display' in specs:
+            display_info = specs.get('display', specs.get('Display', {}))
+            if isinstance(display_info, dict):
+                size = display_info.get('size', '')
+                if size:
+                    highlights.append(f"It has a {size} display")
         
-        # If we couldn't extract any highlights, provide a generic message
-        if not highlights:
-            return "I have the full specifications available for you to review."
-            
-        # Join the highlights with proper punctuation
-        if len(highlights) == 1:
-            return highlights[0] + "."
-        elif len(highlights) == 2:
-            return highlights[0] + " and " + highlights[1] + "."
-        else:
-            return ", ".join(highlights[:-1]) + ", and " + highlights[-1] + "."
+        # Look for processor information
+        if 'platform' in specs or 'Platform' in specs:
+            platform_info = specs.get('platform', specs.get('Platform', {}))
+            if isinstance(platform_info, dict):
+                chipset = platform_info.get('chipset', '')
+                if chipset:
+                    highlights.append(f"It's powered by a {chipset}")
+        
+        # Look for camera information
+        if 'main_camera' in specs or 'Main Camera' in specs:
+            camera_info = specs.get('main_camera', specs.get('Main Camera', {}))
+            if isinstance(camera_info, dict) and 'modules' in camera_info:
+                highlights.append(f"The main camera is {camera_info['modules']}")
+            elif isinstance(camera_info, str):
+                highlights.append(f"The main camera is {camera_info}")
+        
+        # Look for battery information
+        if 'battery_type' in specs:
+            highlights.append(f"It has a {specs['battery_type']}")
+        elif 'battery' in specs and isinstance(specs['battery'], dict) and 'type' in specs['battery']:
+            highlights.append(f"It has a {specs['battery']['type']}")
+        
+        # Add the highlights to the response
+        if highlights:
+            response += " " + ". ".join(highlights) + "."
+        
+        # Ask if the user wants more information
+        response += " Would you like to know more specific information about this device?"
+        
+        return response
     
-    def _handle_recommend_intent(self, entities):
-        """Handle recommend intent.
+    def _categorize_input(self, user_input):
+        """Categorize user input into predefined categories using pattern matching."""
+        user_input = user_input.lower()
         
-        Args:
-            entities: Dictionary of extracted entities
-            
-        Returns:
-            Response dictionary
-        """
-        # Get top 3 devices based on popularity or ratings
-        top_devices = self._get_top_devices(3)
+        logger.info(f"Categorizing input: {user_input}")
         
-        if not top_devices:
-            return {
-                "type": "text",
-                "content": "I couldn't find any devices to recommend right now. Could you tell me what features are most important to you so I can provide better suggestions?"
-            }
+        # Check for direct device type references
+        for device_type in DEVICE_TYPES:
+            if device_type in user_input:
+                logger.info(f"Detected device type reference: {device_type}")
+                # If it also contains a recommendation keyword, it's likely a recommendation request
+                if any(keyword in user_input for keyword in RECOMMENDATION_KEYWORDS):
+                    logger.info("Categorized as recommendation based on device type + recommendation keywords")
+                    return 'recommendation'
+                # Otherwise it's likely a general device search
+                logger.info("Categorized as device_search based on device type reference")
+                return 'device_search'
         
-        # Format the device data for display
-        formatted_devices = [self._format_device_data(device) for device in top_devices]
+        # Check for brand references
+        for brand in POPULAR_BRANDS:
+            if brand in user_input:
+                logger.info(f"Detected brand reference: {brand}")
+                # If we also have recommendation keywords, it's likely a brand-specific recommendation
+                if any(keyword in user_input for keyword in RECOMMENDATION_KEYWORDS):
+                    logger.info("Categorized as recommendation based on brand + recommendation keywords")
+                    return 'recommendation'
         
-        # Create personalized recommendations
-        recommendations = []
-        for i, device in enumerate(formatted_devices):
-            highlights = self._extract_device_highlights(device)
-            recommendations.append(f"{i+1}. {device['name']}: {highlights}")
+        # Check for comparison intent
+        if any(keyword in user_input for keyword in COMPARISON_KEYWORDS):
+            logger.info("Categorized as comparison based on comparison keywords")
+            return 'comparison'
         
-        recommendation_text = "\n\n".join(recommendations)
+        # Check for specification intent
+        if any(keyword in user_input for keyword in SPECIFICATION_KEYWORDS):
+            logger.info("Categorized as specification based on specification keywords")
+            return 'specification'
         
-        return {
-            "type": "device_list",
-            "summary": "Based on your interests, here are some top recommendations:",
-            "devices": formatted_devices,
-            "recommendations": recommendation_text
+        # Check for feature-specific queries
+        for feature, keywords in FEATURE_KEYWORDS.items():
+            if any(keyword in user_input for keyword in keywords):
+                logger.info(f"Detected feature reference: {feature}")
+                # If it's a price feature, categorize as price
+                if feature == 'price':
+                    logger.info("Categorized as price based on price keywords")
+                    return 'price'
+                # If it's a camera feature, categorize as camera
+                elif feature == 'camera':
+                    logger.info("Categorized as camera based on camera keywords")
+                    return 'camera'
+                # If it's a battery feature, categorize as battery
+                elif feature == 'battery':
+                    logger.info("Categorized as battery based on battery keywords")
+                    return 'battery'
+                # If it's a performance feature, categorize as performance
+                elif feature == 'performance':
+                    logger.info("Categorized as performance based on performance keywords")
+                    return 'performance'
+                # If it's a display feature, categorize as display
+                elif feature == 'display':
+                    logger.info("Categorized as display based on display keywords")
+                    return 'display'
+        
+        # Define simple keyword-based categories
+        categories = {
+            'greeting': ['hi', 'hello', 'hey', 'greetings', 'good morning', 'good afternoon', 'good evening'],
+            'farewell': ['bye', 'goodbye', 'see you', 'talk to you later'],
+            'thanks': ['thank you', 'thanks', 'appreciate it'],
+            'identity': ['who are you', 'what are you', 'your name', 'about you'],
+            'help': ['help', 'assist', 'guidance', 'how to use', 'what can you do', 'capabilities']
         }
+        
+        # Check for recommendation intent (this is important enough to check separately)
+        if any(keyword in user_input for keyword in RECOMMENDATION_KEYWORDS):
+            logger.info("Categorized as recommendation based on recommendation keywords")
+            return 'recommendation'
+        
+        # Check for other simple categories
+        for category, keywords in categories.items():
+            for keyword in keywords:
+                if keyword in user_input:
+                    logger.info(f"Categorized as: {category} based on keyword: {keyword}")
+                    return category
+        
+        # Check for specific device references
+        for _, row in self.unified_data.iterrows():
+            brand_name = row.get('brand_name', '').lower()
+            device_name = row.get('device_name', '').lower()
+            
+            # If both brand and device name are in the query, it's probably a device search
+            if brand_name in user_input and device_name in user_input:
+                logger.info(f"Categorized as device_search for device: {brand_name} {device_name}")
+                return 'device_search'
+        
+        # Default category
+        logger.info("No specific category found, using 'general'")
+        return 'general'
     
-    def _handle_count_intent(self, query, entities):
-        """Handle count intent - counting brands, devices, etc.
-        
-        Args:
-            query: The original query string
-            entities: Dictionary of extracted entities
-            
-        Returns:
-            Response dictionary
-        """
-        query_lower = query.lower()
-        
-        # Count brands
-        if any(x in query_lower for x in ['brands', 'manufacturers', 'companies']):
-            unique_brands = self.unified_data['brand_name'].unique()
-            brand_count = len(unique_brands)
-            brand_list = ', '.join(sorted(unique_brands)[:10])
-            
-            if len(unique_brands) > 10:
-                brand_list += f", and {len(unique_brands) - 10} more"
-            
-            return {
-                "type": "text",
-                "content": f"I have information on {brand_count} different mobile device brands in my database. These include {brand_list}. Is there a specific brand you'd like to know more about?"
-            }
-        
-        # Count devices
-        elif any(x in query_lower for x in ['devices', 'phones', 'models']):
-            device_count = len(self.unified_data)
-            specs_count = sum(~self.unified_data['specifications'].isna())
-            
-            return {
-                "type": "text",
-                "content": f"I have information on {device_count} different mobile devices in my database, with detailed specifications for {specs_count} of them. You can ask me about any specific device or brand you're interested in."
-            }
-        
-        # Default count response
-        else:
-            return {
-                "type": "text",
-                "content": f"I have information on {len(self.unified_data['brand_name'].unique())} brands and {len(self.unified_data)} devices in my database. What would you like to know about?"
-            }
-    
-    def _handle_conversation_intent(self, query):
-        """Handle conversational interactions like greetings, thanks, etc.
-        
-        Args:
-            query: The original query string
-            
-        Returns:
-            Response dictionary
-        """
-        # Use the conversation model to get a response if available
-        if self.conversation_model is not None:
-            response_text = self.conversation_model.get_response(query)
-            return {
-                "type": "text",
-                "content": response_text
-            }
-        
-        # Fallback responses if conversation model is not available
-        if hasattr(self, '_last_conversation_category') and self._last_conversation_category:
-            category = self._last_conversation_category
-            
-            # Basic responses for common categories
-            if category == 'greeting':
+    def _get_response_for_category(self, category, user_input):
+        """Get a hardcoded response based on the category."""
+        # Check for recommendation keywords and return a more helpful message
+        if any(keyword in user_input.lower() for keyword in RECOMMENDATION_KEYWORDS):
+            logger.info(f"Recommendation request in _get_response_for_category: {user_input}")
+            # Force recommendations if we somehow end up here with a recommendation request
+            recommendations = self.get_device_recommendations(user_input)
+            if recommendations:
+                logger.info(f"Returning {len(recommendations)} recommendations from _get_response_for_category")
                 return {
-                    "type": "text",
-                    "content": "Hello! I'm Sumail-000, your mobile device assistant. How can I help you today?"
-                }
-            elif category == 'farewell':
-                return {
-                    "type": "text",
-                    "content": "Goodbye! Feel free to come back if you have more questions. Sumail-000 will be here for you."
-                }
-            elif category == 'thanks':
-                return {
-                    "type": "text",
-                    "content": "You're welcome! I'm happy I could help. That's what Sumail-000 is here for!"
-                }
-            elif category == 'identity':
-                return {
-                    "type": "text",
-                    "content": "I'm Sumail-000, your personal mobile device assistant. I was created to help you with all your mobile device questions and needs. I can search for information, compare devices, and give personalized recommendations based on your preferences."
-                }
-        
-        # Default conversational response
-        return {
-            "type": "text",
-            "content": "I'm Sumail-000, your mobile device assistant. I can help you find information about phones, compare devices, or get recommendations. What would you like to know?"
-        }
-    
-    def _handle_general_intent(self, query, entities):
-        """Handle general questions about mobile devices.
-        
-        Args:
-            query: The original query string
-            entities: Dictionary of extracted entities
-            
-        Returns:
-            Response dictionary
-        """
-        query_lower = query.lower()
-        
-        # Handle buying advice questions
-        if any(x in query_lower for x in ['should i buy', 'worth buying', 'good choice', 'recommend', 'suggestion']):
-            return {
-                "type": "text",
-                "content": "When deciding on a new mobile device, it's important to consider your specific needs. If you're looking for excellent camera quality, Google Pixel and iPhone devices are often top choices. For customization and powerful hardware, Samsung and OnePlus offer great options. Budget-conscious buyers might consider Xiaomi or Realme. What features are most important to you? I can recommend specific devices based on your preferences."
-            }
-        
-        # Handle questions about mobile technology
-        elif any(x in query_lower for x in ['what is', 'explain', 'how does']):
-            if 'processor' in query_lower or 'chipset' in query_lower or 'cpu' in query_lower:
-                return {
-                    "type": "text",
-                    "content": "A mobile processor or chipset is the brain of your smartphone. Top manufacturers include Qualcomm (Snapdragon series), Apple (A-series), Samsung (Exynos), and MediaTek (Dimensity). Higher-end processors offer better performance for gaming, multitasking, and camera processing. They're typically identified by model numbers - generally, the higher the number, the more powerful the processor."
-                }
-            elif 'camera' in query_lower:
-                return {
-                    "type": "text",
-                    "content": "Modern smartphone cameras are sophisticated systems that combine hardware and software. While megapixel count (MP) matters, it's not the only factor - sensor size, aperture, and image processing are equally important. Google Pixels are known for excellent computational photography, iPhones for consistent quality, and Samsung for versatile multi-lens setups. Many flagships now feature multiple cameras for different focal lengths and special features like night mode and portrait effects."
-                }
-            elif 'battery' in query_lower:
-                return {
-                    "type": "text",
-                    "content": "Smartphone battery capacity is measured in milliampere-hours (mAh). Most modern phones range from 3,000-5,000 mAh, with larger numbers generally meaning longer battery life. However, actual battery performance depends on many factors including screen size, processor efficiency, and software optimization. Fast charging technology is also important - look for standards like Qualcomm Quick Charge, USB Power Delivery, or proprietary systems like OnePlus' Warp Charge."
-                }
-            elif 'display' in query_lower or 'screen' in query_lower:
-                return {
-                    "type": "text",
-                    "content": "Smartphone displays vary in technology (LCD, OLED, AMOLED), resolution, refresh rate, and size. OLED/AMOLED screens offer better contrast and power efficiency than LCD. Resolution is measured in pixels (1080p, 1440p, etc.), while refresh rates (60Hz, 90Hz, 120Hz) affect smoothness of scrolling and animations. Higher is generally better for both, but impacts battery life. Screen size is a personal preference - larger screens are better for media but less pocketable."
+                    'type': 'recommendations',
+                    'devices': recommendations,
+                    'message': DEVICE_TEMPLATES['recommendation_intro']
                 }
             else:
-                return {
-                    "type": "text",
-                    "content": "Mobile devices have evolved tremendously over the years. Modern smartphones combine powerful processors, sophisticated cameras, high-resolution displays, and various sensors into pocket-sized computers. They typically run either iOS (Apple) or Android (various manufacturers) operating systems. Is there a specific aspect of mobile technology you'd like to learn more about?"
-                }
+                return FALLBACK_RESPONSES['no_recommendations']
         
-        # Default general response
-        else:
-            return {
-                "type": "text",
-                "content": "I'm your mobile device assistant, trained on a database of hundreds of smartphones and their specifications. I can help you find information about specific devices, compare models, understand technical specifications, or get personalized recommendations. What would you like to know about today?"
-            }
+        # First check if the input mentions a specific device
+        for _, row in self.unified_data.iterrows():
+            brand_name = row.get('brand_name', '').lower()
+            device_name = row.get('device_name', '').lower()
+            
+            # If both brand and device name are in the query, it's probably a device search
+            if brand_name in user_input.lower() and device_name in user_input.lower():
+                return DEVICE_TEMPLATES['found_device'].format(
+                    brand_name=brand_name,
+                    device_name=device_name
+                )
+        
+        # Handle recommendation category separately
+        if category == 'recommendation':
+            # Instead of using a hardcoded response, actually return recommendations
+            recommendations = self.get_device_recommendations(user_input)
+            if recommendations:
+                return {
+                    'type': 'recommendations',
+                    'devices': recommendations,
+                    'message': DEVICE_TEMPLATES['recommendation_intro']
+                }
+            
+        # If no specific device mentioned, return a random response for the category
+        if category in CATEGORY_RESPONSES:
+            return random.choice(CATEGORY_RESPONSES[category])
+        
+        # Fallback response
+        return FALLBACK_RESPONSES['general_error']
     
-    def _get_top_devices(self, count=3):
-        """Get top devices based on popularity or ratings.
+    def get_device_recommendations(self, query=None):
+        """Generate device recommendations based on the query and available data.
         
         Args:
-            count: Number of devices to return
-            
+            query: Optional query string to filter recommendations
+        
         Returns:
-            List of top device data rows
+            List of recommended devices with their details
         """
         try:
-            # For now, we'll use the most recent devices as a proxy for popularity
-            # In a real system, this would use actual popularity metrics or user ratings
-            if not self.unified_data.empty:
-                # Sort by device_url (assuming newer devices have higher IDs in the URL)
-                top_devices = self.unified_data.sort_values('device_url', ascending=False).head(count)
-                return top_devices.to_dict('records')
-            return []
+            # If no data is available, return empty list
+            if self.unified_data.empty:
+                logger.warning("No device data available for recommendations")
+                return []
+            
+            # Add debugging
+            logger.info(f"Generating recommendations for query: {query}")
+            logger.info(f"Data available: {len(self.unified_data)} devices")
+            
+            # Start with all devices
+            device_pool = self.unified_data.copy()
+            
+            # Default to high-end devices if no specific category is mentioned
+            price_category = 'high_end'
+            focus_areas = []
+            
+            # If a specific brand is mentioned, filter for that brand
+            brand_focus = None
+            for brand in POPULAR_BRANDS:
+                if query and brand in query.lower():
+                    brand_focus = brand
+                    logger.info(f"Filtering recommendations for brand: {brand}")
+                    # Create a more flexible pattern to match variations of the brand name
+                    pattern = brand.lower()
+                    device_pool = device_pool[device_pool['brand_name'].str.lower().str.contains(pattern, na=False)]
+                    break
+            
+            # Extract category and focus areas from query
+            if query:
+                query_lower = query.lower()
+                
+                # Determine price category
+                for cat, terms in FEATURE_KEYWORDS.items():
+                    if cat in ['high_end', 'mid_range', 'budget']:
+                        for term in terms:
+                            if term in query_lower:
+                                price_category = cat
+                                logger.info(f"Detected price category: {price_category}")
+                                break
+                
+                # Determine focus areas
+                for focus, terms in FEATURE_KEYWORDS.items():
+                    if focus not in ['high_end', 'mid_range', 'budget']:
+                        for term in terms:
+                            if term in query_lower:
+                                focus_areas.append(focus)
+                                logger.info(f"Detected focus area: {focus}")
+                                break
+            
+            logger.info(f"Selected price category: {price_category}, focus areas: {focus_areas}")
+            
+            # Prepare recommendations
+            recommendations = []
+            unique_devices = set()  # To avoid duplicates
+            
+            # Define popular brands if not already filtered by brand
+            popular_brands = ['Samsung', 'Apple', 'Google', 'Xiaomi', 'OnePlus', 'Huawei']
+            
+            # If we're already focusing on a specific brand, prioritize devices from that brand
+            if brand_focus:
+                for brand in popular_brands:
+                    if brand.lower() == brand_focus:
+                        popular_brands = [brand]
+                        break
+            
+            # Prioritize popular brands first
+            brand_prioritized = device_pool[device_pool['brand_name'].isin(popular_brands)]
+            other_brands = device_pool[~device_pool['brand_name'].isin(popular_brands)]
+            
+            # Combine with popular brands first
+            device_pool = pd.concat([brand_prioritized, other_brands]).drop_duplicates()
+            
+            # Filter based on price category if possible
+            # This is a simplification - in a real implementation, you would need price data
+            # or a way to categorize devices by price range
+            if price_category == 'high_end':
+                # For high-end, assume the most recent devices are high-end
+                # In a real implementation, you would filter based on actual price or specs
+                filtered_devices = device_pool.head(30)  # Take the first 30 as high-end
+            elif price_category == 'mid_range':
+                # For mid-range, take devices in the middle of the list
+                mid_start = max(0, len(device_pool) // 3)
+                mid_end = min(len(device_pool), mid_start + 30)
+                filtered_devices = device_pool.iloc[mid_start:mid_end]
+            elif price_category == 'budget':
+                # For budget, take devices from the end of the list
+                # In a real implementation, you would filter based on actual price
+                budget_start = max(0, len(device_pool) - 30)
+                filtered_devices = device_pool.iloc[budget_start:]
+            else:
+                # Default to all devices
+                filtered_devices = device_pool
+            
+            logger.info(f"Found {len(filtered_devices)} devices after filtering")
+            
+            # Collect recommendations (limit to top 5)
+            for _, device in filtered_devices.iterrows():
+                # Create a unique key for this device
+                device_key = f"{device['brand_name']}_{device['device_name']}"
+                
+                # Skip if we already added this device
+                if device_key in unique_devices:
+                    continue
+                
+                # Format the device data
+                formatted_device = self._format_device_data(device)
+                
+                # Find highlight features based on focus areas
+                highlights = []
+                
+                # Check for main features in specifications
+                if 'specifications' in formatted_device and formatted_device['specifications']:
+                    specs = formatted_device['specifications']
+                    
+                    # Look for camera information
+                    if 'camera' in focus_areas or not focus_areas:
+                        if 'main_camera' in specs or 'Main Camera' in specs:
+                            camera_info = specs.get('main_camera', specs.get('Main Camera', {}))
+                            if isinstance(camera_info, dict) and 'modules' in camera_info:
+                                highlights.append(f"Main camera: {camera_info['modules']}")
+                            elif isinstance(camera_info, str):
+                                highlights.append(f"Main camera: {camera_info}")
+                    
+                    # Look for battery information
+                    if 'battery' in focus_areas or not focus_areas:
+                        if 'battery_type' in specs:
+                            highlights.append(f"Battery: {specs['battery_type']}")
+                        elif 'battery' in specs and isinstance(specs['battery'], dict) and 'type' in specs['battery']:
+                            highlights.append(f"Battery: {specs['battery']['type']}")
+                    
+                    # Look for performance information
+                    if 'performance' in focus_areas or not focus_areas:
+                        if 'platform' in specs or 'Platform' in specs:
+                            platform_info = specs.get('platform', specs.get('Platform', {}))
+                            if isinstance(platform_info, dict):
+                                chipset = platform_info.get('chipset', '')
+                                if chipset:
+                                    highlights.append(f"Processor: {chipset}")
+                    
+                    # Look for display information
+                    if 'display' in focus_areas or not focus_areas:
+                        if 'display' in specs or 'Display' in specs:
+                            display_info = specs.get('display', specs.get('Display', {}))
+                            if isinstance(display_info, dict):
+                                size = display_info.get('size', '')
+                                if size:
+                                    highlights.append(f"Display: {size}")
+                    
+                    # Look for storage information
+                    if 'storage' in focus_areas or not focus_areas:
+                        if 'memory' in specs or 'Memory' in specs:
+                            memory_info = specs.get('memory', specs.get('Memory', {}))
+                            if isinstance(memory_info, dict):
+                                storage = memory_info.get('internal', '')
+                                if storage:
+                                    highlights.append(f"Storage: {storage}")
+                    
+                    # Add other focus areas similarly
+                    for focus in focus_areas:
+                        if focus not in ['camera', 'battery', 'performance', 'display', 'storage']:
+                            for key in specs.keys():
+                                if focus.lower() in key.lower():
+                                    if isinstance(specs[key], dict):
+                                        for subkey, value in specs[key].items():
+                                            highlights.append(f"{focus.title()} - {subkey}: {value}")
+                                            break
+                                    else:
+                                        highlights.append(f"{focus.title()}: {specs[key]}")
+                                        break
+                
+                # If we have focus areas but couldn't find matching highlights,
+                # add a generic highlight for the device
+                if focus_areas and not highlights:
+                    highlights.append(f"A great choice for {', '.join(focus_areas)}")
+                
+                # Add default highlight if none found
+                if not highlights:
+                    if price_category == 'high_end':
+                        highlights.append("Premium flagship device")
+                    elif price_category == 'mid_range':
+                        highlights.append("Great value mid-range device")
+                    elif price_category == 'budget':
+                        highlights.append("Affordable device with good features")
+                    else:
+                        highlights.append(f"Popular {device['brand_name']} device")
+                
+                # Add highlights to the formatted device
+                formatted_device['highlights'] = highlights
+                
+                # Add to recommendations
+                recommendations.append(formatted_device)
+                unique_devices.add(device_key)
+                
+                # Limit to 5 recommendations
+                if len(recommendations) >= 5:
+                    break
+            
+            logger.info(f"Generated {len(recommendations)} recommendations")
+            if len(recommendations) > 0:
+                logger.info(f"First recommendation: {recommendations[0]['brand_name']} {recommendations[0]['device_name']}")
+            
+            # If no recommendations found, use fallback approach to just get the most recent popular devices
+            if not recommendations:
+                logger.info("No matching recommendations found, using fallback approach")
+                for brand in popular_brands:
+                    brand_devices = device_pool[device_pool['brand_name'] == brand]
+                    if not brand_devices.empty:
+                        device = brand_devices.iloc[0]
+                        formatted_device = self._format_device_data(device)
+                        formatted_device['highlights'] = [f"Top {brand} device"]
+                        recommendations.append(formatted_device)
+                        if len(recommendations) >= 5:
+                            break
+            
+            return recommendations
+        
         except Exception as e:
-            logger.error(f"Error getting top devices: {str(e)}")
+            logger.error(f"Error generating device recommendations: {str(e)}")
+            logger.error(traceback.format_exc())
             return []
     
     def train_conversation_model(self, user_input, category, response):
-        """Train the conversation model with a new pattern and response.
+        """Train the conversation model with a new example.
+        
+        This is a simple placeholder implementation.
+        """
+        logger.info(f"Training conversation model with: category={category}, input={user_input}")
+        # In a real implementation, this would update a machine learning model
+        return True
+
+    def compare_devices(self, query):
+        """
+        Extract devices for comparison and their aspects from the query
         
         Args:
-            user_input: User's input text
-            category: Conversation category
-            response: Response text
+            query (str): The user query for comparing devices
             
         Returns:
-            True if training was successful, False otherwise
+            dict: Comparison results with devices and compared specifications
         """
-        if self.conversation_model is not None:
-            try:
-                self.conversation_model.train(user_input, category, response)
-                logger.info(f"Trained conversation model with new {category} response")
-                return True
-            except Exception as e:
-                logger.error(f"Error training conversation model: {str(e)}")
-                return False
-        else:
-            logger.warning("Conversation model not available for training")
-            return False
-    
-    def _format_device_data(self, device_data):
-        """Format device data for display.
+        logger.info(f"Processing comparison query: {query}")
         
-        Args:
-            device_data: Device data from the unified dataset
+        # Extract potential device names from the query
+        device_names = self._extract_device_names(query)
+        
+        if len(device_names) < 2:
+            logger.info("Not enough devices found for comparison")
+            return {
+                "success": False,
+                "message": "I need at least two devices to compare. Please specify the devices you want to compare."
+            }
+        
+        # Limit to comparing two devices for simplicity
+        devices_to_compare = device_names[:2]
+        logger.info(f"Devices to compare: {devices_to_compare}")
+        
+        # Extract specifications to compare
+        specs_to_compare = self._extract_specification_requests(query)
+        if not specs_to_compare:
+            # If no specific specs mentioned, use common comparison points
+            specs_to_compare = ["processor", "camera", "display", "battery", "memory"]
+        
+        logger.info(f"Specifications to compare: {specs_to_compare}")
+        
+        # Find devices in the database
+        device_data = []
+        formatted_devices = []
+        for device_info in devices_to_compare:
+            # Pass a list containing a single device_info to _search_devices_by_name
+            devices_df = self._search_devices_by_name([device_info])
             
-        Returns:
-            Formatted device data dictionary
-        """
-        device_specs = {}
+            if not devices_df.empty:
+                device_data.append(devices_df.iloc[0])
+                # Format the device data to ensure it's JSON serializable
+                formatted_device = self._format_device_data(devices_df.iloc[0])
+                formatted_devices.append(formatted_device)
+            else:
+                device_name = f"{device_info.get('brand', '')} {device_info.get('device', '')}"
+                return {
+                    "success": False,
+                    "message": f"I couldn't find information for {device_name}. Please check the device name."
+                }
         
-        # Extract device specifications from JSON string
-        if 'specifications' in device_data and device_data['specifications']:
-            try:
-                device_specs = json.loads(device_data['specifications'])
-            except Exception as e:
-                logger.error(f"Error parsing device data JSON for {device_data['device_name']}: {str(e)}")
+        if len(device_data) < 2 or len(formatted_devices) < 2:
+            return {
+                "success": False,
+                "message": "I couldn't find enough information to compare these devices."
+            }
         
-        # Format the device data for display with safe access to columns
-        formatted_device = {
-            'name': f"{device_data.get('brand_name', '')} {device_data.get('device_name', '')}",
-            'brand': device_data.get('brand_name', ''),
-            'model': device_data.get('device_name', ''),
-            'url': device_data.get('device_url', ''),
-            'image_url': device_data.get('device_image', ''),  # Changed from image_url to device_image
-            'specifications': device_specs
+        # Create comparison data structure
+        comparison_result = {
+            "success": True,
+            "devices": formatted_devices,
+            "compared_specs": {},
+            "summary": f"Comparison between {devices_to_compare[0]['brand']} {devices_to_compare[0]['device']} and {devices_to_compare[1]['brand']} {devices_to_compare[1]['device']}"
         }
         
-        # Extract device pictures if available
-        if 'pictures' in device_data and device_data['pictures']:
-            try:
-                pictures = json.loads(device_data['pictures'])
-                formatted_device['pictures'] = pictures
-            except Exception as e:
-                logger.error(f"Error parsing device pictures JSON for {device_data['device_name']}: {str(e)}")
-                formatted_device['pictures'] = []
-        else:
-            formatted_device['pictures'] = []
+        # Extract and format specs for comparison
+        for spec in specs_to_compare:
+            comparison_result["compared_specs"][spec] = []
+            for i, device in enumerate(device_data):
+                spec_value = self._extract_requested_specs(device['specs_dict'], [spec])
+                
+                # Ensure spec_value is JSON serializable
+                formatted_spec_value = {}
+                if spec_value and spec in spec_value and isinstance(spec_value[spec], dict):
+                    # Convert all values to strings to ensure serializability
+                    for key, value in spec_value[spec].items():
+                        if isinstance(value, dict):
+                            # Handle nested dictionaries
+                            nested_values = []
+                            for sub_key, sub_value in value.items():
+                                nested_values.append(f"{sub_key}: {sub_value}")
+                            formatted_spec_value[key] = ", ".join(nested_values)
+                        else:
+                            formatted_spec_value[key] = str(value)
+                elif spec_value:
+                    formatted_spec_value = {"value": str(spec_value)}
+                
+                comparison_result["compared_specs"][spec].append({
+                    "device_name": f"{formatted_devices[i]['brand_name']} {formatted_devices[i]['device_name']}",
+                    "value": formatted_spec_value if formatted_spec_value else "Not specified"
+                })
         
-        return formatted_device
-    def _get_spec_value(self, formatted_device, category):
-        """Get the value of a specific specification category.
-        
-        Args:
-            formatted_device: Dictionary with formatted device data
-            category: Specification category
-            
-        Returns:
-            String with the specification value or None if not found
-        """
-        specs = formatted_device["specifications"]
-        
-        # Map category to actual keys in the specifications
-        category_keys = {
-            'battery': ['battery', 'battery_c', 'batlife'],
-            'camera': ['camera', 'cam', 'cam1', 'cam2', 'selfiecam'],
-            'display': ['display', 'displaytype', 'displaysize', 'displayres'],
-            'processor': ['chipset', 'cpu', 'gpu'],
-            'memory': ['memory', 'ram', 'storage'],
-            'os': ['os', 'platform'],
-            'network': ['network', 'sim', '2g', '3g', '4g', '5g'],
-            'dimensions': ['dimensions', 'weight']
-        }
-        
-        # Check if any of the keys for the category exist in the specs
-        if category in category_keys:
-            for key in category_keys[category]:
-                if key in specs:
-                    return specs[key]
-        
-        # Direct lookup
-        if category in specs:
-            return specs[category]
-        
-        return None
-    
-    def _generate_comparison_summary(self, device1, device2):
-        """Generate a text summary comparing two devices.
-        
-        Args:
-            device1: Dictionary with formatted device data for first device
-            device2: Dictionary with formatted device data for second device
-            
-        Returns:
-            String with comparison summary
-        """
-        summary = []
-        
-        # Compare key specifications
-        specs_to_compare = [
-            ('display', 'Display'),
-            ('camera', 'Camera'),
-            ('chipset', 'Processor'),
-            ('battery', 'Battery'),
-            ('memory', 'Memory'),
-            ('os', 'Operating System')
-        ]
-        
-        for spec_key, spec_name in specs_to_compare:
-            spec1 = self._get_spec_value(device1, spec_key)
-            spec2 = self._get_spec_value(device2, spec_key)
-            
-            if spec1 and spec2:
-                summary.append(f"{spec_name}: {device1['name']} has {spec1}, while {device2['name']} has {spec2}.")
-        
-        if not summary:
-            summary.append(f"I don't have enough detailed information to compare {device1['name']} and {device2['name']}.")
-        
-        return "\n".join(summary)
+        return comparison_result

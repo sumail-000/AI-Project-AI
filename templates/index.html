@@ -394,6 +394,68 @@
             color: #0ff;
             text-shadow: 0 0 5px #0ff;
         }
+        
+        .brand-list-container {
+            padding-right: 10px; /* Add padding for scrollbar */
+        }
+        
+        .brand-list-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .brand-list-container::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+            border-radius: 4px;
+        }
+        
+        .brand-list-container::-webkit-scrollbar-thumb {
+            background: var(--neon-blue);
+            border-radius: 4px;
+        }
+        
+        .brand-list-container::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-green);
+        }
+        
+        .brand-option {
+            background-color: var(--dark-bg);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border: 1px solid var(--neon-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .brand-option:hover {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+        }
+        
+        .brand-info h6 {
+            color: var(--neon-pink);
+            margin-bottom: 5px;
+        }
+        
+        .brand-info p {
+            color: var(--neon-green);
+            margin-bottom: 0;
+        }
+        
+        .option-buttons {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option-buttons input[type="checkbox"] {
+            accent-color: var(--neon-blue);
+        }
+        
+        .option-buttons label {
+            color: var(--neon-yellow);
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -430,10 +492,6 @@
                     <button id="scanButton" class="btn btn-primary me-2">Scan Brands</button>
                     <button id="startButton" class="btn btn-success me-2" disabled>Start Extraction</button>
                     <button id="incrementalUpdateButton" class="btn btn-info me-2" disabled>Incremental Update</button>
-                    <div class="btn-group me-2">
-                        <button id="selectAllBrands" class="btn btn-outline-secondary" disabled>Select All</button>
-                        <button id="deselectAllBrands" class="btn btn-outline-secondary" disabled>Deselect All</button>
-                    </div>
                     <div id="scanningSpinner" class="spinner-border text-primary d-none ms-2" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
@@ -535,7 +593,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="brand-list"></div>
+                    <div class="brand-list-container" style="max-height: 400px; overflow-y: auto;">
+                        <div class="brand-list"></div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -860,15 +920,33 @@
 
         selectAllBtn.addEventListener('click', () => {
             $('.brand-checkbox').prop('checked', true);
+            addConsoleMessage('All brands selected');
         });
 
         deselectAllBtn.addEventListener('click', () => {
             $('.brand-checkbox').prop('checked', false);
+            addConsoleMessage('All brands deselected');
         });
 
         startButton.addEventListener('click', async () => {
-            const selectedBrands = Array.from(document.querySelectorAll('.brand-checkbox:checked'))
-                .map(cb => cb.dataset.url);
+            // Get all selected brands from the DataTable, including those from search results
+            const selectedBrands = [];
+            const table = $('#brandsTable').DataTable();
+            const allRows = table.rows().nodes();
+            
+            $(allRows).each(function() {
+                const checkbox = $(this).find('.brand-checkbox');
+                if (checkbox.prop('checked')) {
+                    const brandUrl = checkbox.data('url');
+                    const brandName = $(this).find('td:eq(1)').text();
+                    const deviceCount = $(this).find('td:eq(3)').text();
+                    selectedBrands.push({
+                        url: brandUrl,
+                        name: brandName,
+                        device_count: deviceCount
+                    });
+                }
+            });
             
             if (selectedBrands.length === 0) {
                 addConsoleMessage('Please select at least one brand', 'error');
@@ -881,7 +959,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ brands: selectedBrands })
+                    body: JSON.stringify({ brands: selectedBrands.map(b => b.url) })
                 });
                 
                 const data = await response.json();
@@ -891,18 +969,17 @@
                 const brandList = document.querySelector('.brand-list');
                 brandList.innerHTML = '';
 
-                data.brand_checks.forEach(brandCheck => {
-                    const brand = brandCheck.brand;
+                // Show all selected brands in the modal
+                selectedBrands.forEach(brand => {
                     const div = document.createElement('div');
-                    div.className = 'brand-option';
+                    div.className = 'brand-option mb-3';
                     div.innerHTML = `
                         <div class="brand-info">
                             <h6>${brand.name}</h6>
                             <p>Devices: ${brand.device_count}</p>
-                            <p>Status: ${brandCheck.exists ? 'Data exists' : 'New brand'}</p>
                         </div>
                         <div class="option-buttons">
-                            <input type="checkbox" class="delete-existing" data-brand-url="${brand.url}" ${brandCheck.exists ? '' : 'disabled'}>
+                            <input type="checkbox" class="delete-existing" data-brand-url="${brand.url}">
                             <label>Delete existing data</label>
                         </div>
                     `;
@@ -920,7 +997,7 @@
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({
-                                brands: selectedBrands,
+                                brands: selectedBrands.map(b => b.url),
                                 delete_existing: deleteExisting
                             })
                         });
@@ -933,7 +1010,6 @@
                             startButton.disabled = true;
                             scanButton.disabled = true;
                             addConsoleMessage('Starting extraction...');
-                            // checkProgress();
                             extractionDialog.hide();
                         } else {
                             throw new Error(data.message || 'Failed to start extraction');

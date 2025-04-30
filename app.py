@@ -14,6 +14,7 @@ from loguru import logger
 from typing import Dict, List
 import traceback  # Add this import for better error reporting
 from ai_assistant import DeviceAIAssistant  # Import the AI assistant
+from responses import RECOMMENDATION_KEYWORDS, DEVICE_TEMPLATES, COMPARISON_KEYWORDS, FALLBACK_RESPONSES
 import asyncio
 import aiohttp
 from datetime import datetime  # Add datetime module for timestamp generation
@@ -429,60 +430,279 @@ def ai_assistant_page():
     """Render the AI assistant page."""
     return render_template('ai_assistant.html')
 
+@app.route('/device-search-api', methods=['POST'])
+def device_search_api():
+    try:
+        data = request.get_json()
+        query = data.get('query', '')
+        
+        if not query:
+            return jsonify({
+                'status': 'error',
+                'message': 'Query is required',
+                'devices': []
+            })
+        
+        # Process the search query using our simplified AI assistant
+        results = ai_assistant.process_query(query)
+        
+        return jsonify({
+            'status': 'success',
+            'devices': results.get('devices', [])
+        })
+    except Exception as e:
+        app.logger.error(f"Error in device search API: {str(e)}")
+        return jsonify({
+            'status': 'error',
+            'message': f"An error occurred: {str(e)}",
+            'devices': []
+        })
+
 @app.route('/ai-assistant-api', methods=['POST'])
 def ai_assistant_api():
-    """API endpoint for the AI assistant."""
+    """API endpoint for the AI assistant with advanced query analysis."""
     try:
         print("=== AI ASSISTANT API CALLED ===")
         data = request.get_json()
         query = data.get('query')
         
         if not query:
+            print("Error: No query provided")
             return jsonify({'status': 'error', 'message': 'Query required'})
         
         print(f"Processing query: {query}")
         
-        try:
-            # Get response from AI assistant
-            response = ai_assistant.process_query(query)
+        # Perform comprehensive query analysis using our new algorithm
+        query_analysis = ai_assistant.analyze_query_intent(query)
+        
+        # Log key analysis results
+        print(f"Query analysis results:")
+        print(f"- Primary intent: {query_analysis['primary_intent']}")
+        print(f"- Response type: {query_analysis['response_type']}")
+        print(f"- Detected devices: {len(query_analysis['entities']['devices'])}")
+        print(f"- Detected specifications: {query_analysis['entities']['specifications']}")
+        
+        # Extract key analysis components
+        response_type = query_analysis['response_type']
+        primary_intent = query_analysis['primary_intent']
+        devices = query_analysis['entities']['devices']
+        specifications = query_analysis['entities']['specifications']
+        features = query_analysis['entities']['features']
+        brands = query_analysis['entities']['brands']
+        
+        # Convert devices to the format used by existing methods
+        device_names = []
+        for device in devices:
+            if isinstance(device, dict) and 'brand' in device and 'device' in device:
+                device_names.append({
+                    'brand': device['brand'],
+                    'device': device['device']
+                })
+        
+        # Handle different response types
+        if response_type == "comparison":
+            print("Handling comparison request")
+            comparison_result = ai_assistant.compare_devices(query)
             
-            # Convert response to JSON string with ASCII-only encoding
-            json_str = json.dumps({'status': 'success', 'response': response}, 
-                               ensure_ascii=True,  # Force ASCII encoding
-                               default=str)        # Convert any non-serializable objects to strings
-            
-            # Create response with proper content type
-            return Response(json_str, mimetype='application/json')
-            
-        except UnicodeEncodeError as ue:
-            # Handle Unicode encoding errors specifically
-            print(f"Unicode encoding error: {str(ue)}")
-            
-            # Create a simplified response with only ASCII characters
-            if 'device' in response:
-                # For device details, create a simplified version
-                device = response['device']
-                simplified_device = {
-                    'name': str(device.get('name', '')).encode('ascii', 'ignore').decode('ascii'),
-                    'brand': str(device.get('brand', '')).encode('ascii', 'ignore').decode('ascii'),
-                    'model': str(device.get('model', '')).encode('ascii', 'ignore').decode('ascii'),
-                    'url': str(device.get('url', '')).encode('ascii', 'ignore').decode('ascii'),
-                    'image_url': str(device.get('image_url', '')).encode('ascii', 'ignore').decode('ascii'),
-                    'specifications': {'display': 'Details available but contain special characters'}
-                }
-                simplified_response = {
-                    'type': response.get('type', 'device_details'),
-                    'summary': 'Here is the device information (some details simplified due to encoding issues):',
-                    'device': simplified_device
-                }
+            if comparison_result.get('success', False):
+                print(f"Returning comparison. Devices: {len(comparison_result.get('devices', []))}")
+                try:
+                    # Ensure all data is serializable
+                    devices = comparison_result.get('devices', [])
+                    compared_specs = comparison_result.get('compared_specs', {})
+                    
+                    # Convert any non-serializable data in compared_specs
+                    for spec_key, spec_values in compared_specs.items():
+                        for i, spec_value in enumerate(spec_values):
+                            if 'value' in spec_value and not isinstance(spec_value['value'], (str, dict, list, int, float, bool, type(None))):
+                                # Convert non-serializable value to string
+                                spec_values[i]['value'] = str(spec_value['value'])
+                    
+                    return jsonify({
+                        'status': 'success',
+                        'response': {
+                            'type': 'comparison',
+                            'summary': comparison_result.get('summary', 'Here\'s a comparison:'),
+                            'devices': devices,
+                            'compared_specs': compared_specs
+                        }
+                    })
+                except TypeError as e:
+                    print(f"Serialization error: {str(e)}")
+                    # Fallback to text response in case of serialization error
+                    return jsonify({
+                        'status': 'success',
+                        'response': {
+                            'type': 'text',
+                            'content': f"I found information about these devices, but encountered an error preparing the comparison: {str(e)}"
+                        }
+                    })
             else:
-                # For other responses, create a text-only version
-                simplified_response = {
-                    'type': 'text',
-                    'content': 'Found information about your query, but encountered encoding issues. Please try a different query.'
-                }
+                # Return error message if comparison failed
+                return jsonify({
+                    'status': 'success',
+                    'response': {
+                        'type': 'text',
+                        'content': comparison_result.get('message', FALLBACK_RESPONSES['no_comparison_devices'])
+                    }
+                })
+                
+        elif response_type in ["device_specs", "device_feature"] and device_names:
+            print(f"Handling device specifications request for {device_names}")
+            # Find the device in the database
+            devices_df = ai_assistant._search_devices_by_name(device_names)
             
-            return jsonify({'status': 'success', 'response': simplified_response})
+            if not devices_df.empty:
+                # Format device data
+                device = ai_assistant._format_device_data(devices_df.iloc[0])
+                
+                # Get specifications to display
+                spec_categories = specifications
+                if response_type == "device_feature" and features:
+                    # Map features to specification categories
+                    feature_to_spec = {
+                        "camera": ["camera", "main_camera", "selfie_camera"],
+                        "battery": ["battery", "battery_life", "charging"],
+                        "performance": ["processor", "cpu", "chipset", "platform"],
+                        "display": ["display", "screen"]
+                    }
+                    
+                    for feature in features:
+                        if feature in feature_to_spec:
+                            spec_categories.extend(feature_to_spec[feature])
+                
+                # Extract the requested specifications
+                requested_specs = ai_assistant._extract_requested_specs(
+                    device.get('specifications', {}), 
+                    spec_categories
+                )
+                
+                # Format response for frontend
+                formatted_response = {
+                    'type': 'device_specs',
+                    'summary': f"Here are the specifications for {device['brand_name']} {device['device_name']}:",
+                    'device': {
+                        'name': f"{device['brand_name']} {device['device_name']}",
+                        'image_url': device.get('device_image', ''),
+                        'url': device.get('device_url', ''),
+                        'specifications': device.get('specifications', {}),
+                        'requested_specs': requested_specs,
+                        'spec_types': spec_categories
+                    }
+                }
+                
+                # Add pictures if available
+                if 'pictures' in device:
+                    formatted_response['device']['pictures'] = device['pictures']
+                    
+                return jsonify({'status': 'success', 'response': formatted_response})
+            else:
+                print(f"No device found matching: {device_names}")
+                return jsonify({
+                    'status': 'success',
+                    'response': {
+                        'type': 'text',
+                        'content': FALLBACK_RESPONSES['no_device_found']
+                    }
+                })
+                
+        elif response_type == "device_details" and device_names:
+            print(f"Handling device details request for {device_names}")
+            # Find the device in the database
+            devices_df = ai_assistant._search_devices_by_name(device_names)
+            
+            if not devices_df.empty:
+                # Format device data
+                device = ai_assistant._format_device_data(devices_df.iloc[0])
+                
+                # Format response for frontend
+                formatted_response = {
+                    'type': 'device_details',
+                    'summary': f"Here's information about {device['brand_name']} {device['device_name']}:",
+                    'device': {
+                        'name': f"{device['brand_name']} {device['device_name']}",
+                        'image_url': device.get('device_image', ''),
+                        'url': device.get('device_url', ''),
+                        'specifications': device.get('specifications', {})
+                    }
+                }
+                
+                # Add pictures if available
+                if 'pictures' in device:
+                    formatted_response['device']['pictures'] = device['pictures']
+                    
+                return jsonify({'status': 'success', 'response': formatted_response})
+            else:
+                print(f"No device found matching: {device_names}")
+                return jsonify({
+                    'status': 'success',
+                    'response': {
+                        'type': 'text',
+                        'content': FALLBACK_RESPONSES['no_device_found']
+                    }
+                })
+                
+        elif response_type in ["recommendations", "feature_recommendations", "general_recommendations"]:
+            print("Handling recommendations request")
+            # Get recommendations based on query
+            recommendations = ai_assistant.get_device_recommendations(query)
+            
+            if recommendations:
+                # Determine message based on features or brands
+                if features and len(features) > 0:
+                    message = DEVICE_TEMPLATES['recommendation_specific'].format(feature=features[0])
+                elif brands and len(brands) > 0:
+                    message = DEVICE_TEMPLATES['recommendation_brand'].format(brand=brands[0])
+                else:
+                    message = DEVICE_TEMPLATES['recommendation_intro']
+                
+                print(f"Returning {len(recommendations)} recommendations with message: {message}")
+                return jsonify({
+                    'status': 'success',
+                    'response': {
+                        'type': 'recommendations',
+                        'message': message,
+                        'devices': recommendations
+                    }
+                })
+            else:
+                print("No recommendations found, using fallback")
+                return jsonify({
+                    'status': 'success',
+                    'response': {
+                        'type': 'text',
+                        'content': FALLBACK_RESPONSES['no_recommendations']
+                    }
+                })
+        
+        # Handle all other query types (conversation, troubleshooting, usage patterns, etc.)
+        print(f"Handling general conversation with intent: {primary_intent}")
+        conversation_response = ai_assistant.handle_conversation(query)
+        
+        # Check if the response is a structured object or plain text
+        if isinstance(conversation_response, dict) and 'type' in conversation_response:
+            response_type = conversation_response['type']
+            
+            if response_type == 'recommendations':
+                print(f"Returning recommendations from conversation handler")
+                return jsonify({
+                    'status': 'success',
+                    'response': {
+                        'type': 'recommendations',
+                        'message': conversation_response.get('message', DEVICE_TEMPLATES['recommendation_intro']),
+                        'devices': conversation_response.get('devices', [])
+                    }
+                })
+        
+        # For general text responses
+        print("Returning text response from conversation handler")
+        return jsonify({
+            'status': 'success',
+            'response': {
+                'type': 'text',
+                'content': conversation_response
+            }
+        })
             
     except Exception as e:
         error_msg = f"Error in AI assistant API: {str(e)}"

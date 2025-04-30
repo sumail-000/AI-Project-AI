@@ -23,17 +23,23 @@
             <div class="stats-box">
                 <h4>Example Queries</h4>
                 <div class="example-queries">
-                    <div class="example-query" data-query="Show me the Samsung Galaxy S21">
-                        Show me the Samsung Galaxy S21
+                    <div class="example-query" data-query="Show me the Realme GT7">
+                        Show me Realme GT7
                     </div>
-                    <div class="example-query" data-query="Compare iPhone 12 and Samsung Galaxy S21">
-                        Compare iPhone 12 and Samsung Galaxy S21
+                    <div class="example-query" data-query="Tell me about Amazon Fire HD 10 (2021)">
+                        Amazon Fire HD 10 specs
                     </div>
-                    <div class="example-query" data-query="What's the battery capacity of Pixel 6?">
-                        What's the battery capacity of Pixel 6?
+                    <div class="example-query" data-query="What's the battery capacity of Infinix Note 50s?">
+                        Infinix Note 50s battery
                     </div>
-                    <div class="example-query" data-query="Recommend me the best phones">
-                        Recommend me the best phones
+                    <div class="example-query" data-query="Tell me about Google Pixel 9 Pro">
+                        Google Pixel 9 Pro info
+                    </div>
+                    <div class="example-query" data-query="What are the specs of Realme Narzo 80 Pro?">
+                        Realme Narzo 80 Pro specs
+                    </div>
+                    <div class="example-query" data-query="Tell me about Realme 14">
+                        Realme 14 details
                     </div>
                 </div>
             </div>
@@ -59,155 +65,353 @@
 
 {% block styles %}
 <style>
-    .chat-container {
-        padding: 20px;
+    :root {
+        --neon-blue: #03e9f4;
+        --neon-purple: #bb86fc;
+        --neon-green: #39ff14;
+        --neon-yellow: #ffff00;
+        --dark-bg: #121212;
+        --lighter-bg: #1e1e1e;
+        --card-bg: rgba(30, 30, 40, 0.8);
     }
     
-    #chat-messages {
-        height: 300px;
-        overflow-y: auto;
-        margin-bottom: 15px;
-        padding: 10px;
+    body {
         background-color: var(--dark-bg);
-        border-radius: 5px;
-        border: 1px solid var(--neon-blue);
+        color: #f0f0f0;
+        font-family: 'Roboto', sans-serif;
     }
     
-    .user-message {
-        background-color: rgba(57, 255, 20, 0.1);
-        color: var(--neon-green);
-        padding: 8px 12px;
-        border-radius: 15px;
-        margin-bottom: 10px;
-        max-width: 80%;
-        align-self: flex-end;
-        margin-left: auto;
-        border: 1px solid var(--neon-green);
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
     }
     
-    .bot-message {
-        background-color: rgba(0, 255, 255, 0.1);
-        color: var(--neon-blue);
-        padding: 8px 12px;
-        border-radius: 15px;
-        margin-bottom: 10px;
-        max-width: 80%;
-        border: 1px solid var(--neon-blue);
-    }
-    
-    .example-queries {
+    .chat-interface {
+        background-color: var(--lighter-bg);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        height: 85vh;
     }
     
-    .example-query {
-        background-color: var(--dark-bg);
-        color: var(--neon-yellow);
-        padding: 10px;
+    .chat-header {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .chat-header h2 {
+        color: var(--neon-purple);
+        margin: 0;
+    }
+    
+    .chat-header p {
+        color: #aaa;
+        margin: 5px 0 0;
+        font-size: 0.9rem;
+    }
+    
+    .chat-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px;
         border-radius: 5px;
+        background-color: rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+    }
+    
+    .chat-input {
+        display: flex;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 5px;
+    }
+    
+    .chat-input input {
+        flex: 1;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-radius: 3px;
+        padding: 10px 15px;
+        color: #fff;
+        outline: none;
+    }
+    
+    .chat-input button {
+        background-color: var(--neon-purple);
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 10px 20px;
+        margin-left: 10px;
         cursor: pointer;
-        border: 1px solid var(--neon-orange);
         transition: all 0.3s ease;
     }
     
-    .example-query:hover {
-        background-color: rgba(255, 153, 51, 0.2);
+    .chat-input button:hover {
+        background-color: #c79dff;
         transform: translateY(-2px);
     }
     
+    .user-message, .bot-message {
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        border-radius: 10px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+    
+    .user-message {
+        background-color: #2c2c54;
+        align-self: flex-end;
+        margin-left: auto;
+    }
+    
+    .bot-message {
+        background-color: #3c3c5c;
+        align-self: flex-start;
+        margin-right: auto;
+    }
+    
+    .loading-message {
+        display: flex;
+        align-items: center;
+        background-color: #3c3c5c;
+        align-self: flex-start;
+        margin-right: auto;
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        border-radius: 10px;
+    }
+    
+    .loading-dots {
+        display: flex;
+        margin-left: 10px;
+    }
+    
+    .loading-dot {
+        width: 8px;
+        height: 8px;
+        margin: 0 2px;
+        background-color: #fff;
+        border-radius: 50%;
+        animation: pulse 1.5s infinite;
+    }
+    
+    .loading-dot:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    .loading-dot:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+    
+    @keyframes pulse {
+        0% {
+            transform: scale(0.8);
+            opacity: 0.5;
+        }
+        20% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(0.8);
+            opacity: 0.5;
+        }
+    }
+    
     .device-card {
-        background-color: var(--dark-bg);
-        border-radius: 8px;
+        background-color: var(--card-bg);
+        border-radius: 10px;
         padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         margin-bottom: 20px;
-        border: 1px solid var(--neon-purple);
-        box-shadow: 0 0 10px rgba(188, 19, 254, 0.2);
     }
     
     .device-image {
         max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        border: 1px solid var(--neon-purple);
+        margin-bottom: 10px;
+        transition: transform 0.3s ease;
+    }
+    
+    .device-image:hover {
+        transform: scale(1.05);
+    }
+    
+    .device-gallery {
+        display: flex;
+        overflow-x: auto;
+        margin-top: 15px;
+        padding-bottom: 10px;
+        gap: 10px;
+    }
+    
+    .gallery-thumbnail {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
         border-radius: 5px;
-        border: 1px solid var(--neon-blue);
+        border: 1px solid #444;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .gallery-thumbnail:hover, .gallery-thumbnail.active {
+        border-color: var(--neon-blue);
+        transform: translateY(-3px);
     }
     
     .specs-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
         margin-top: 15px;
     }
     
     .spec-item {
-        background-color: rgba(0, 0, 0, 0.3);
-        padding: 10px;
+        margin-bottom: 12px;
         border-radius: 5px;
-        border: 1px solid var(--neon-green);
+        background-color: rgba(40, 40, 60, 0.5);
+        padding: 10px;
     }
     
     .spec-name {
-        color: var(--neon-pink);
+        color: var(--neon-blue);
         font-weight: bold;
         margin-bottom: 5px;
     }
     
     .spec-value {
-        color: var(--neon-green);
+        color: #f0f0f0;
     }
     
-    .comparison-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-    
-    .comparison-summary {
-        grid-column: span 2;
-        background-color: rgba(0, 0, 0, 0.3);
-        padding: 15px;
-        border-radius: 5px;
+    .spec-section {
         margin-bottom: 20px;
-        border: 1px solid var(--neon-yellow);
-        color: var(--neon-yellow);
     }
     
-    .recommendation-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-    }
-    
-    .recommendation-card {
-        background-color: var(--dark-bg);
+    .spec-section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        background-color: rgba(70, 70, 100, 0.5);
         border-radius: 8px;
-        padding: 15px;
-        border: 1px solid var(--neon-orange);
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-left: 3px solid var(--neon-purple);
+    }
+    
+    .spec-section-header h5 {
+        margin: 0;
+        color: var(--neon-blue);
+    }
+    
+    .spec-section-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+        padding: 0 10px;
+    }
+    
+    .spec-section.expanded .spec-section-content {
+        max-height: 1000px;
+        padding: 10px;
+    }
+    
+    .spec-section-toggle {
+        color: var(--neon-blue);
+        transition: transform 0.3s ease;
+    }
+    
+    .spec-section.expanded .spec-section-toggle {
+        transform: rotate(180deg);
+    }
+    
+    #visualization-area {
+        margin-top: 20px;
+    }
+    
+    /* Modal styles */
+    .image-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+    
+    .modal-content {
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
+        height: 100%;
     }
     
-    .recommendation-image {
-        width: 100px;
-        height: 100px;
+    .modal-image {
+        max-width: 90%;
+        max-height: 80%;
         object-fit: contain;
-        margin-bottom: 10px;
+    }
+    
+    .modal-caption {
+        color: #f1f1f1;
+        margin-top: 20px;
+        font-size: 1.2rem;
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    
+    .comparison-container {
+        margin-top: 20px;
+        background-color: var(--card-bg);
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Example queries styling */
+    .example-queries {
+        margin-top: 5px;
+    }
+    
+    .example-query {
+        background-color: rgba(40, 40, 60, 0.9);
         border: 1px solid var(--neon-blue);
         border-radius: 5px;
-        padding: 5px;
+        color: var(--neon-blue);
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
     }
     
-    .recommendation-name {
-        color: var(--neon-orange);
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 5px;
-    }
-    
-    .recommendation-specs {
-        color: var(--neon-green);
-        font-size: 0.9em;
-        text-align: center;
+    .example-query:hover {
+        background-color: var(--neon-blue);
+        color: #121212;
+        transform: translateY(-2px);
     }
 </style>
 {% endblock %}
@@ -254,7 +458,7 @@
         const exampleQueries = document.querySelectorAll('.example-query');
         
         // Add initial greeting
-        addBotMessage("Hello! I'm your mobile device assistant. Ask me about any device in our database, compare devices, or get recommendations.");
+        addMessage('assistant', "Hello! I'm your mobile device assistant. Ask me about any device in our database, compare devices, or get recommendations.");
         
         // Handle send button click
         sendButton.addEventListener('click', sendMessage);
@@ -279,133 +483,106 @@
         window.showImageInModal = showImageInModal;
         
         function sendMessage() {
-            console.log('=== DEBUGGING AI ASSISTANT ===');
             const query = userInput.value.trim();
-            console.log('Query:', query);
-            if (query === '') return;
+            if (!query) return;
             
             // Add user message to chat
-            addUserMessage(query);
+            addMessage('user', query);
+            
+            // Clear input field
             userInput.value = '';
             
-            // Show loading indicator
-            addBotMessage("Thinking...", "loading");
-            console.log('Added loading message');
+            // Add loading indicator
+            const loadingMessage = document.createElement('div');
+            loadingMessage.className = 'message loading-message assistant-message';
+            loadingMessage.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+            chatMessages.appendChild(loadingMessage);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
             
-            // Send query to backend
-            console.log('Sending fetch request to /ai-assistant-api');
-            const requestBody = JSON.stringify({ query: query });
-            console.log('Request body:', requestBody);
+            // Log the query for debugging
+            console.log("Sending query:", query);
             
+            // Prepare request
+            const requestBody = {
+                query: query
+            };
+            
+            console.log("Request body:", JSON.stringify(requestBody));
+            
+            // Send request to backend
             fetch('/ai-assistant-api', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: requestBody
+                body: JSON.stringify(requestBody)
             })
-            .then(response => {
-                console.log('Received response:', response.status, response.statusText);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json().then(data => {
-                    console.log('Response data:', data);
-                    return data;
-                });
-            })
+            .then(response => response.json())
             .then(data => {
+                console.log("Received response:", data);
+                
                 // Remove loading message
                 removeLoadingMessage();
                 
-                // Debug: Log the received data
-                console.log('AI Assistant API Response:', data);
-                
-                // Handle different response types
                 if (data.status === 'error') {
-                    addBotMessage(data.message || 'An error occurred');
+                    addMessage('assistant', 'Sorry, I encountered an error: ' + data.message);
+                    console.error("Error:", data.message);
                     return;
                 }
                 
-                // Check if response exists
-                if (!data.response) {
-                    console.error('Invalid response format:', data);
-                    addBotMessage('Received an invalid response format from the server.');
-                    return;
-                }
-                
+                // Get the response data
                 const response = data.response;
                 
-                // Handle device details (most common case)
-                if (response.device) {
-                    let summary = response.summary || `Here's information about ${response.device.name || 'the device'}:`;
-                    addBotMessage(summary);
-                    renderDeviceDetails(response.device);
-                    return;
-                }
-                
-                // Handle other response types
+                // Handle different response types
                 if (response.type === 'text') {
-                    addBotMessage(response.content);
-                } else if (response.type === 'comparison' && response.devices) {
-                    addBotMessage(response.summary || 'Here\'s a comparison:');
-                    if (response.comparison_text) addBotMessage(response.comparison_text);
-                    renderComparison(response.devices);
-                } else if (response.type === 'spec_details' && response.device) {
-                    addBotMessage(response.summary || 'Here\'s the specification:');
-                    if (response.spec_value) addBotMessage(response.spec_value);
+                    addMessage('assistant', response.content);
+                } else if (response.type === 'device_details') {
+                    addMessage('assistant', response.summary);
                     renderDeviceDetails(response.device);
-                } else if (response.type === 'recommendation' && response.devices) {
-                    addBotMessage(response.summary || 'Here are my recommendations:');
-                    renderRecommendations(response.devices);
+                } else if (response.type === 'device_specs') {
+                    addMessage('assistant', response.summary);
+                    renderDeviceSpecifications(response.device);
+                } else if (response.type === 'recommendations') {
+                    console.log("Received recommendations:", response);
+                    addMessage('assistant', response.message);
+                    if (response.devices && response.devices.length > 0) {
+                        console.log(`Rendering ${response.devices.length} recommendations`);
+                        renderRecommendations(response.devices);
+                    } else {
+                        console.warn("No recommendation devices found in response");
+                        addMessage('assistant', "I couldn't find any recommendations at this time.");
+                    }
+                } else if (response.type === 'comparison') {
+                    addMessage('assistant', response.summary || 'Here\'s a comparison:');
+                    renderDeviceComparison(response.devices);
                 } else {
                     // Fallback for unknown response format
-                    console.warn('Unknown response format:', response);
-                    addBotMessage('I found some information, but I\'m not sure how to display it properly.');
+                    addMessage('assistant', 'I received information but I\'m not sure how to display it.');
+                    console.warn("Unknown response type:", response);
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
+                // Remove loading message
                 removeLoadingMessage();
-                addBotMessage("Sorry, I encountered an error processing your request: " + error.message);
                 
-                // Log additional debugging information
-                console.log('Query that caused the error:', query);
-                
-                // Add visual indicator that something went wrong
-                visualizationArea.innerHTML = `
-                    <div class="alert alert-danger">
-                        <h4>Error Processing Request</h4>
-                        <p>There was a problem processing your request. Please try again or try a different query.</p>
-                        <p>Technical details: ${error.message}</p>
-                        <p>Check the browser console for more information.</p>
-                    </div>
-                `;
+                addMessage('assistant', 'Sorry, there was an error processing your request. Please try again.');
+                console.error("Error:", error);
             });
         }
         
-        function addUserMessage(message) {
+        function addMessage(type, message) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = 'user-message';
-            messageDiv.textContent = message;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        
-        function addBotMessage(message, type = '') {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'bot-message';
-            if (type === 'loading') {
-                messageDiv.className += ' loading-message';
-            }
+            messageDiv.className = type === 'user' ? 'user-message' : 'bot-message';
             messageDiv.textContent = message;
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
         
         function removeLoadingMessage() {
-            const loadingMessages = document.querySelectorAll('.loading-message');
-            loadingMessages.forEach(msg => msg.remove());
+            const loadingMessage = document.querySelector('.loading-message');
+            if (loadingMessage) {
+                chatMessages.removeChild(loadingMessage);
+            }
         }
         
         function renderDeviceDetails(device) {
@@ -416,85 +593,1084 @@
             const deviceCard = document.createElement('div');
             deviceCard.className = 'device-card';
             
-            // Add device image and name
-            deviceCard.innerHTML = `
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="${device.image_url}" alt="${device.name}" class="device-image img-fluid" style="cursor: pointer;" onclick="showImageInModal('${device.image_url}', '${device.name}')">
-                    </div>
-                    <div class="col-md-8">
-                        <h3>${device.name}</h3>
-                        <div class="specs-container">
-                            ${generateSpecsHTML(device.specifications)}
-                        </div>
-                    </div>
-                </div>
-            `;
+            // Device name
+            const deviceName = document.createElement('h3');
+            deviceName.textContent = device.name;
+            deviceName.style.color = 'var(--neon-purple)';
+            deviceCard.appendChild(deviceName);
             
-            visualizationArea.appendChild(deviceCard);
+            // Create content layout (with more space between columns)
+            const contentLayout = document.createElement('div');
+            contentLayout.className = 'd-flex flex-wrap';
+            contentLayout.style.gap = '20px';
+            deviceCard.appendChild(contentLayout);
             
-            // Add image gallery if available
-            if (device.pictures && device.pictures.length > 0) {
-                const galleryContainer = document.createElement('div');
-                galleryContainer.className = 'mt-3';
-                galleryContainer.innerHTML = '<h4>Device Images</h4><div class="device-gallery"></div>';
-                
-                const gallery = galleryContainer.querySelector('.device-gallery');
-                gallery.style.display = 'flex';
-                gallery.style.flexWrap = 'wrap';
-                gallery.style.gap = '10px';
-                
-                device.pictures.forEach(pic => {
-                    const imgContainer = document.createElement('div');
-                    imgContainer.style.width = '100px';
-                    imgContainer.style.height = '100px';
-                    imgContainer.style.overflow = 'hidden';
-                    imgContainer.style.border = '1px solid var(--neon-blue)';
-                    imgContainer.style.borderRadius = '5px';
-                    imgContainer.style.cursor = 'pointer';
+            // Add device image and gallery
+            const imageCol = document.createElement('div');
+            imageCol.className = 'col-md-4 mb-3';
+            imageCol.style.paddingRight = '20px'; // Add right padding for better spacing
+            
+            // Process pictures array
+            let mainImageUrl = device.image_url;
+            let allPictures = [];
+            
+            if (device.pictures) {
+                try {
+                    // Try to parse the pictures array
+                    if (typeof device.pictures === 'string') {
+                        allPictures = JSON.parse(device.pictures.replace(/'/g, '"'));
+                    } else if (Array.isArray(device.pictures)) {
+                        allPictures = device.pictures;
+                    }
                     
-                    const img = document.createElement('img');
-                    img.src = pic;
-                    img.alt = device.name;
-                    img.style.width = '100%';
-                    img.style.height = '100%';
-                    img.style.objectFit = 'cover';
-                    img.onclick = () => showImageInModal(pic, device.name);
+                    // Set main image to first picture if available
+                    if (allPictures && allPictures.length > 0) {
+                        mainImageUrl = allPictures[0];
+                    }
+                } catch (e) {
+                    console.error('Error parsing pictures:', e);
+                }
+            }
+            
+            // Create main image element
+            const mainImg = document.createElement('img');
+            mainImg.id = 'mainDeviceImage';
+            mainImg.src = mainImageUrl;
+            mainImg.className = 'device-image';
+            mainImg.onclick = function() {
+                showImageInModal(mainImageUrl, device.name);
+            };
+            mainImg.style.cursor = 'pointer';
+            imageCol.appendChild(mainImg);
+            
+            // Add "Click to enlarge" text
+            const viewLarger = document.createElement('div');
+            viewLarger.textContent = 'Click to enlarge';
+            viewLarger.style.textAlign = 'center';
+            viewLarger.style.color = 'var(--neon-blue)';
+            viewLarger.style.fontSize = '0.8rem';
+            viewLarger.style.marginTop = '5px';
+            viewLarger.style.marginBottom = '10px';
+            imageCol.appendChild(viewLarger);
+            
+            // Add image gallery if we have multiple pictures
+            if (allPictures && allPictures.length > 1) {
+                const galleryTitle = document.createElement('div');
+                galleryTitle.textContent = 'More Images';
+                galleryTitle.style.color = 'var(--neon-purple)';
+                galleryTitle.style.fontWeight = 'bold';
+                galleryTitle.style.marginTop = '10px';
+                galleryTitle.style.marginBottom = '5px';
+                imageCol.appendChild(galleryTitle);
+                
+                const gallery = document.createElement('div');
+                gallery.className = 'device-gallery';
+                gallery.style.display = 'grid';
+                gallery.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                gallery.style.gap = '8px';
+                gallery.style.marginBottom = '15px'; // Add bottom margin to gallery
+                
+                // Add thumbnails for all images
+                allPictures.forEach((picUrl, index) => {
+                    const thumbnailCard = document.createElement('div');
+                    thumbnailCard.className = 'thumbnail-card';
+                    thumbnailCard.style.backgroundColor = 'rgba(40, 40, 60, 0.8)';
+                    thumbnailCard.style.borderRadius = '5px';
+                    thumbnailCard.style.padding = '5px';
+                    thumbnailCard.style.cursor = 'pointer';
+                    thumbnailCard.style.transition = 'transform 0.2s, border-color 0.2s';
+                    thumbnailCard.style.border = index === 0 ? '2px solid var(--neon-blue)' : '2px solid transparent';
                     
-                    imgContainer.appendChild(img);
-                    gallery.appendChild(imgContainer);
+                    const thumbnail = document.createElement('img');
+                    thumbnail.src = picUrl;
+                    thumbnail.className = 'gallery-thumbnail';
+                    thumbnail.style.width = '100%';
+                    thumbnail.style.height = '60px';
+                    thumbnail.style.objectFit = 'cover';
+                    thumbnail.style.borderRadius = '3px';
+                    
+                    thumbnailCard.onclick = function() {
+                        // Update main image
+                        document.getElementById('mainDeviceImage').src = picUrl;
+                        // Update modal trigger
+                        document.getElementById('mainDeviceImage').onclick = function() {
+                            showImageInModal(picUrl, device.name);
+                        };
+                        // Update active state
+                        document.querySelectorAll('.thumbnail-card').forEach(t => {
+                            t.style.borderColor = 'transparent';
+                        });
+                        thumbnailCard.style.borderColor = 'var(--neon-blue)';
+                    };
+                    
+                    thumbnailCard.appendChild(thumbnail);
+                    gallery.appendChild(thumbnailCard);
                 });
                 
-                visualizationArea.appendChild(galleryContainer);
+                imageCol.appendChild(gallery);
             }
+            
+            contentLayout.appendChild(imageCol);
+            
+            // Add specifications
+            const specsCol = document.createElement('div');
+            specsCol.className = 'col-md-7';
+            specsCol.style.paddingLeft = '20px'; // Add left padding for separation from image
+            
+            // Add device URL link
+            if (device.url) {
+                const urlLink = document.createElement('a');
+                urlLink.href = device.url;
+                urlLink.textContent = 'View on GSMArena';
+                urlLink.target = '_blank';
+                urlLink.className = 'btn btn-sm btn-outline-primary mb-3';
+                specsCol.appendChild(urlLink);
+            }
+            
+            // Add key specifications at the top
+            const keySpecsSection = document.createElement('div');
+            keySpecsSection.className = 'key-specs mb-4';
+            const keySpecsTitle = document.createElement('h4');
+            keySpecsTitle.textContent = 'Key Specifications';
+            keySpecsTitle.style.color = 'var(--neon-purple)';
+            keySpecsTitle.style.borderBottom = '1px solid var(--neon-purple)';
+            keySpecsTitle.style.paddingBottom = '5px';
+            keySpecsSection.appendChild(keySpecsTitle);
+            
+            // Add specifications container for key specs
+            const keySpecsContainer = document.createElement('div');
+            keySpecsContainer.className = 'specs-container';
+            keySpecsContainer.style.marginTop = '10px'; // Add top margin
+            
+            // Extract specifications
+            try {
+                // Get the specifications, either parse from string or use object
+                let specs = device.specifications;
+                if (typeof specs === 'string') {
+                    specs = JSON.parse(specs.replace(/'/g, '"'));
+                }
+                
+                // Create helper for adding specs
+                function addKeySpec(name, value) {
+                    if (!value) return;
+                    
+                    const specItem = document.createElement('div');
+                    specItem.className = 'spec-item';
+                    
+                    const specName = document.createElement('div');
+                    specName.className = 'spec-name';
+                    specName.textContent = name;
+                    specItem.appendChild(specName);
+                    
+                    const specValue = document.createElement('div');
+                    specValue.className = 'spec-value';
+                    specValue.textContent = value;
+                    specItem.appendChild(specValue);
+                    
+                    keySpecsContainer.appendChild(specItem);
+                }
+                
+                // Map of common spec locations
+                const specMappings = {
+                    'Display': ['display_type', 'display', 'Display'],
+                    'Battery': ['battery_type', 'battery', 'Battery'],
+                    'Main Camera': ['main_camera', 'Main Camera'],
+                    'Selfie Camera': ['selfie_camera', 'Selfie camera'],
+                    'Processor': ['processor', 'Platform.chipset', 'platform.chipset'],
+                    'Memory': ['memory', 'Memory'],
+                    'OS': ['os', 'OS'],
+                    'Dimensions': ['dimensions', 'Dimensions']
+                };
+                
+                // Extract the specs we want to display in the key section
+                for (const [displayName, paths] of Object.entries(specMappings)) {
+                    let found = false;
+                    
+                    // Try each possible path
+                    for (const path of paths) {
+                        if (found) break;
+                        
+                        // Handle dot notation for nested properties
+                        if (path.includes('.')) {
+                            const parts = path.split('.');
+                            let value = specs;
+                            
+                            // Navigate through nested objects
+                            for (const part of parts) {
+                                if (value && value[part]) {
+                                    value = value[part];
+                                } else {
+                                    value = null;
+                                    break;
+                                }
+                            }
+                            
+                            if (value) {
+                                addKeySpec(displayName, value);
+                                found = true;
+                            }
+                        } 
+                        // Direct property access
+                        else if (specs[path]) {
+                            // Handle different data types
+                            if (typeof specs[path] === 'object') {
+                                // Format object into a readable string
+                                let formattedValue = '';
+                                for (const [key, val] of Object.entries(specs[path])) {
+                                    if (formattedValue) formattedValue += ', ';
+                                    formattedValue += `${key}: ${val}`;
+                                }
+                                addKeySpec(displayName, formattedValue);
+                            } else {
+                                addKeySpec(displayName, specs[path]);
+                            }
+                            found = true;
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('Error processing specifications:', e);
+                keySpecsContainer.textContent = 'Error displaying specifications';
+            }
+            
+            keySpecsSection.appendChild(keySpecsContainer);
+            specsCol.appendChild(keySpecsSection);
+            
+            // Add collapsible sections for detailed specifications
+            const detailedSpecsSection = document.createElement('div');
+            detailedSpecsSection.className = 'detailed-specs mt-4'; // Increased margin top
+            
+            const detailedSpecsTitle = document.createElement('h4');
+            detailedSpecsTitle.textContent = 'Detailed Specifications';
+            detailedSpecsTitle.style.color = 'var(--neon-purple)';
+            detailedSpecsTitle.style.borderBottom = '1px solid var(--neon-purple)';
+            detailedSpecsTitle.style.paddingBottom = '5px';
+            detailedSpecsTitle.style.marginBottom = '10px'; // Add margin bottom
+            detailedSpecsSection.appendChild(detailedSpecsTitle);
+            
+            // Get detailed specifications
+            try {
+                let specs = device.specifications;
+                if (typeof specs === 'string') {
+                    specs = JSON.parse(specs.replace(/'/g, '"'));
+                }
+                
+                // Define the categories we want to show
+                const categories = [
+                    { name: 'Network', keys: ['network', 'Network'] },
+                    { name: 'Display', keys: ['display', 'Display'] },
+                    { name: 'Platform', keys: ['platform', 'Platform'] },
+                    { name: 'Memory', keys: ['memory', 'Memory'] },
+                    { name: 'Main Camera', keys: ['main_camera', 'Main Camera'] },
+                    { name: 'Selfie Camera', keys: ['selfie_camera', 'Selfie camera'] },
+                    { name: 'Sound', keys: ['sound', 'Sound'] },
+                    { name: 'Communications', keys: ['comms', 'Communications'] },
+                    { name: 'Features', keys: ['features', 'Features'] },
+                    { name: 'Battery', keys: ['battery', 'Battery'] },
+                    { name: 'Misc', keys: ['misc', 'Misc'] }
+                ];
+                
+                // Add each category as a collapsible section
+                categories.forEach(category => {
+                    // Find this category in the specs
+                    let categoryData = null;
+                    
+                    for (const key of category.keys) {
+                        if (specs[key]) {
+                            categoryData = specs[key];
+                            break;
+                        }
+                    }
+                    
+                    // If we found data for this category, create a section
+                    if (categoryData) {
+                        // Create section container
+                        const section = document.createElement('div');
+                        section.className = 'spec-section';
+                        
+                        // Create section header
+                        const header = document.createElement('div');
+                        header.className = 'spec-section-header';
+                        
+                        const headerTitle = document.createElement('h5');
+                        headerTitle.textContent = category.name;
+                        header.appendChild(headerTitle);
+                        
+                        const toggleIcon = document.createElement('span');
+                        toggleIcon.className = 'spec-section-toggle';
+                        toggleIcon.innerHTML = '&#9660;'; // Down arrow
+                        header.appendChild(toggleIcon);
+                        
+                        // Create section content
+                        const content = document.createElement('div');
+                        content.className = 'spec-section-content';
+                        
+                        // Format the category data
+                        if (typeof categoryData === 'object') {
+                            for (const [key, value] of Object.entries(categoryData)) {
+                                const specItem = document.createElement('div');
+                                specItem.className = 'spec-item';
+                                
+                                const specName = document.createElement('div');
+                                specName.className = 'spec-name';
+                                specName.textContent = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                                specItem.appendChild(specName);
+                                
+                                const specValue = document.createElement('div');
+                                specValue.className = 'spec-value';
+                                
+                                // Handle nested objects
+                                if (typeof value === 'object' && value !== null) {
+                                    let formattedValue = '';
+                                    for (const [subKey, subValue] of Object.entries(value)) {
+                                        if (formattedValue) formattedValue += '<br>';
+                                        formattedValue += `<strong>${subKey}</strong>: ${subValue}`;
+                                    }
+                                    specValue.innerHTML = formattedValue;
+                                } else {
+                                    specValue.textContent = value;
+                                }
+                                
+                                specItem.appendChild(specValue);
+                                content.appendChild(specItem);
+                            }
+                        } else {
+                            // Handle string values
+                            const specItem = document.createElement('div');
+                            specItem.className = 'spec-item';
+                            
+                            const specValue = document.createElement('div');
+                            specValue.className = 'spec-value';
+                            specValue.textContent = categoryData;
+                            
+                            specItem.appendChild(specValue);
+                            content.appendChild(specItem);
+                        }
+                        
+                        // Add toggle functionality
+                        header.addEventListener('click', () => {
+                            section.classList.toggle('expanded');
+                        });
+                        
+                        // Assemble section
+                        section.appendChild(header);
+                        section.appendChild(content);
+                        detailedSpecsSection.appendChild(section);
+                    }
+                });
+            } catch (e) {
+                console.error('Error processing detailed specifications:', e);
+                const errorMsg = document.createElement('div');
+                errorMsg.textContent = 'Error displaying detailed specifications';
+                errorMsg.style.color = '#ff5555';
+                detailedSpecsSection.appendChild(errorMsg);
+            }
+            
+            specsCol.appendChild(detailedSpecsSection);
+            contentLayout.appendChild(specsCol);
+            
+            // Add to visualization area
+            visualizationArea.appendChild(deviceCard);
         }
         
-        function renderComparison(devices) {
-            if (devices.length < 2) return;
+        function renderDeviceSpecifications(device) {
+            // Clear previous visualizations
+            visualizationArea.innerHTML = '';
             
+            // Create device card
+            const deviceCard = document.createElement('div');
+            deviceCard.className = 'device-card';
+            
+            // Device name
+            const deviceName = document.createElement('h3');
+            deviceName.textContent = device.name;
+            deviceName.style.color = 'var(--neon-purple)';
+            deviceCard.appendChild(deviceName);
+            
+            // Create content layout
+            const contentLayout = document.createElement('div');
+            contentLayout.className = 'd-flex flex-wrap';
+            deviceCard.appendChild(contentLayout);
+            
+            // Add device image
+            const imageCol = document.createElement('div');
+            imageCol.className = 'col-md-4 mb-3';
+            imageCol.style.paddingRight = '20px'; // Add right padding for better spacing
+            
+            // Determine image source and process picture array
+            let mainImageUrl = device.image_url;
+            let allPictures = [];
+            
+            if (device.pictures) {
+                try {
+                    // Try to parse the pictures array
+                    if (typeof device.pictures === 'string') {
+                        allPictures = JSON.parse(device.pictures.replace(/'/g, '"'));
+                    } else if (Array.isArray(device.pictures)) {
+                        allPictures = device.pictures;
+                    }
+                    
+                    // Set main image to first picture if available
+                    if (allPictures && allPictures.length > 0) {
+                        mainImageUrl = allPictures[0];
+                    }
+                } catch (e) {
+                    console.error('Error parsing pictures:', e);
+                }
+            }
+            
+            // Create main image element
+            const mainImg = document.createElement('img');
+            mainImg.id = 'mainDeviceSpecImage';
+            mainImg.src = mainImageUrl;
+            mainImg.className = 'device-image';
+            mainImg.onclick = function() {
+                showImageInModal(mainImageUrl, device.name);
+            };
+            mainImg.style.cursor = 'pointer';
+            imageCol.appendChild(mainImg);
+            
+            // Add "Click to enlarge" text
+            const viewLarger = document.createElement('div');
+            viewLarger.textContent = 'Click to enlarge';
+            viewLarger.style.textAlign = 'center';
+            viewLarger.style.color = 'var(--neon-blue)';
+            viewLarger.style.fontSize = '0.8rem';
+            viewLarger.style.marginTop = '5px';
+            viewLarger.style.marginBottom = '10px';
+            imageCol.appendChild(viewLarger);
+            
+            // Add image gallery if we have multiple pictures
+            if (allPictures && allPictures.length > 1) {
+                const galleryTitle = document.createElement('div');
+                galleryTitle.textContent = 'More Images';
+                galleryTitle.style.color = 'var(--neon-purple)';
+                galleryTitle.style.fontWeight = 'bold';
+                galleryTitle.style.marginTop = '10px';
+                galleryTitle.style.marginBottom = '5px';
+                imageCol.appendChild(galleryTitle);
+                
+                const gallery = document.createElement('div');
+                gallery.className = 'device-gallery';
+                gallery.style.display = 'grid';
+                gallery.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                gallery.style.gap = '8px';
+                gallery.style.marginBottom = '15px'; // Add bottom margin to gallery
+                
+                // Add thumbnails for all images
+                allPictures.forEach((picUrl, index) => {
+                    const thumbnailCard = document.createElement('div');
+                    thumbnailCard.className = 'thumbnail-card';
+                    thumbnailCard.style.backgroundColor = 'rgba(40, 40, 60, 0.8)';
+                    thumbnailCard.style.borderRadius = '5px';
+                    thumbnailCard.style.padding = '5px';
+                    thumbnailCard.style.cursor = 'pointer';
+                    thumbnailCard.style.transition = 'transform 0.2s, border-color 0.2s';
+                    thumbnailCard.style.border = index === 0 ? '2px solid var(--neon-blue)' : '2px solid transparent';
+                    
+                    const thumbnail = document.createElement('img');
+                    thumbnail.src = picUrl;
+                    thumbnail.className = 'gallery-thumbnail';
+                    thumbnail.style.width = '100%';
+                    thumbnail.style.height = '60px';
+                    thumbnail.style.objectFit = 'cover';
+                    thumbnail.style.borderRadius = '3px';
+                    
+                    thumbnailCard.onclick = function() {
+                        // Update main image
+                        document.getElementById('mainDeviceSpecImage').src = picUrl;
+                        // Update modal trigger
+                        document.getElementById('mainDeviceSpecImage').onclick = function() {
+                            showImageInModal(picUrl, device.name);
+                        };
+                        // Update active state
+                        document.querySelectorAll('.thumbnail-card').forEach(t => {
+                            t.style.borderColor = 'transparent';
+                        });
+                        thumbnailCard.style.borderColor = 'var(--neon-blue)';
+                    };
+                    
+                    thumbnailCard.appendChild(thumbnail);
+                    gallery.appendChild(thumbnailCard);
+                });
+                
+                imageCol.appendChild(gallery);
+            }
+            
+            contentLayout.appendChild(imageCol);
+            
+            // Add specifications
+            const specsCol = document.createElement('div');
+            specsCol.className = 'col-md-8';
+            specsCol.style.paddingLeft = '20px'; // Add left padding for separation from image
+            
+            // Add device URL link
+            if (device.url) {
+                const urlLink = document.createElement('a');
+                urlLink.href = device.url;
+                urlLink.textContent = 'View on GSMArena';
+                urlLink.target = '_blank';
+                urlLink.className = 'btn btn-sm btn-outline-primary mb-3';
+                specsCol.appendChild(urlLink);
+            }
+            
+            // Add highlighted specifications section with special styling
+            if (device.requested_specs && Object.keys(device.requested_specs).length > 0) {
+                const highlightedContainer = document.createElement('div');
+                highlightedContainer.className = 'mb-4';
+                
+                const highlightedTitle = document.createElement('h4');
+                highlightedTitle.textContent = 'Requested Specifications';
+                highlightedTitle.style.color = 'var(--neon-green)';
+                highlightedTitle.style.borderBottom = '1px solid var(--neon-green)';
+                highlightedTitle.style.paddingBottom = '5px';
+                highlightedContainer.appendChild(highlightedTitle);
+                
+                // Create a container for the highlighted specs
+                const highlightedSpecs = document.createElement('div');
+                highlightedSpecs.className = 'highlighted-specs';
+                highlightedSpecs.style.backgroundColor = 'rgba(57, 255, 20, 0.1)';
+                highlightedSpecs.style.padding = '15px';
+                highlightedSpecs.style.borderRadius = '5px';
+                highlightedSpecs.style.border = '1px solid var(--neon-green)';
+                highlightedSpecs.style.marginTop = '10px'; // Add top margin
+                
+                // Add each requested spec type
+                for (const [specType, specData] of Object.entries(device.requested_specs)) {
+                    const specTypeEl = document.createElement('div');
+                    specTypeEl.className = 'spec-category mb-3';
+                    
+                    const specTypeTitle = document.createElement('h5');
+                    specTypeTitle.textContent = specType.charAt(0).toUpperCase() + specType.slice(1);
+                    specTypeTitle.style.color = 'var(--neon-yellow)';
+                    specTypeEl.appendChild(specTypeTitle);
+                    
+                    // Add each spec under this type
+                    for (const [key, value] of Object.entries(specData)) {
+                        if (typeof value === 'object' && value !== null) {
+                            // Handle nested objects
+                            const nestedSpecItem = document.createElement('div');
+                            nestedSpecItem.className = 'spec-item mb-2';
+                            
+                            const nestedSpecName = document.createElement('div');
+                            nestedSpecName.className = 'spec-name';
+                            nestedSpecName.textContent = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                            nestedSpecItem.appendChild(nestedSpecName);
+                            
+                            for (const [subKey, subValue] of Object.entries(value)) {
+                                const nestedSpecValue = document.createElement('div');
+                                nestedSpecValue.className = 'spec-value';
+                                nestedSpecValue.textContent = `${subKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}: ${subValue}`;
+                                nestedSpecItem.appendChild(nestedSpecValue);
+                            }
+                            
+                            specTypeEl.appendChild(nestedSpecItem);
+                        } else {
+                            // Handle simple key-value pairs
+                            const specItem = document.createElement('div');
+                            specItem.className = 'spec-item mb-2';
+                            
+                            const specName = document.createElement('div');
+                            specName.className = 'spec-name';
+                            specName.textContent = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                            specItem.appendChild(specName);
+                            
+                            const specValue = document.createElement('div');
+                            specValue.className = 'spec-value';
+                            specValue.textContent = value;
+                            specItem.appendChild(specValue);
+                            
+                            specTypeEl.appendChild(specItem);
+                        }
+                    }
+                    
+                    highlightedSpecs.appendChild(specTypeEl);
+                }
+                
+                highlightedContainer.appendChild(highlightedSpecs);
+                specsCol.appendChild(highlightedContainer);
+            }
+            
+            // Add all specifications in collapsible section
+            const allSpecsContainer = document.createElement('div');
+            allSpecsContainer.className = 'mt-4'; // Increase margin top
+            
+            const allSpecsTitle = document.createElement('h4');
+            allSpecsTitle.textContent = 'All Specifications';
+            allSpecsTitle.style.color = 'var(--neon-blue)';
+            allSpecsTitle.style.borderBottom = '1px solid var(--neon-blue)';
+            allSpecsTitle.style.paddingBottom = '5px';
+            allSpecsContainer.appendChild(allSpecsTitle);
+            
+            // Helper function to create spec items
+            function createSpecItem(name, value) {
+                const specItem = document.createElement('div');
+                specItem.className = 'spec-item';
+                
+                const specName = document.createElement('div');
+                specName.className = 'spec-name';
+                specName.textContent = name;
+                specItem.appendChild(specName);
+                
+                const specValue = document.createElement('div');
+                specValue.className = 'spec-value';
+                
+                if (typeof value === 'object' && value !== null) {
+                    let formattedValue = '';
+                    for (const [key, val] of Object.entries(value)) {
+                        if (formattedValue) formattedValue += ', ';
+                        formattedValue += `${key}: ${val}`;
+                    }
+                    specValue.textContent = formattedValue;
+                } else {
+                    specValue.textContent = value;
+                }
+                
+                specItem.appendChild(specValue);
+                return specItem;
+            }
+            
+            // Add specifications container
+            const specsContainer = document.createElement('div');
+            specsContainer.className = 'specs-container';
+            
+            // Add specifications
+            if (device.specifications) {
+                try {
+                    // Get the specifications, either parse from string or use object
+                    let specs = device.specifications;
+                    if (typeof specs === 'string') {
+                        specs = JSON.parse(specs.replace(/'/g, '"'));
+                    }
+                    
+                    // Add top-level specifications first
+                    const mainSpecs = ['display_type', 'dimensions', 'os', 'battery_type', 'main_camera', 'selfie_camera'];
+                    mainSpecs.forEach(specName => {
+                        if (specs[specName]) {
+                            const specItem = createSpecItem(specName.replace(/_/g, ' '), specs[specName]);
+                            specsContainer.appendChild(specItem);
+                        }
+                    });
+                    
+                    // Add some detailed specs from sub-objects
+                    if (specs.detailed_specs) {
+                        const detailedSpecs = specs.detailed_specs;
+                        // Add memory
+                        if (detailedSpecs.memory && detailedSpecs.memory.internal) {
+                            const specItem = createSpecItem('Memory', detailedSpecs.memory.internal);
+                            specsContainer.appendChild(specItem);
+                        }
+                        
+                        // Add platform details
+                        if (detailedSpecs.platform) {
+                            if (detailedSpecs.platform.chipset) {
+                                const specItem = createSpecItem('Chipset', detailedSpecs.platform.chipset);
+                                specsContainer.appendChild(specItem);
+                            }
+                            if (detailedSpecs.platform.cpu) {
+                                const specItem = createSpecItem('CPU', detailedSpecs.platform.cpu);
+                                specsContainer.appendChild(specItem);
+                            }
+                        }
+                    }
+                    
+                    // Add any top-level nested objects we might have missed
+                    for (const [key, value] of Object.entries(specs)) {
+                        if (typeof value === 'object' && value !== null && 
+                            !['detailed_specs', 'specifications'].includes(key)) {
+                            const specItem = createSpecItem(
+                                key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                                value
+                            );
+                            specsContainer.appendChild(specItem);
+                        }
+                    }
+                    
+                    // If we haven't added any specs yet, add some of the common ones
+                    if (specsContainer.children.length === 0 && specs.specifications) {
+                        const mainSpecsObj = specs.specifications;
+                        // Display
+                        if (mainSpecsObj.Display) {
+                            const display = mainSpecsObj.Display;
+                            let displayInfo = '';
+                            
+                            if (display.Size) displayInfo += display.Size;
+                            if (display.Resolution) {
+                                if (displayInfo) displayInfo += ', ';
+                                displayInfo += display.Resolution;
+                            }
+                            
+                            if (displayInfo) {
+                                const specItem = createSpecItem('Display', displayInfo);
+                                specsContainer.appendChild(specItem);
+                            }
+                        }
+                        
+                        // Battery
+                        if (mainSpecsObj.Battery) {
+                            const battery = mainSpecsObj.Battery;
+                            let batteryInfo = '';
+                            
+                            if (battery.Type) batteryInfo += battery.Type;
+                            if (battery.Charging) {
+                                if (batteryInfo) batteryInfo += ', ';
+                                batteryInfo += 'Charging: ' + battery.Charging;
+                            }
+                            
+                            if (batteryInfo) {
+                                const specItem = createSpecItem('Battery', batteryInfo);
+                                specsContainer.appendChild(specItem);
+                            }
+                        }
+                        
+                        // Add other categories from specifications if available
+                        for (const [category, details] of Object.entries(mainSpecsObj)) {
+                            if (!['Display', 'Battery'].includes(category) && typeof details === 'object') {
+                                const specItem = createSpecItem(category, details);
+                                specsContainer.appendChild(specItem);
+                            }
+                        }
+                    }
+                    
+                    // If still no specs found, show a message
+                    if (specsContainer.children.length === 0) {
+                        specsContainer.textContent = 'No additional specifications available';
+                    }
+                } catch (e) {
+                    console.error('Error parsing specifications:', e);
+                    specsContainer.textContent = 'Error displaying specifications';
+                }
+            } else {
+                specsContainer.textContent = 'No specifications available';
+            }
+            
+            allSpecsContainer.appendChild(specsContainer);
+            specsCol.appendChild(allSpecsContainer);
+            contentLayout.appendChild(specsCol);
+            
+            // Add to visualization area
+            visualizationArea.appendChild(deviceCard);
+        }
+        
+        function renderDeviceComparison(devices) {
             // Clear previous visualizations
             visualizationArea.innerHTML = '';
             
             // Create comparison container
             const comparisonContainer = document.createElement('div');
             comparisonContainer.className = 'comparison-container';
+            comparisonContainer.style.display = 'flex';
+            comparisonContainer.style.flexWrap = 'wrap';
+            comparisonContainer.style.gap = '20px';
+            comparisonContainer.style.justifyContent = 'space-around';
             
-            // Add device cards
+            // Get all unique specification categories across all devices
+            const allSpecCategories = new Set();
+            // Exclude these categories to avoid duplicates
+            const excludedCategories = ['detailed_specs', 'specifications'];
+            
             devices.forEach(device => {
-                const deviceCard = document.createElement('div');
-                deviceCard.className = 'device-card';
+                if (device.specifications) {
+                    try {
+                        let specs = device.specifications;
+                        if (typeof specs === 'string') {
+                            specs = JSON.parse(specs.replace(/'/g, '"'));
+                        }
+                        
+                        Object.keys(specs).forEach(category => {
+                            // Skip excluded categories
+                            if (!excludedCategories.includes(category)) {
+                                allSpecCategories.add(category);
+                            }
+                        });
+                    } catch (e) {
+                        console.error('Error parsing specifications:', e);
+                    }
+                }
+            });
+            
+            // Create header row with device names
+            const headerRow = document.createElement('div');
+            headerRow.className = 'comparison-header';
+            headerRow.style.display = 'flex';
+            headerRow.style.width = '100%';
+            headerRow.style.marginBottom = '15px';
+            
+            // Add empty first cell for category column
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'comparison-cell category-cell';
+            emptyCell.style.width = '200px';
+            emptyCell.style.minWidth = '200px';
+            emptyCell.style.fontWeight = 'bold';
+            emptyCell.style.paddingRight = '10px';
+            headerRow.appendChild(emptyCell);
+            
+            // Add device name cells
+            devices.forEach(device => {
+                const deviceCell = document.createElement('div');
+                deviceCell.className = 'comparison-cell device-name-cell';
+                deviceCell.style.flex = '1';
+                deviceCell.style.minWidth = '200px';
+                deviceCell.style.textAlign = 'center';
+                deviceCell.style.padding = '10px';
+                deviceCell.style.backgroundColor = 'rgba(60, 60, 80, 0.5)';
+                deviceCell.style.borderRadius = '8px 8px 0 0';
+                deviceCell.style.color = 'var(--neon-purple)';
+                deviceCell.style.fontWeight = 'bold';
+                deviceCell.style.fontSize = '1.2em';
+                deviceCell.textContent = device.name;
+                headerRow.appendChild(deviceCell);
+            });
+            
+            comparisonContainer.appendChild(headerRow);
+            
+            // Create image gallery row
+            const imageRow = document.createElement('div');
+            imageRow.className = 'comparison-row';
+            imageRow.style.display = 'flex';
+            imageRow.style.width = '100%';
+            imageRow.style.marginBottom = '20px';
+            
+            // Add label cell for images
+            const imageLabel = document.createElement('div');
+            imageLabel.className = 'comparison-cell category-cell';
+            imageLabel.style.width = '200px';
+            imageLabel.style.minWidth = '200px';
+            imageLabel.style.fontWeight = 'bold';
+            imageLabel.style.paddingRight = '10px';
+            imageLabel.style.display = 'flex';
+            imageLabel.style.alignItems = 'center';
+            imageLabel.textContent = 'Images';
+            imageRow.appendChild(imageLabel);
+            
+            // Add device image gallery cells
+            devices.forEach(device => {
+                const imageCell = document.createElement('div');
+                imageCell.className = 'comparison-cell image-gallery-cell';
+                imageCell.style.flex = '1';
+                imageCell.style.minWidth = '200px';
+                imageCell.style.padding = '10px';
+                imageCell.style.backgroundColor = 'rgba(40, 40, 60, 0.5)';
+                imageCell.style.display = 'flex';
+                imageCell.style.flexWrap = 'wrap';
+                imageCell.style.gap = '5px';
+                imageCell.style.justifyContent = 'center';
                 
-                deviceCard.innerHTML = `
-                    <div class="text-center mb-3">
-                        <img src="${device.image_url}" alt="${device.name}" class="device-image" style="max-height: 200px;">
-                        <h4 class="mt-2">${device.name}</h4>
-                    </div>
-                    <div class="specs-container">
-                        ${generateSpecsHTML(device.specifications)}
-                    </div>
-                `;
+                // Get image URLs
+                let imageUrls = [];
+                if (device.image_url) {
+                    imageUrls.push(device.image_url);
+                }
                 
-                comparisonContainer.appendChild(deviceCard);
+                if (device.pictures) {
+                    try {
+                        let pictures = device.pictures;
+                        if (typeof pictures === 'string') {
+                            pictures = JSON.parse(pictures.replace(/'/g, '"'));
+                        }
+                        if (Array.isArray(pictures)) {
+                            // Add only unique pictures (avoid duplicates)
+                            pictures.forEach(pic => {
+                                if (!imageUrls.includes(pic)) {
+                                    imageUrls.push(pic);
+                                }
+                            });
+                        }
+                    } catch (e) {
+                        console.error('Error parsing pictures:', e);
+                    }
+                }
+                
+                if (imageUrls.length > 0) {
+                    // Create a small gallery of thumbnails
+                    const galleryDiv = document.createElement('div');
+                    galleryDiv.style.display = 'flex';
+                    galleryDiv.style.flexWrap = 'wrap';
+                    galleryDiv.style.gap = '8px';
+                    galleryDiv.style.justifyContent = 'center';
+                    
+                    // Limit to max 4 thumbnails
+                    const maxThumbnails = Math.min(4, imageUrls.length);
+                    
+                    for (let i = 0; i < maxThumbnails; i++) {
+                        const thumbContainer = document.createElement('div');
+                        thumbContainer.style.width = '70px';
+                        thumbContainer.style.height = '70px';
+                        thumbContainer.style.border = '2px solid rgba(100, 100, 255, 0.5)';
+                        thumbContainer.style.borderRadius = '8px';
+                        thumbContainer.style.overflow = 'hidden';
+                        thumbContainer.style.cursor = 'pointer';
+                        
+                        const thumb = document.createElement('img');
+                        thumb.src = imageUrls[i];
+                        thumb.style.width = '100%';
+                        thumb.style.height = '100%';
+                        thumb.style.objectFit = 'cover';
+                        
+                        // Set click handler to open in modal
+                        thumb.onclick = function() {
+                            showImageInModal(imageUrls[i], device.name);
+                        };
+                        
+                        thumbContainer.appendChild(thumb);
+                        galleryDiv.appendChild(thumbContainer);
+                    }
+                    
+                    // If there are more images, show a count indicator
+                    if (imageUrls.length > maxThumbnails) {
+                        const moreIndicator = document.createElement('div');
+                        moreIndicator.style.width = '70px';
+                        moreIndicator.style.height = '70px';
+                        moreIndicator.style.border = '2px solid rgba(100, 100, 255, 0.5)';
+                        moreIndicator.style.borderRadius = '8px';
+                        moreIndicator.style.backgroundColor = 'rgba(60, 60, 80, 0.7)';
+                        moreIndicator.style.display = 'flex';
+                        moreIndicator.style.alignItems = 'center';
+                        moreIndicator.style.justifyContent = 'center';
+                        moreIndicator.style.cursor = 'pointer';
+                        moreIndicator.textContent = `+${imageUrls.length - maxThumbnails}`;
+                        moreIndicator.style.color = 'white';
+                        moreIndicator.style.fontWeight = 'bold';
+                        
+                        // Show the next image when clicked
+                        moreIndicator.onclick = function() {
+                            showImageInModal(imageUrls[maxThumbnails], device.name);
+                        };
+                        
+                        galleryDiv.appendChild(moreIndicator);
+                    }
+                    
+                    imageCell.appendChild(galleryDiv);
+                } else {
+                    imageCell.textContent = 'No images available';
+                }
+                
+                imageRow.appendChild(imageCell);
+            });
+            
+            comparisonContainer.appendChild(imageRow);
+            
+            // Add GSMArena link row
+            const linkRow = document.createElement('div');
+            linkRow.className = 'comparison-row';
+            linkRow.style.display = 'flex';
+            linkRow.style.width = '100%';
+            linkRow.style.marginBottom = '20px';
+            
+            // Add label cell for links
+            const linkLabel = document.createElement('div');
+            linkLabel.className = 'comparison-cell category-cell';
+            linkLabel.style.width = '200px';
+            linkLabel.style.minWidth = '200px';
+            linkLabel.style.fontWeight = 'bold';
+            linkLabel.style.paddingRight = '10px';
+            linkLabel.style.display = 'flex';
+            linkLabel.style.alignItems = 'center';
+            linkLabel.textContent = 'More Info';
+            linkRow.appendChild(linkLabel);
+            
+            // Add device link cells
+            devices.forEach(device => {
+                const linkCell = document.createElement('div');
+                linkCell.className = 'comparison-cell link-cell';
+                linkCell.style.flex = '1';
+                linkCell.style.minWidth = '200px';
+                linkCell.style.padding = '10px';
+                linkCell.style.backgroundColor = 'rgba(40, 40, 60, 0.5)';
+                linkCell.style.textAlign = 'center';
+                
+                if (device.url) {
+                    const link = document.createElement('a');
+                    link.href = device.url;
+                    link.target = '_blank';
+                    link.className = 'gsmarena-button';
+                    link.style.display = 'inline-block';
+                    link.style.padding = '8px 16px';
+                    link.style.backgroundColor = '#4c57b9';
+                    link.style.color = 'white';
+                    link.style.borderRadius = '20px';
+                    link.style.textDecoration = 'none';
+                    link.style.fontWeight = 'bold';
+                    link.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+                    link.style.transition = 'all 0.3s ease';
+                    link.onmouseover = function() { this.style.backgroundColor = '#3a44a0'; };
+                    link.onmouseout = function() { this.style.backgroundColor = '#4c57b9'; };
+                    
+                    // Add GSMArena logo
+                    const logoSpan = document.createElement('span');
+                    logoSpan.innerHTML = '📱 ';
+                    logoSpan.style.marginRight = '5px';
+                    
+                    link.appendChild(logoSpan);
+                    link.appendChild(document.createTextNode('View on GSMArena'));
+                    linkCell.appendChild(link);
+                } else {
+                    linkCell.textContent = 'No link available';
+                }
+                
+                linkRow.appendChild(linkCell);
+            });
+            
+            comparisonContainer.appendChild(linkRow);
+            
+            // Create specification rows for each category
+            allSpecCategories.forEach(category => {
+                const categoryRow = document.createElement('div');
+                categoryRow.className = 'comparison-row';
+                categoryRow.style.display = 'flex';
+                categoryRow.style.width = '100%';
+                categoryRow.style.marginBottom = '5px';
+                
+                // Add category label cell
+                const categoryLabel = document.createElement('div');
+                categoryLabel.className = 'comparison-cell category-cell';
+                categoryLabel.style.width = '200px';
+                categoryLabel.style.minWidth = '200px';
+                categoryLabel.style.fontWeight = 'bold';
+                categoryLabel.style.paddingRight = '10px';
+                categoryLabel.style.color = 'var(--neon-blue)';
+                categoryLabel.textContent = category;
+                categoryRow.appendChild(categoryLabel);
+                
+                // Add spec values for each device
+                devices.forEach(device => {
+                    const specCell = document.createElement('div');
+                    specCell.className = 'comparison-cell spec-cell';
+                    specCell.style.flex = '1';
+                    specCell.style.minWidth = '200px';
+                    specCell.style.padding = '10px';
+                    specCell.style.backgroundColor = 'rgba(40, 40, 60, 0.5)';
+                    specCell.style.borderRadius = '4px';
+                    specCell.style.marginBottom = '2px';
+                    
+                    // Get specification value
+                    let specValue = 'N/A';
+                    if (device.specifications) {
+                        try {
+                            let specs = device.specifications;
+                            if (typeof specs === 'string') {
+                                specs = JSON.parse(specs.replace(/'/g, '"'));
+                            }
+                            
+                            if (specs[category]) {
+                                if (typeof specs[category] === 'object') {
+                                    specValue = Object.entries(specs[category])
+                                        .map(([key, value]) => `<strong>${key}:</strong> ${value}`)
+                                        .join('<br>');
+                                } else {
+                                    specValue = specs[category];
+                                }
+                            }
+                        } catch (e) {
+                            console.error('Error parsing specifications:', e);
+                        }
+                    }
+                    
+                    specCell.innerHTML = specValue;
+                    categoryRow.appendChild(specCell);
+                });
+                
+                comparisonContainer.appendChild(categoryRow);
             });
             
             visualizationArea.appendChild(comparisonContainer);
@@ -502,140 +1678,244 @@
         
         function renderRecommendations(devices) {
             // Clear previous visualizations
+            const visualizationArea = document.getElementById('visualization-area');
             visualizationArea.innerHTML = '';
+            
+            console.log("Rendering recommendations:", devices);
+            
+            if (!devices || devices.length === 0) {
+                visualizationArea.innerHTML = '<div class="error-message">No recommendations available.</div>';
+                console.warn("No devices provided to renderRecommendations");
+                return;
+            }
             
             // Create recommendations container
             const recommendationsContainer = document.createElement('div');
-            recommendationsContainer.className = 'recommendation-container';
+            recommendationsContainer.className = 'recommendations-container';
             
-            // Add device cards
-            devices.forEach(device => {
-                const deviceCard = document.createElement('div');
-                deviceCard.className = 'recommendation-card';
+            // Add title
+            const title = document.createElement('h3');
+            title.textContent = 'Top Recommended Devices';
+            title.className = 'recommendations-title';
+            recommendationsContainer.appendChild(title);
+            
+            // Create recommendations grid
+            const grid = document.createElement('div');
+            grid.className = 'recommendations-grid';
+            
+            // Add each device as a card
+            devices.forEach((device, index) => {
+                console.log(`Building card for device ${index}:`, device);
                 
-                // Get key specs
-                let keySpecs = '';
-                if (device.specifications) {
-                    if (device.specifications.display) {
-                        keySpecs += `Display: ${device.specifications.display}<br>`;
-                    }
-                    if (device.specifications.chipset) {
-                        keySpecs += `Chipset: ${device.specifications.chipset}<br>`;
-                    }
-                    if (device.specifications.battery) {
-                        keySpecs += `Battery: ${device.specifications.battery}`;
-                    }
+                const card = document.createElement('div');
+                card.className = 'recommendation-card';
+                
+                // Device name
+                const name = document.createElement('h4');
+                name.className = 'device-name';
+                name.textContent = `${device.brand_name} ${device.device_name}`;
+                card.appendChild(name);
+                
+                // Device image
+                const imageContainer = document.createElement('div');
+                imageContainer.className = 'device-image-container';
+                
+                const image = document.createElement('img');
+                image.className = 'device-image';
+                
+                // Determine image source
+                let imageSrc = '/static/images/device-placeholder.png';
+                if (device.pictures && device.pictures.length > 0) {
+                    imageSrc = device.pictures[0];
+                    console.log(`Using image from pictures array: ${imageSrc}`);
+                } else if (device.device_image) {
+                    imageSrc = device.device_image;
+                    console.log(`Using device_image: ${imageSrc}`);
+                } else {
+                    console.log("No image found, using placeholder");
                 }
                 
-                deviceCard.innerHTML = `
-                    <img src="${device.image_url}" alt="${device.name}" class="recommendation-image">
-                    <div class="recommendation-name">${device.name}</div>
-                    <div class="recommendation-specs">${keySpecs}</div>
-                `;
+                image.src = imageSrc;
+                image.alt = `${device.brand_name} ${device.device_name}`;
+                image.onerror = function() {
+                    console.warn(`Image failed to load: ${this.src}`);
+                    this.src = '/static/images/device-placeholder.png';
+                };
                 
-                recommendationsContainer.appendChild(deviceCard);
+                // Add click handler to show image in modal
+                image.addEventListener('click', function() {
+                    showImageInModal(image.src, `${device.brand_name} ${device.device_name}`);
+                });
+                
+                imageContainer.appendChild(image);
+                card.appendChild(imageContainer);
+                
+                // Highlights (key specifications)
+                if (device.highlights && device.highlights.length > 0) {
+                    console.log(`Device has ${device.highlights.length} highlights`);
+                    const highlights = document.createElement('div');
+                    highlights.className = 'device-highlights';
+                    
+                    device.highlights.forEach(highlight => {
+                        const highlightItem = document.createElement('div');
+                        highlightItem.className = 'highlight-item';
+                        highlightItem.textContent = highlight;
+                        highlights.appendChild(highlightItem);
+                    });
+                    
+                    card.appendChild(highlights);
+                } else {
+                    console.log("No highlights found for device");
+                }
+                
+                // Device link
+                if (device.device_url) {
+                    const linkContainer = document.createElement('div');
+                    linkContainer.className = 'device-link-container';
+                    
+                    const link = document.createElement('a');
+                    link.href = device.device_url;
+                    link.target = '_blank';
+                    link.className = 'device-link';
+                    link.textContent = 'View on GSMArena';
+                    
+                    linkContainer.appendChild(link);
+                    card.appendChild(linkContainer);
+                }
+                
+                // Add a "Details" button
+                const detailsButton = document.createElement('button');
+                detailsButton.className = 'details-button';
+                detailsButton.textContent = 'View Specifications';
+                detailsButton.addEventListener('click', function() {
+                    // Send a new message to get device details
+                    userInput.value = `Tell me about ${device.brand_name} ${device.device_name}`;
+                    sendMessage();
+                });
+                
+                card.appendChild(detailsButton);
+                
+                // Add card to grid
+                grid.appendChild(card);
             });
             
+            recommendationsContainer.appendChild(grid);
             visualizationArea.appendChild(recommendationsContainer);
-        }
-        
-        function generateSpecsHTML(specs) {
-            if (!specs || Object.keys(specs).length === 0) {
-                return '<div class="spec-item"><div class="spec-name">No specifications available</div></div>';
-            }
+            console.log("Recommendations visualization created successfully");
             
-            // Safely handle encoding issues
-            function safeText(text) {
-                if (typeof text !== 'string') return String(text || '');
-                return text
-                    .replace(/\u02da/g, '°') // Replace degree symbol
-                    .replace(/\u00b5/g, 'µ') // Replace micro symbol
-                    .replace(/[^\x00-\x7F]/g, function(char) {
-                        // Replace any non-ASCII characters with their HTML entity or a safe replacement
-                        try {
-                            return `&#${char.charCodeAt(0)};`;
-                        } catch (e) {
-                            return '';
-                        }
-                    });
-            }
-            
-            let html = '';
-            
-            // Define spec groups for organized display
-            const specGroups = {
-                'Display': ['display', 'display_type', 'resolution'],
-                'Platform': ['platform', 'chipset', 'cpu', 'gpu', 'os'],
-                'Memory': ['memory', 'internal', 'card_slot'],
-                'Camera': ['main_camera', 'selfie_camera', 'features', 'video'],
-                'Battery': ['battery', 'battery_type', 'charging'],
-                'Features': ['features', 'sensors'],
-                'Network': ['network', '5g_bands', '4g_bands', '3g_bands', '2g_bands'],
-                'Body': ['body', 'dimensions', 'weight', 'build', 'sim'],
-                'Misc': ['misc', 'colors', 'price']
-            };
-            
-            // Create HTML for each spec group
-            for (const [groupName, specKeys] of Object.entries(specGroups)) {
-                let groupHTML = '';
-                let hasSpecs = false;
-                
-                for (const key of specKeys) {
-                    if (specs[key]) {
-                        hasSpecs = true;
-                        groupHTML += `
-                            <div class="spec-item">
-                                <div class="spec-label">${key.replace(/_/g, ' ').charAt(0).toUpperCase() + key.replace(/_/g, ' ').slice(1)}</div>
-                                <div class="spec-value">${safeText(specs[key])}</div>
-                            </div>
-                        `;
-                    }
+            // Add some CSS to the page
+            const style = document.createElement('style');
+            style.textContent = `
+                .recommendations-container {
+                    margin-top: 20px;
+                    background-color: rgba(30, 30, 50, 0.8);
+                    border-radius: 10px;
+                    padding: 20px;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
                 }
                 
-                if (hasSpecs) {
-                    html += `
-                        <div class="spec-group">
-                            <h5>${groupName}</h5>
-                            ${groupHTML}
-                        </div>
-                    `;
-                }
-            }
-            
-            // Add any remaining specs that weren't in predefined groups
-            let otherSpecs = '';
-            let hasOtherSpecs = false;
-            
-            for (const key of Object.keys(specs)) {
-                let inGroup = false;
-                for (const groupKeys of Object.values(specGroups)) {
-                    if (groupKeys.includes(key)) {
-                        inGroup = true;
-                        break;
-                    }
+                .recommendations-title {
+                    color: #bb86fc;
+                    text-align: center;
+                    margin-bottom: 20px;
+                    font-size: 1.3rem;
                 }
                 
-                if (!inGroup && specs[key]) {
-                    hasOtherSpecs = true;
-                    otherSpecs += `
-                        <div class="spec-item">
-                            <div class="spec-label">${key.replace(/_/g, ' ').charAt(0).toUpperCase() + key.replace(/_/g, ' ').slice(1)}</div>
-                            <div class="spec-value">${safeText(specs[key])}</div>
-                        </div>
-                    `;
+                .recommendations-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                    gap: 20px;
                 }
-            }
+                
+                .recommendation-card {
+                    background-color: rgba(40, 40, 60, 0.9);
+                    border-radius: 8px;
+                    padding: 15px;
+                    display: flex;
+                    flex-direction: column;
+                    transition: transform 0.2s, box-shadow 0.2s;
+                    min-height: 300px;
+                }
+                
+                .recommendation-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 5px 15px rgba(187, 134, 252, 0.3);
+                }
+                
+                .device-name {
+                    color: #bb86fc;
+                    font-size: 1.1rem;
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                    text-align: center;
+                }
+                
+                .device-image-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 160px;
+                    margin-bottom: 15px;
+                }
+                
+                .device-image {
+                    max-height: 150px;
+                    max-width: 100%;
+                    object-fit: contain;
+                    cursor: pointer;
+                    transition: transform 0.2s;
+                }
+                
+                .device-image:hover {
+                    transform: scale(1.05);
+                }
+                
+                .device-highlights {
+                    margin-bottom: 15px;
+                }
+                
+                .highlight-item {
+                    color: #e0e0e0;
+                    font-size: 0.9rem;
+                    margin-bottom: 5px;
+                    padding: 5px;
+                    background-color: rgba(50, 50, 70, 0.7);
+                    border-radius: 4px;
+                }
+                
+                .device-link-container {
+                    margin-top: auto;
+                    text-align: center;
+                    margin-bottom: 10px;
+                }
+                
+                .device-link {
+                    color: #03dac6;
+                    text-decoration: none;
+                    font-size: 0.9rem;
+                }
+                
+                .device-link:hover {
+                    text-decoration: underline;
+                }
+                
+                .details-button {
+                    background-color: #bb86fc;
+                    color: #121212;
+                    border: none;
+                    border-radius: 4px;
+                    padding: 8px 12px;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                    transition: background-color 0.2s;
+                }
+                
+                .details-button:hover {
+                    background-color: #9d4edd;
+                }
+            `;
             
-            if (hasOtherSpecs) {
-                html += `
-                    <div class="spec-group">
-                        <h5>Other</h5>
-                        ${otherSpecs}
-                    </div>
-                `;
-            }
-            
-            return html || '<div class="spec-item"><div class="spec-name">No specifications available</div></div>';
+            document.head.appendChild(style);
         }
     });
 </script>

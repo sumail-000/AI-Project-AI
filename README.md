@@ -52,7 +52,7 @@ A comprehensive system for managing, analyzing, and providing intelligent access
 
 1. Clone the repository:
 ```bash
-git clone [repository-url]
+git clone https://github.com/sumail-000/AI-Project-AI.git
 cd AI-Project-AI
 ```
 
@@ -171,4 +171,4 @@ SOFTWARE.
 
 ## Support
 
-For support, please [provide contact information or issue reporting guidelines]
+For support, reahanali823@gmail.com
